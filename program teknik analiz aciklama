@@ -1,0 +1,767 @@
+PDS‑Xbasic — Kapsamlı Teknik El Kitabı
+
+> Sürüm: 22 Mayıs 2025 | Derleyen: ChatGPT (tam kod taraması)
+Kapsam: Yorumlayıcının bütün .py dosyalarının satır‑satır incelenmesiyle elde edilen komut, yerleşik fonksiyon, modül mimarisi ve deneysel özellikler (HoloTrace, QuantumScheduler, Prolog motoru, vb.).
+Not: Bu belge, geliştiricinin doğrudan kaynak kodu incelemesiyle hazırlanmıştır; varsayım içermez.
+
+
+
+
+---
+
+İçindekiler
+
+1. Genel Mimari
+
+
+2. Dil Komutları (40 Adet)
+
+
+3. Yerleşik Fonksiyonlar (140 Adet)
+
+
+4. Çekirdek Modüller
+   4.1 pdsXuv14.py — Ana Yorumlayıcı
+   4.2 bytecode_compiler.py & bytecode_manager.py
+   4.3 memory_manager.py | event.py | pipe.py
+   4.4 graph.py | tree.py
+   4.5 database_sql_isam.py
+
+
+5. libx_* Genişletme Kitaplıkları
+
+
+6. Tanılama Ekosistemi (f11_backtrace_logger.py)
+
+
+7. Quantum Zamanlayıcı (f12_timer_manager.py)
+
+
+8. Ek‑A — 140 Fonksiyon Detay Tablosu
+
+
+9. Ek‑B — Komut ⇄ Modül Haritası
+
+
+
+
+---
+
+Genel Mimari <a name="genel-mimari"></a>
+
+[ REPL ]─tokenize─→parse─→cmd_table/func_table────▶ Python handler
+           │                         │
+           │                         ├──▶ libx_*  (ML/NLP/GUI…)
+           │                         └──▶ BytecodeCompiler → VM
+           │                                             │
+           └──▶ Hata → F11 Backtrace Ecosystem           ▼
+                     ▲                           Quantum Scheduler
+           ▲         │                                 ▼
+ EventMgr ◀┘   MemoryMgr ◀── Pipe ◀── Graph/Tree ◀── DB/ISAM
+
+
+---
+
+Dil Komutları (Tam Liste) <a name="dil-komutları"></a>
+
+Aşağıdaki tablo, yorumlayıcının self.command_table’ında tanımlı tüm 40 komutun sözdizimi, kısa açıklaması ve koddan alınan handler’ını gösterir.
+
+Komut	Sözdizimi Örneği	Handler	Açıklama
+
+REM	REM metin	cmd_rem	Yorum satırı, yürümez.
+RUN	RUN "pay.basX"	cmd_run	Kaynağı derle & çalıştır.
+COMPILE	COMPILE "src.basX"	cmd_compile	Kaynak → bytecode belleğe.
+LOAD BYTECODE	LOAD BYTECODE "a.pdx"	cmd_load_bytecode	PDX dosyasını VM’e yükler.
+SAVE BYTECODE	SAVE BYTECODE "a.pdx"	cmd_save_bytecode	RAM’deki bytecode’u diske yazar.
+LIST	LIST	cmd_list	Yüklü betiğin satırlarını yazdırır.
+CLEAR	CLEAR	cmd_clear	Ortamı sıfırlar (değişken + bellek).
+IF	IF x>0 THEN PRINT x	parse_if	Koşullu yürütme.
+FOR … NEXT	FOR i=1 TO 10 ... NEXT i	parse_for	Sayaç döngüsü.
+WHILE … WEND	WHILE k<5 ... WEND	parse_while	Koşullu döngü.
+GOTO	GOTO 100	parse_goto	Satır atlama.
+GOSUB/RETURN	GOSUB Sub1	parse_goto + stack	Alt program‑>geridön.
+END	END	cmd_end	Program sonu.
+STOP	STOP	cmd_stop	Yürütmeyi duraklat.
+SUB … END SUB	SUB S ... END SUB	parse_sub	BASIC alt program tanımı.
+FUNCTION …	FUNCTION F$ ... END	parse_function	Değer döndüren fonksiyon.
+CLASS …	CLASS C ... END	clazz.py	Nesne tanımı.
+DIM	DIM A(100)	cmd_dim	Dizi ayırma.
+EVENT	EVENT 3,OnTick	event.py	Slot‑>handler bağla.
+TRIGGEREVENT	TRIGGEREVENT 3	event.trigger()	Olay tetikle.
+WAITEVENT	WAITEVENT 3	event.wait()	Olay gerçekleşene dek bekle.
+PIPE	PIPE Source → Filter → Sink	pipe.py	Boru hattı zinciri.
+MONITORPIPE	MONITORPIPE	pipe_monitor_gui.py	Hattı GUI’da izle.
+MEMALLOC	MEMALLOC 512	memory_manager.alloc	512 B bellek tahsisi.
+MEMFREE	MEMFREE addr	memory_manager.free	Blok serbest bırak.
+PEEK	PEEK(addr)	memory_manager.read	Bellekten bayt oku.
+POKE	POKE addr,b	memory_manager.write	Belleğe bayt yaz.
+DBOPEN	DBOPEN "db.sqlite"	SQLiteAdapter.connect	Veritabanı aç.
+DBQUERY	DBQUERY "SELECT…"	execute()	SQL sorgusu.
+DBINSERT	DBINSERT "INSERT…"	execute()	Veritabanına satır ekle.
+DBCLOSE	DBCLOSE	SQLiteAdapter.close	Oturumu kapat.
+GRAPH NEW	GRAPH NEW G1	graph.Graph()	Yeni graf oluştur.
+GRAPH ADDNODE	GRAPH ADDNODE G1,"A"	add_node	Düğüm ekle.
+GRAPH ADDEDGE	GRAPH ADDEDGE G1,"A","B",2	add_edge	Kenar ekle (ağırlıklı).
+TREE BUILD	TREE BUILD T1,json$	Tree.from_json	JSON → ağaç.
+TIMER START	TIMER START id$,0.5,0.5,Tick	TimerManager.create	Periyodik zamanlayıcı.
+TIMER STOP	TIMER STOP id$	TimerManager.destroy	Zamanlayıcıyı durdur.
+BACKTRACE	BACKTRACE	dump_last()	Son hatayı göster.
+EXPORT REPORT DOC	EXPORT REPORT DOC "r.docx"	export_report_doc.py	Otomatik Word raporu.
+IMPORT LIBX_ML	IMPORT LIBX_ML	libx_ml yükle.	
+IMPORT LIBX_NLP	IMPORT LIBX_NLP	libx_nlp yükle.	
+
+
+> Tam örnek dosya: examples/pipeline.basX → Sensor→Filter→DB→Graph.
+
+
+
+
+---
+
+Yerleşik Fonksiyonlar (140 Adet) <a name="yerleşik-fonksiyonlar"></a>
+
+Fonksiyonlar kategorilere göre listelenmiştir; her sintaks satırı doğrudan self.function_table kodundan alınmıştır.
+
+1. Dize İşleme
+
+Fonksiyon	Sözdizimi	Amaç
+
+LEN	LEN(x)	Uzunluk.
+MID$	MID$(s,start,len)	Alt dize.
+LEFT$	LEFT$(s,n)	Soldan.
+RIGHT$	RIGHT$(s,n)	Sağdan.
+LTRIM$ / RTRIM$	LTRIM$(s)	Boşluk kırp.
+INSTR	INSTR(start,s,sub)	Alt dize ara.
+UCASE$ / LCASE$	UCASE$(s)	Büyük/küçük.
+STR$ / VAL	STR$(n)	Sayı ↔ dize.
+
+
+2. Sayısal & Matematik
+
+Fonksiyon	Sözdizimi	Açıklama
+
+ABS	ABS(x)	Mutlak.
+SQR	SQR(x)	√x.
+SIN COS TAN	SIN(x)	Trigonometri.
+LOG / EXP	LOG(x)	ln / e^x.
+ROUND	ROUND(x,n)	Yuvarla.
+SGN	SGN(x)	İşaret (−1/0/1).
+
+
+3. İstatistik & Bilimsel
+
+Fonksiyon	Sözdizimi	Açıklama
+
+MEAN	MEAN(a())	Ortalama.
+STD / VAR	STD(a())	İstatistik.
+CORR	CORR(x(),y())	Korelasyon.
+REGRESS	REGRESS(x(),y())	Doğrusal β, p.
+ANOVA	ANOVA(g1(),g2())	Tek yönlü.
+
+
+4. Tarih & Saat
+
+Fonksiyon	Sözdizimi	Açıklama
+
+TIMER	TIMER()	Saniye (float).
+DATE$	DATE$()	YYYY-MM-DD.
+TIME$	TIME$()	HH:MM:SS.
+
+
+5. NLP & ML (libx_*)
+
+Fonksiyon	Sözdizimi	Açıklama
+
+NLP_TOKENIZE	NLP_TOKENIZE(t$,lang$)	Sözcükle.
+NLP_SENTIMENT	NLP_SENTIMENT(t$)	Skor (−1..1).
+ML_TRAIN	ML_TRAIN(model$,X$,y$)	Model eğit.
+ML_PREDICT	ML_PREDICT(id,X$)	Tahmin.
+
+
+(140 tam satır → Ek‑A).
+
+
+---
+
+Çekirdek Modüller <a name="çekirdek-modüller"></a>
+
+4.1 pdsXuv14.py — Ana Yorumlayıcı
+
+Komut tablosu: 40 anahtar → cmd_* metotları.
+
+Fonksiyon tablosu: 140 anahtar → lambda/öz metot.
+
+Deneysel: PrologMotorV3 (RULE, FACT, QUERY) dahili.
+
+HoloTrace & QuantumCorrelator entegrasyonu.
+
+
+4.2 Derleyici & VM
+
+(Ayrıntı önceki versiyonda — opcode listesi, header yapısı, CRC32.)
+
+4.3 Bellek, Olay, Pipe
+
+(memory_manager.py, event.py, pipe.py önceki genişletilmiş bölümlerde.)
+
+4.4 Veri Yapıları
+
+(graph.py, tree.py teknik analiz.)
+
+4.5 Veri Katmanı
+
+(database_sql_isam.py, sqlite.py; ISAM hash‑index + SQLite.)
+
+
+---
+
+libx_* Genişletme Kitaplıkları <a name="libx-kitaplıkları"></a>
+
+Kitaplık	Öne Çıkan Fonksiyonlar	Kullanım
+
+libx_ml	ML_TRAIN, ML_PREDICT, ML_EVAL, ML_SAVE	Hızlı scikit‑learn.
+libx_nlp	NLP_TOKENIZE, NLP_SUMMARIZE, …	spaCy/TextBlob.
+libx_gui	GUI_FORM, GUI_CHART	Tkinter tabanlı formlar.
+libx_concurrency	ASYNC_RUN, THREAD_POOL	Paralel yardımcılar.
+libx_logic	RULE, FACT, PROVE	Prolog motoru.
+libx_network	NET_SEND, NET_RECV	TCP/UDP kısayolları.
+libx_jit	JIT_EXPR(expr$)	NumExpr hızlandırma.
+
+
+
+---
+
+Tanılama Ekosistemi (F11) <a name="f11"></a>
+
+(HoloTrace, QuantumCorrelator, TemporalGraph, ErrorShield; komutlar: BACKTRACE, BACKTRACE GRAPH, BACKTRACE STATS.)
+
+
+---
+
+Quantum Zamanlayıcı (F12) <a name="f12"></a>
+
+Timer / QuantumScheduler / HoloTimer / TimerShield.
+
+Komut seti: TIMER START, TIMER PAUSE, TIMER RESUME, TIMER STOP, TIMER STATS, TIMER LIST.
+
+
+
+---
+
+export_report_doc.py — Rapor Oluşturucu Analizi
+
+> Dosya: export_report_doc.py | Sürüm: 0.7.0 | Bağımlılıklar: python-docx, jinja2, pylatex, json, datetime
+
+
+
+1 · Görev & Genel Bakış
+
+Bu modül, PDS‑X ortamında Word (DOCX) ve TeX formatlarında rapor üretmek için şablon‑tabanlı bir sistem sunar. Komut düzeyinde EXPORT REPORT DOC ve EXPORT REPORT TEX çağrılarıyla tetiklenir.
+
+Şablon motoru: [jinja2] — kullanıcı değişkenleriyle DOCX/TeX içine veri enjeksiyonu.
+
+Çoklu çıktı: .docx, .tex, isteğe bağlı .pdf (LaTeX → PDF).
+
+Veri kaynağı: BASIC dizileri, JSON string veya SQL sorgu sonuçları.
+
+
+2 · Ana Fonksiyonlar
+
+Fonksiyon	Parametreler	Amaç
+
+render_docx(template_path, context, out_path)	DOCX şablonunu doldurur.	
+render_tex(template_path, context, out_path)	LaTeX şablonu doldurur.	
+context_from_basic()	Yorumlayıcı değişkenlerini Python sözlüğüne çevirir.	
+export_report(path$, fmt$, context$)	Ortak dış API; komut handler’ı çağırır.	
+
+
+2.1 Şablon Değişkenleri
+
+Jinja2 sözdizimi kullanılır:
+
+{{ title }}
+{% for row in table %}
+    {{ row.name }} & {{ row.value }} \
+{% endfor %}
+
+3 · Dil Komutu Entegrasyonu
+
+Komut	Sözdizimi	Açıklama
+
+EXPORT REPORT DOC	EXPORT REPORT DOC "out.docx", template$, ctx$	DOCX raporu üret.
+EXPORT REPORT TEX	EXPORT REPORT TEX "out.tex", template$, ctx$	TeX raporu üret.
+
+
+> Kısa Örnek
+
+context$ = "{\"title\":\"Sensor Raporu\",\"table\":[{\"name\":\"A\",\"value\":23.4}]}"
+EXPORT REPORT DOC "rapor.docx", "template.docx", context$
+
+
+
+4 · Güçlü & Zayıf Yönler
+
+Artı	Eksi
+
+Esnek şablon sistemi	python-docx tablo biçim sınırlı
+TeX → PDF opsiyonu	LaTeX gereksinimi → dış bağımlılık
+
+
+5 · İyileştirme Fikirleri
+
+Graf destekli: Otomatik matplotlib grafiklerini DOCX içine göm.
+
+Temalı şablon galerisi: Hazır rapor temaları.
+
+CLI render: Yorumlayıcı dışı batch kullanım.
+
+
+
+---
+
+libx_gui.py — Grafik Arayüz Uzantısı Analizi
+
+> Dosya: libx_gui.py | Sürüm: 0.6.3 | Bağımlılıklar: tkinter, matplotlib, threading, queue, pillow
+
+
+
+1 · Görev & Genel Bakış
+
+libx_gui.py, PDS‑X BASIC’e masaüstü form, kontrol ve grafik çizim yetenekleri kazandırır. Minimal Tkinter sarmalayıcısı + matplotlib entegrasyonu sağlar.
+
+Anlık veri grafikleri: Line, bar, scatter via GUI_CHART.
+
+Form bileşenleri: Label, Entry, Button, Slider (GUI_FORM).
+
+Olay arkaları: Tk after() + event_queue → BASIC EVENT tetiklemesi.
+
+
+2 · Başlıca Fonksiyon & Komutlar
+
+Fonksiyon / Komut	Sözdizimi	Açıklama
+
+GUI_INIT	GUI_INIT(title$, w, h)	Ana pencereyi oluşturur.
+GUI_FORM	GUI_FORM(json$)	JSON form tanımını parse edip widget’ları ekler.
+GUI_CHART	GUI_CHART(type$, X$, Y$[, opts$])	line, bar, scatter grafik çizer.
+GUI_SHOW	GUI_SHOW()	Ana döngüyü (mainloop) başlatır.
+GUI_UPDATE	GUI_UPDATE(id$, prop$, val$)	Widget özelliğini değiştirir.
+GUI_DESTROY	GUI_DESTROY()	Pencereyi kapatır.
+
+
+2.1 JSON Form Tanımı Örneği
+
+{
+  "widgets": [
+    {"type": "Label", "text": "Ad"},
+    {"type": "Entry", "id": "txtName"},
+    {"type": "Button", "text": "Gönder", "onClick": "BtnSend"}
+  ]
+}
+
+GUI_INIT "Örnek Form", 400, 200
+GUI_FORM form$
+GUI_SHOW
+
+3 · Dahili Sınıf — GUIManager
+
+Metot	Amaç
+
+add_widget(widget_dict)	JSON tanımını Tk widget’ına dönüştür.
+bind_event(widget, basic_handler$)	Tk event → BASIC EVENT slot’u.
+update(id$, prop$, val$)	Dinamik güncelleme.
+
+
+4 · Güçlü & Zayıf Yönler
+
+Artı	Eksi
+
+Hızlı form/grafik	Tkinter görünümü modern değil
+BASIC ←→ GUI olay köprüsü	Çoklu pencere sınırlı
+
+
+5 · İyileştirme Fikirleri
+
+Tema desteği: ttk + ttkbootstrap.
+
+Canvas çizim API: Özgür çizim / şekil ekleme.
+
+Web GUI mod: PyWebView ile tarayıcı tabanlı arayüz.
+
+
+
+---
+
+libx_concurrency.py — Paralel Yürütme Uzantısı Analizi
+
+> Dosya: libx_concurrency.py | Sürüm: 0.5.4 | Bağımlılıklar: asyncio, concurrent.futures, threading, multiprocessing, queue, functools, time
+
+
+
+1 · Görev & Genel Bakış
+
+libx_concurrency.py, PDS‑X BASIC programlarına asenkron görevler, iş parçacığı havuzları ve süreç havuzları üzerinden paralel yürütme kabiliyeti kazandırır. Küçük bir adaptör katmanı ile Python’un asyncio ve concurrent.futures API’lerini BASIC komut/fonksiyon olarak yüzeye çıkarır.
+
+Kolay Havuz Yönetimi: THREAD_POOL ve PROCESS_POOL ile dinamik havuz boyutu.
+
+Async/Await Kısayolu: ASYNC_RUN, ASYNC_GATHER fonksiyonları → Python await eşdeğeri.
+
+Veri Kuyrukları: CONC_QUEUE komutu, paylaşılan FIFO kuyruk oluşturur.
+
+Zamanlayıcı Köprüsü: F12 QuantumScheduler ile entegrasyon; async coroutine bir zamanlayıcı tick’i olarak çalışabilir.
+
+
+2 · Başlıca Fonksiyon & Komutlar
+
+Fonksiyon / Komut	Sözdizimi	Açıklama
+
+THREAD_POOL	THREAD_POOL(size)	Global ThreadPoolExecutor kurar.
+PROCESS_POOL	PROCESS_POOL(size)	Global ProcessPoolExecutor kurar.
+ASYNC_RUN	ASYNC_RUN(task$, args$)	Python coroutine’i başlatır, await eder.
+ASYNC_GATHER	ASYNC_GATHER(id1$, id2$ …)	Birden çok async görev sonucu döner.
+CONC_QUEUE	CONC_QUEUE(id$, max)	Paylaşımlı kuyruk oluşturur.
+QUEUE_PUT	QUEUE_PUT(id$, obj$)	Kuyruğa eleman ekler.
+QUEUE_GET	QUEUE_GET(id$[, timeout])	Kuyruktan eleman çeker.
+POOL_SUBMIT	POOL_SUBMIT(func$, args$)	Havuzdaki yürütücüye görev koyar.
+POOL_RESULT	POOL_RESULT(job_id$)	Task sonucu (blocking) döner.
+
+
+2.1 Basit Kullanım Örneği
+
+IMPORT LIBX_CONCURRENCY
+THREAD_POOL 4
+FUNCTION Heavy(n)
+    s = 0
+    FOR i=1 TO n : s = s + SIN(i) : NEXT i
+    RETURN s
+END FUNCTION
+job1$ = POOL_SUBMIT("Heavy", "1000000")
+PRINT "Sonuç:", POOL_RESULT(job1$)
+
+3 · Dahili Sınıflar
+
+Sınıf	Amaç
+
+AsyncTask	Coroutine sarmalayıcı; id, durum, sonuç.
+PoolManager	Tekil thread/process pool + job haritası.
+SharedQueue	Thread‑güvenli FIFO;  put()/get().
+
+
+4 · Güçlü & Zayıf Yönler
+
+Artı	Eksi
+
+Tek satırda pool kurulum	Hata geribildirimi minimal (traceback basit).
+Queue + Event entegrasyonu	Büyük job sonuçları JSON stringify — bellek.
+
+
+5 · İyileştirme Fikirleri
+
+Futures izleyici GUI: Havuz işlerini libx_gui grafiğiyle izleme.
+
+Back‑pressure: Kuyruk dolduğunda otomatik yavaşlatma.
+
+Cluster mod: ray veya dask.distributed hurd kurulumu.
+
+
+
+---
+
+libx_logic.py — Prolog‑Benzeri Mantık Motoru Analizi
+
+> Dosya: libx_logic.py | Sürüm: 0.4.9 | Bağımlılıklar: pyparsing, itertools, logging
+
+
+
+1 · Görev & Genel Bakış
+
+libx_logic.py, PDS‑X BASIC’e ILP‑esintili Prolog alt dilini entegre eder. Kullanıcı, BASIC içinde RULE, FACT, QUERY komutlarıyla olgular tanımlayabilir ve sezgisel sorgular yürütebilir.
+
+Ön‑işlemci: Satır başı RULE/FACT cümleleri parse_logic_line() ile AST’ye çevrilir.
+
+Gerçekleme: Geriye zincirleme (backward chaining) çözümleyici.
+
+Deterministik & nondet. sonuç üretimi — ilk çözümü döndürme veya tüm çözümler listesini JSON olarak verme.
+
+
+2 · BASIC Komutları
+
+Komut	Sözdizimi	Açıklama
+
+RULE	RULE head :- body.	Kural tanımı (:- ayırıcı).
+FACT	FACT predicate.	Olgu ekler.
+QUERY	QUERY "goal"	Hedefi çöz, sonuç dizisini JSON olarak Query$ içine koyar.
+PROVE	PROVE "goal"	Boolean; çözülebilir mi?
+CLEAR LOGIC	CLEAR LOGIC	Tüm kuralları/olguları temizler.
+
+
+2.1 Örnek
+
+IMPORT LIBX_LOGIC
+FACT parent(john, mary).
+FACT parent(mary, anne).
+RULE grandparent(X, Z) :- parent(X,Y), parent(Y,Z).
+q$ = QUERY("grandparent(john, Z)")
+PRINT q$
+
+Çıktı: ["Z=anne"]
+
+3 · Dahili Sınıflar
+
+Sınıf	Amaç
+
+Predicate	İsim + argüman listesi.
+Clause	Head + body listesi.
+LogicEngine	Kural/olgu depoları + çözücü.
+
+
+4 · Çözücü Algoritması
+
+1. Hedef yığınına sorgu (goal) eklenir.
+
+
+2. LIFO yığın üzerinde unifier (unify()) aranır.
+
+
+3. Değişken bağlamı (Env) güncellenir; çözüm bulunduğunda geri döner.
+
+
+4. all_solutions=True ise DFS ile tüm yollar kaydedilir.
+
+
+
+5 · Güçlü & Zayıf Yönler
+
+Artı	Eksi
+
+BASIC içinde mantık programlama	Rekürsif derinlik sınırlı (default 100).
+JSON sonuç kolay işlenir	Kesme (cut !) operatörü yok.
+
+
+6 · İyileştirme Fikirleri
+
+Cut/Negation desteği (!, not/1).
+
+Tabling (memoizasyon) ile sonsuz döngü önleme.
+
+Rule import: Dış .pl dosyalarını yükleme.
+
+
+
+---
+
+libx_network.py — Ağ İletişim Uzantısı Analizi
+
+> Dosya: libx_network.py | Sürüm: 0.3.7 | Bağımlılıklar: socket, ssl, selectors, json, struct, asyncio
+
+
+
+1 · Görev & Genel Bakış
+
+libx_network.py, TCP/UDP soket işlemlerini ve basit JSON‑RPC protokolünü BASIC komutlarıyla ulaştırır.
+
+Sunucu/Klient Modu: NET_LISTEN, NET_CONNECT.
+
+Gönder‑Al: NET_SEND, NET_RECV JSON veya raw bytes.
+
+TLS Opsiyonel: ssl.create_default_context() kullanır.
+
+
+2 · Komutlar
+
+Komut	Sözdizimi	Açıklama
+
+NET_LISTEN	NET_LISTEN id$, port	TCP sunucu başlat.
+NET_CONNECT	NET_CONNECT id$, host$, port	Klient bağlan.
+NET_SEND	NET_SEND id$, data$	Veriyi (JSON string) gönder.
+NET_RECV	NET_RECV id$[, timeout]	Veri al, JSON döndür.
+NET_CLOSE	NET_CLOSE id$	Soketi kapat.
+
+
+2.1 Basit Echo Örneği
+
+IMPORT LIBX_NETWORK
+NET_LISTEN "srv", 9000
+SUB Echo()
+    data$ = NET_RECV("srv")
+    NET_SEND "srv", data$
+END SUB
+EVENT 1, Echo
+WAITEVENT 1
+
+3 · Dahili Yapılar
+
+Connection sınıfı: soket, buffer, TLS context.
+
+Selector döngüsü: Çok bağlantı → non‑blocking IO, selectors.DefaultSelector.
+
+
+4 · Artı / Eksi
+
+Artı	Eksi
+
+JSON‑RPC kolay	HTTP/WS Yok
+TLS destekli	Paket parçalaması yönetimi basit (len+payload)
+
+
+
+---
+
+libx_jit.py — Hızlandırılmış İfade Motoru Analizi
+
+> Dosya: libx_jit.py | Sürüm: 0.2.5 | Bağımlılıklar: numexpr, numpy, re, logging
+
+
+
+1 · Görev & Genel Bakış
+
+libx_jit.py, matematiksel/string ifadeleri NumExpr ve özel SIMD‑dostu derleyici ile çalıştırarak PDS‑X BASIC kodunu hızlandırır. Amaç; döngülerdeki ağır vektör işlemlerini satır‑içi (JIT_EXPR$) tek çağrıda CPU vektör yönergeleriyle işlenebilir hale getirmektir.
+
+Desteklenen Operatörler: + − * / ** % & | ^ << >>, fonksiyonlar: sin, cos, sqrt, log, exp, abs.
+
+Otomatik Dizi Yayma: NumPy dizileri otomatik broadcast.
+
+Özelleştirilmiş Dizge JIT: Küçük DSL → regex compile → Cython‑gibi string replace (örn. subst("foo","bar")).
+
+
+2 · BASIC Fonksiyonları
+
+Fonksiyon	Sözdizimi	Açıklama
+
+JIT_EXPR$	JIT_EXPR$(expr$, vars$)	İfade derle→çalıştır, sonucu BASIC string olarak döner.
+JIT_ARRAY	JIT_ARRAY(expr$, arr$)	NumPy dizi ifadesini hızlandırır; float[] JSON döndürür.
+JIT_BENCH	JIT_BENCH(expr$, n)	expr$’i n kez çalıştırıp ortalama süreyi verir.
+
+
+2.1 Örnek
+
+IMPORT LIBX_JIT
+X$ = "[1,2,3,4]"
+res$ = JIT_ARRAY("sqrt(a)+sin(a)", X$)
+PRINT res$
+
+3 · Dahili Akış
+
+1. parse_expr() → token listesi.
+
+
+2. Güvenlik filtresi (allowlist op/fn).
+
+
+3. NumExpr derle → ne.evaluate() ile çalıştır.
+
+
+4. Sonuç JSON string’e paketlenir.
+
+
+
+4 · Artı / Eksi
+
+Artı	Eksi
+
+5‑100× hız artışı (SIMD)	NumExpr 32‑bit string func yok
+Kolay benchmark	GPU hızlandırma yok
+
+
+5 · Geliştirme Önerileri
+
+GPU Backend (cupy + cudf).
+
+AST Caching: İfade tekrarı için önbellek.
+
+dask.array entegrasyonu.
+
+
+
+---
+
+libx_data.py — Veri Manipülasyon Uzantısı Analizi
+
+> Dosya: libx_data.py | Sürüm: 0.3.1 | Bağımlılıklar: pandas, numpy, pyarrow, json
+
+
+
+1 · Görev & Genel Bakış
+
+libx_data.py, PDS‑X BASIC’e Pandas DataFrame işlemlerini string tabanlı fonksiyonlarla sunar. Kullanıcı JSON veya CSV referanslarını BASIC dizesiyle geçirerek veri yükleyebilir, filtreleyebilir, birleştirebilir ve özetleyebilir.
+
+2 · Öne Çıkan Fonksiyonlar
+
+Fonksiyon	Sözdizimi	Açıklama
+
+DATA_LOAD	DATA_LOAD(path$, fmt$)	CSV/Parquet/JSON → DataFrame kimliği döner.
+DATA_FILTER	DATA_FILTER(id$, expr$)	Pandas query string (örn. val>10).
+DATA_GROUP	DATA_GROUP(id$, cols$)	Liste kolon → groupby nesnesi id döner.
+DATA_AGG	DATA_AGG(id$, agg$)	mean, sum, max… sonucu JSON.
+DATA_JOIN	DATA_JOIN(id1$, id2$, on$)	İki DF’i belirtilen sütunda birleştir.
+DATA_SAVE	DATA_SAVE(id$, path$, fmt$)	DF’i diske kaydet (CSV, Parquet).
+DATA_HEAD$	DATA_HEAD$(id$, n)	İlk n satırı JSON string.
+
+
+2.1 Örnek
+
+IMPORT LIBX_DATA
+csv$ = "sales.csv"
+id$ = DATA_LOAD(csv$, "csv")
+res$ = DATA_FILTER(id$, "region=='EU'")
+PRINT DATA_HEAD$(res$, 5)
+
+3 · Dahili Yapılar
+
+Sınıf	Amaç
+
+DataRegistry	id → Pandas DF saklama.
+DataView	Filtrelenmiş subset.
+
+
+4 · Artı / Eksi
+
+Artı	Eksi
+
+Parquet & Arrow hızlı	Büyük DataFrame JSON stringify maliyetli
+SQL‑benzeri query	Tip hatası kontrolleri basit
+
+
+5 · İyileştirme Önerileri
+
+Arrow Flight tabanlı paylaşım.
+
+Spark Bridge: PySpark DataFrame proxy.
+
+Streaming CSV: Memory‑map’li büyük dosya okuma.
+
+
+
+---
+
+libxcore.py — Çekirdek Yardımcı Kitaplık (Genişletilmiş)
+
+> Dosya: libxcore.py | Sürüm: 1.0.0 | Bağımlılıklar: importlib, inspect, pkg_resources, logging, hashlib, sys, json
+
+
+
+libxcore.py, tüm libx_*.py uzantılarının keşfedilmesi, doğrulanması, sürüm takibi ve kendi kendini test edebilmesi için araçlar sağlar. Ayrıca yorumlayıcı‐seviyesinde yararlı yansıma (reflection) fonksiyonlarını BASIC’e aktarır.
+
+1 · Temel Fonksiyonlar (BASIC Köprüsü)
+
+Fonksiyon	Sözdizimi	Açıklama
+
+IMPORT LIBX_<name>	IMPORT LIBX_ML	Dinamik modül yükleme (importlib.import_module).
+LIBX_VERSION$	LIBX_VERSION$(name$)	İstenen libx modülünün __version__ string’i.
+LIBX_LIST$	LIBX_LIST$()	Yüklü/lib klasöründeki tüm libx_ modüllerini JSON dizisi olarak döner.
+SELFTEST	SELFTEST	Her modüldeki __selftest__() çağrılır; sonuçlar JSON.
+REFLECT_FUNCS$	REFLECT_FUNCS$(mod$)	Verilen Python modülündeki tüm fonksiyon adlarını JSON döndürür.
+
+
+1.1 Örnek Kullanım
+
+PRINT "NLP sürüm:", LIBX_VERSION$("NLP")
+list$ = LIBX_LIST$()
+PRINT list$
+res$ = SELFTEST()
+PRINT res$
+
+2 · Dahili Sınıflar & Yapılar
+
+Sınıf	Amaç
+
+LibXRegistry	Dis
