@@ -16,7 +16,11 @@ import threading
 import asyncio
 from collections import deque, defaultdict
 from pathlib import Path
-
+import scipy.stats as stats
+import nunpy as np
+import random
+import pandas as pd
+ 
 # Modül İçe Aktarmaları (aynı dizinde)
 from libxcore import LibXCore
 from libx_jit import LibXJIT
@@ -34,20 +38,20 @@ from lowlevel import LowLevelManager
 from memory_manager import MemoryManager
 from pipe import PipeManager
 from event import EventManager
-from tree import TreeManager
-from graph import GraphManager
+from tree3 import TreeManager
+from graph2 import GraphManager
 from functional import FunctionalManager
 from save import SaveManager
 from f11_backtrace_logger import BacktraceLogger
 from f12_timer_manager import TimerManager
-from f13_repl_extensions import REPLExtensions
-from f14_data_structures import DataStructures
-from f15_oop_and_class import OOPManager
-from f16_save_load_system import SaveLoadSystem
-from f17_multithreading_process import MultithreadingManager
-from f18_database_sql_isam import DatabaseISAM
-from f19_pipe_monitor_gui import PipeMonitorGUI
-from f20_export_report_doc import ReportExporter
+from repl_extensions import REPLExtensions
+from data_structures import DataStructures
+from oop_and_class2 import OOPManager
+from save_load_system2 import SaveLoadSystem
+from multithreading_process import MultithreadingManager
+from database_sql_isam import DatabaseISAM
+from pipe_monitor_gui import PipeMonitorGUI
+from export_report_doc import ReportExporter
 
 __version__ = "14u"
 
@@ -435,7 +439,10 @@ class PdsXv14uInterpreter:
                     name = match.group(1)
                     current_interface = name
                     interface_info[name] = {'methods': {}}
-                    self.modules[module_name]["interfaces"][name] = interface_info[name]
+                    if name in interface_info:
+    self.modules[module_name]["interfaces"][name] = interface_info[name]
+else:
+    raise PdsXException(f"Arayüz '{name}' bilinmiyor")
                     i += 1
                     continue
             if line_upper == "END INTERFACE":
