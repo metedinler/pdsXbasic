@@ -1,8 +1,8 @@
 {
   "argv": [
-    "pdsXuv14.py",
-    "--version"
+    "simple_test_runner.py",
+    "pdsx_test/Test01_Variables.basx"
   ],
-  "timestamp": "2025-07-23T13:01:08.165935",
+  "timestamp": "2025-07-23T13:30:32.225008",
   "original_python": "C:\\Users\\mete\\anaconda3\\python.exe"
 }

@@ -1,6 +1,6 @@
 {
   "args": [
-    "--version"
+    "pdsx_test/Test01_Variables.basx"
   ],
   "timestamp": "1749050149.6065896",
   "executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe"
