@@ -59,26 +59,81 @@ def cleanup_handlers():
 atexit.register(cleanup_handlers)
 
 
+# =============================================================================
+# PDS-X ECOSYSTEM INTEGRATION - Phase 1: Core AutoImporter System
+# =============================================================================
+print("[PDS-X] 🚀 PDS-X Ecosystem başlatılıyor - Entegre modül sistemi...")
+
+# Ecosystem Detection & Environment Analysis
+def detect_pdsx_environment():
+    """PDS-X ekosisteminin durumunu analiz et"""
+    import os
+    import site
+    
+    try:
+        # Site-packages analizi
+        site_packages = site.getsitepackages()[0]
+        package_count = len([d for d in os.listdir(site_packages) 
+                           if os.path.isdir(os.path.join(site_packages, d))])
+        
+        # Memory check
+        import psutil
+        available_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
+        
+        # Decide mode based on environment
+        if package_count > 50 and available_memory > 512:
+            return "lite", package_count, available_memory
+        else:
+            return "heavy", package_count, available_memory
+    except:
+        return "heavy", 0, 0
+
+# Environment Detection
+ENV_MODE, PACKAGE_COUNT, MEMORY_MB = detect_pdsx_environment()
+print(f"[PDS-X] 📊 Ortam Analizi: {ENV_MODE.upper()} mode ({PACKAGE_COUNT} paket, {MEMORY_MB:.0f}MB)")
+
 # AutoImporter ve EnvManager - PDS-X entegrasyon  
-print("[PDS-X] AutoImporter modülü import ediliyor...")
+print("[PDS-X] 📦 AutoImporter modülü import ediliyor...")
 
 # Dinamik AutoImporter seçimi - Lite/Heavy versiyonlar
+IMPORT_SUCCESS = False
+autoimporter = None
+RealAutoImporter = None
+RealEnvManager = None
+
 try:
-    from auto_importer_lite import get_optimal_autoimporter
-    autoimporter = get_optimal_autoimporter(entry_point_script=__file__)
-    print("[PDS-X] ✅ Optimal AutoImporter başarıyla yüklendi!")
-    IMPORT_SUCCESS = True
+    if ENV_MODE == "lite":
+        from auto_importer_lite import AutoImporterLite
+        autoimporter = AutoImporterLite(entry_point_script=__file__, mode="LITE")
+        print("[PDS-X] ✅ AutoImporter Lite yüklendi!")
+    else:
+        from auto_importer_heavy import AutoImporterHeavy
+        autoimporter = AutoImporterHeavy(entry_point_script=__file__, mode="HEAVY")
+        print("[PDS-X] ✅ AutoImporter Heavy yüklendi!")
     
-    # AutoImporter ana sınıflarını ayarla
+    IMPORT_SUCCESS = True
     RealAutoImporter = autoimporter.__class__
     RealEnvManager = getattr(autoimporter, 'env_manager', None)
     
 except ImportError as e:
     print(f"[PDS-X] ⚠️ AutoImporter yüklenemedi: {e}")
-    IMPORT_SUCCESS = False
-    RealEnvManager = None
-    RealAutoImporter = None
-    autoimporter = None
+    print("[PDS-X] 🔄 Fallback sisteme geçiliyor...")
+
+# Fallback: auto_importer_lite modülünden get_optimal_autoimporter
+if not IMPORT_SUCCESS:
+    try:
+        from auto_importer_lite import get_optimal_autoimporter
+        autoimporter = get_optimal_autoimporter(entry_point_script=__file__)
+        print("[PDS-X] ✅ Optimal AutoImporter fallback başarıyla yüklendi!")
+        IMPORT_SUCCESS = True
+        
+        # AutoImporter ana sınıflarını ayarla
+        RealAutoImporter = autoimporter.__class__
+        RealEnvManager = getattr(autoimporter, 'env_manager', None)
+        
+    except ImportError as e:
+        print(f"[PDS-X] ❌ Fallback AutoImporter de yüklenemedi: {e}")
+        IMPORT_SUCCESS = False
 
 # Minimal AutoImporter sınıfları (her zaman çalışır)
 class EnvManager:

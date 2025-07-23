@@ -1,0 +1,79 @@
+{
+  "available_modules": {
+    "core": [
+      "core2_6",
+      "core_system",
+      "bytecode_compiler",
+      "bytecode_manager"
+    ],
+    "auto_importers": [
+      "auto_importer_lite",
+      "auto_importer_heavy"
+    ],
+    "managers": [
+      "memory_manager",
+      "module_manager",
+      "program_manager"
+    ],
+    "repls": [
+      "pdsx_repl",
+      "reply_extension"
+    ],
+    "libx": [
+      "libxcore",
+      "libx_data",
+      "libx_gui",
+      "libx_network"
+    ],
+    "utilities": [
+      "data_structures",
+      "command_executor"
+    ]
+  },
+  "integration_phases": {
+    "phase_1": {
+      "description": "Çekirdek Sistem",
+      "modules": [
+        "auto_importer_lite",
+        "auto_importer_heavy"
+      ],
+      "priority": "CRITICAL"
+    },
+    "phase_2": {
+      "description": "REPL Sistemi",
+      "modules": [
+        "pdsx_repl",
+        "reply_extension"
+      ],
+      "priority": "HIGH"
+    },
+    "phase_3": {
+      "description": "Core Modüller",
+      "modules": [
+        "core2_6",
+        "data_structures",
+        "memory_manager"
+      ],
+      "priority": "HIGH"
+    },
+    "phase_4": {
+      "description": "LibX Kütüphaneleri",
+      "modules": [
+        "libxcore",
+        "libx_data",
+        "libx_gui"
+      ],
+      "priority": "MEDIUM"
+    },
+    "phase_5": {
+      "description": "Yönetici Modüller",
+      "modules": [
+        "module_manager",
+        "program_manager",
+        "command_executor"
+      ],
+      "priority": "MEDIUM"
+    }
+  },
+  "status": "ready_for_integration"
+}
