@@ -462,11 +462,16 @@ from command_executor import execute_command
 # Yeni eklenen modüller (çalışan olanlar)
 from clazz import Clazz  # ClassManager yerine Clazz kullanılabilir
 from exception_manager3 import PdsXException, PdsXSyntaxError, PdsXRuntimeError
-# from ai import AIManager  # Syntax error - geçici olarak devre dışı
+from ai import AdvancedLogger  # AdvancedLogger import başarılı
 from autoinstaller import AutoInstaller  
 from add_exports import add_export  # ExportManager yerine add_export
-# from bus3 import BusManager  # Syntax error - geçici olarak devre dışı  
+from bus3 import BusManager  # BusManager sınıfını import ediyoruz 
 from analyze_imports import analyze_module_imports  # ImportAnalyzer yerine
+
+# Eksik entegrasyon modüllerini ekliyoruz
+import libxcore  # Çekirdek modül kütüphanesi 
+import eventx    # Event management sistem
+import pdsx_exception  # Exception handling sistemi
 
 __version__ = "14u"
 

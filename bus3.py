@@ -13,7 +13,7 @@ import re
 from collections import defaultdict, deque
 from functools import lru_cache
 from typing import Dict, Any, List, Optional, Union, Callable
-from pdsx_exception2 import PdsXBusError
+from pdsx_exception2 import PdsXPipeError as PdsXBusError  # PdsXBusError yerine PdsXPipeError kullanıyoruz
 import zmq.asyncio
 from prometheus_client import Counter, Gauge, start_http_server
 import paho.mqtt.client as mqtt

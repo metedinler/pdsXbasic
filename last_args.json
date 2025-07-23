@@ -1,8 +1,8 @@
 {
   "argv": [
-    "pdsxuv14.py",
-    "--interactive"
+    "pdsXuv14.py",
+    "--version"
   ],
-  "timestamp": "2025-07-22T23:31:54.328727",
+  "timestamp": "2025-07-23T13:01:08.165935",
   "original_python": "C:\\Users\\mete\\anaconda3\\python.exe"
 }

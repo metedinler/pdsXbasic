@@ -277,7 +277,7 @@ async def install_missing_packages():
     importer.summary_generator.print_summary()
 
 class TerminalLogAnalyzer:
-    def __init__(self, logger: AdvancedLogger):
+    def __init__(self, logger: 'AdvancedLogger'):  # Forward reference için string kullanıyoruz
         self.logger = logger
         self.terminal_log = PLAIN_TERMINAL_LOG
         self.jsonl_log = TERMINAL_LOG
@@ -636,7 +636,7 @@ class PipOutputAnalyzer:
             return False
 
 class CacheManager:
-    def __init__(self, cache_dir: Path = CACHE_DIR / "wheels", logger: AdvancedLogger = None):
+    def __init__(self, cache_dir: Path = CACHE_DIR / "wheels", logger: 'AdvancedLogger' = None):
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(exist_ok=True, parents=True)
         self.logger = logger
@@ -769,7 +769,7 @@ class CacheManager:
             self.logger.log("error", f"Önbellek temizleme hatası: {e}")
 
 class EnvManager:
-    def __init__(self, venv_dir: Path = VENV_DIR, logger: AdvancedLogger = None):
+    def __init__(self, venv_dir: Path = VENV_DIR, logger: 'AdvancedLogger' = None):
         self.venv_dir = venv_dir
         self.error_count = 0
         self.max_errors = 3
