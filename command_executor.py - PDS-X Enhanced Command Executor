@@ -1,0 +1,178 @@
+```python
+# command_executor.py - PDS-X Enhanced Command Executor
+# Version: 1.0.0
+# Date: June 14, 2025
+import re
+from typing import Dict, Callable
+
+class CommandExecutor:
+    def __init__(self, interpreter):
+        self.interpreter = interpreter
+        self.command_handlers: Dict[str, Callable] = {}
+        self.register_commands()
+
+    def register_commands(self):
+        self.command_handlers["PRINT"] = self.handle_print
+        self.command_handlers["LET"] = self.handle_let
+        self.command_handlers["DIM"] = self.handle_dim
+        self.command_handlers["IF"] = self.handle_if
+        self.command_handlers["FOR"] = self.handle_for
+        self.command_handlers["WHILE"] = self.handle_while
+        self.command_handlers["GOTO"] = self.handle_goto
+        self.command_handlers["GOSUB"] = self.handle_gosub
+        self.command_handlers["BUS DEFINE"] = self.handle_bus_define
+        self.command_handlers["COMPILE C"] = self.handle_compile_c
+        self.command_handlers["SQLITE CONNECT"] = self.handle_sqlite_connect
+        self.command_handlers["EVENT REGISTER"] = self.handle_event_register
+        self.command_handlers["THREAD"] = self.handle_thread
+        self.command_handlers["OPEN DATABASE"] = self.handle_open_database
+        self.command_handlers["TIMER SET"] = self.handle_timer_set
+        self.command_handlers["PIPE"] = self.handle_pipe
+        self.command_handlers["LOG TRACE"] = self.handle_log_trace
+        self.command_handlers["GRAPH CREATE"] = self.handle_graph_create
+        self.command_handlers["EXPORT DATA"] = self.handle_export_data
+        self.command_handlers["FACT"] = self.handle_fact
+        self.command_handlers["RULE"] = self.handle_rule
+        self.command_handlers["QUERY"] = self.handle_query
+        self.command_handlers["WINDOW"] = self.handle_window
+        self.command_handlers["SIMD ADD"] = self.handle_simd_add
+        self.command_handlers["NET GET"] = self.handle_net_get
+        self.command_handlers["NET POST"] = self.handle_net_post
+        self.command_handlers["AI GENERATE"] = self.handle_ai_generate
+        self.command_handlers["BITSET"] = self.handle_bitset
+        self.command_handlers["NLP ANALYZE"] = self.handle_nlp_analyze
+        self.command_handlers["VALIDATE MODULE"] = self.handle_validate_module
+        self.command_handlers["TYPE"] = self.handle_type
+        self.command_handlers["LOAD MODULE"] = self.handle_load_module
+        self.command_handlers["THREAD CREATE"] = self.handle_thread_create
+
+    def execute(self, command: str, scope_name: str = None) -> Optional[int]:
+        command = command.strip()
+        if not command:
+            return None
+        command_upper = command.upper()
+        for cmd, handler in self.command_handlers.items():
+            if command_upper.startswith(cmd):
+                return handler(command, scope_name)
+        raise PdsXException(f"Bilinmeyen komut: {command}")
+
+    def handle_print(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_let(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_dim(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_if(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_for(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_while(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_goto(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_gosub(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_bus_define(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_compile_c(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.jit.parse_compile_command(command)
+        return None
+
+    def handle_sqlite_connect(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_event_register(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.event_manager.parse_event_command(command)
+        return None
+
+    def handle_thread(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.concurrency.parse_concurrency_command(command)
+        return None
+
+    def handle_open_database(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.db.parse_db_command(command)
+        return None
+
+    def handle_timer_set(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.timer.parse_timer_command(command)
+        return None
+
+    def handle_pipe(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.data.parse_pipe_command(command)
+        return None
+
+    def handle_log_trace(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.backtrace.parse_backtrace_command(command)
+        return None
+
+    def handle_graph_create(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.graph.parse_graph_command(command)
+        return None
+
+    def handle_export_data(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.export_report.parse_export_report_doc_command(command)
+        return None
+
+    def handle_fact(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.logic.parse_prolog_command(command)
+        return None
+
+    def handle_rule(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.logic.parse_prolog_command(command)
+        return None
+
+    def handle_query(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.logic.parse_prolog_command(command)
+        return None
+
+    def handle_window(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.gui.parse_gui_command(command)
+        return None
+
+    def handle_simd_add(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.bytecode_engine.op_simd_add(command)
+        return None
+
+    def handle_net_get(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.network.parse_network_command(command)
+        return None
+
+    def handle_net_post(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.network.parse_network_command(command)
+        return None
+
+    def handle_ai_generate(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.ml.parse_ai_command(command)
+        return None
+
+    def handle_bitset(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.lowlevel.parse_lowlevel_command(command)
+        return None
+
+    def handle_nlp_analyze(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.nlp.parse_nlp_command(command)
+        return None
+
+    def handle_validate_module(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_type(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.memory_manager.parse_memory_command(command)
+        return None
+
+    def handle_load_module(self, command: str, scope_name: str) -> Optional[int]:
+        pass
+
+    def handle_thread_create(self, command: str, scope_name: str) -> Optional[int]:
+        self.interpreter.multithreading.parse_multithreading_command(command)
+        return None
+```

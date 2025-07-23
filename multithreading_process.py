@@ -19,7 +19,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 from collections import defaultdict, deque
 from sklearn.ensemble import IsolationForest
-from pdsx_exception import PdsXException
+from pdsx_unified_exception import PdsXException
 import functools
 
 # Loglama Ayarları

@@ -1,0 +1,52 @@
+ C:/Drivers\intcoed.inf\06072024\WoV\Echo\m\cohort_echo.bin
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+C:/Drivers\wavesapo9de.inf\06072024\HeadTracker.bin
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+C:/Drivers\wavesapo9de_sc.inf\06072024\HeadTracker.bin
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+ Bu dosya taþýnsýn mý? (e/h): h
+? GEÇÝLDÝ: C:/Program Files\Microsoft Office\root\Office16\AI\PowerPointCombinedFloatieLreOfflineExplorationV3.onnx
+C:/Program Files\Microsoft Office\root\Office16\AI\PowerPointCombinedFloatieLreOnline.onnx
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+C:/Program Files\Microsoft Office\root\Office16\AI\PowerPointCombinedFloatieLreOnlineV3.onnx
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+C:/Program Files\Microsoft Office\root\Office16\AI\PowerPointCombinedFloatieV4.onnx
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+C:/Program Files\Microsoft Office\root\Office16\TextInputIntelligence\en-us\filter.bin
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+C:/Program Files\Microsoft Office\root\Office16\TextInputIntelligence\en-us\prefilter\filter_phrase.bin
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+
+?? C:/Program Files\Microsoft Office\root\Office16\TextInputIntelligence\en-us\prefilter\filter_token.bin
+ - Yerel Tahmin: HAYIR
+ - GPT Yanýtý: EVET
+
+
+?? C:/Users\mete\.cache\chroma\onnx_models\all-MiniLM-L6-v2\onnx\model.onnx
+ - Yerel Tahmin: EVET
+ - GPT Yanýtý: EVET
+
+? Bu dosya taþýnsýn mý? (e/h): e
+?? TAÞINDI: C:/Users\mete\.cache\chroma\onnx_models\all-MiniLM-L6-v2\onnx\model.onnx ? C:\YZMODEL\onnx\model.onnx
+
+?? C:/Users\mete\.cache\huggingface\hub\models--sentence-transformers--all-MiniLM-L6-v2\snapshots\c9745ed1d9f207416be6d2e6f8de32d1f16199bf\model.safetensors
+ - Yerel Tahmin: EVET
+ - GPT Yanýtý: EVET
+
+? Bu dosya taþýnsýn mý? (e/h): e
+?? TAÞINDI: C:/Users\mete\.cache\huggingface\hub\models--sentence-transformers--all-MiniLM-L6-v2\snapshots\c9745ed1d9f207416be6d2e6f8de32d1f16199bf\model.safetensors ? C:\YZMODEL\safetensors\model.safetensors
+
+?? C:/Users\mete\.huggingface\hub\models--sentence-transformers--all-MiniLM-L6-v2\snapshots\c9745ed1d9f207416be6d2e6f8de32d1f16199bf\model.safetensors
+ - Yerel Tahmin: EVET
+ - GPT Yanýtý: EVET
+
+? Bu dosya taþýnsýn mý? (e/h): e
+?? TAÞINDI: C:/Users\mete\.huggingface\hub\models--sentence-transformers--all-MiniLM-L6-v2\snapshots\c9745ed1d9f207416be6d2e6f8de32d1f16199bf\model.safetensors ? C:\YZMODEL\safetensors\model.safetensors

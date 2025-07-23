@@ -1,0 +1,551 @@
+uzun yazma izni veriyorum. mega birlestirme stratejisi ve mega Planolusturma calismamiz, her modül için ayrý 
+dependencies_<modulismi>.json</modulismi>, 
+exception_<modulismi>.json</modulismi>, 
+ve command_executor_<modulismi>.py</modulismi> 
+
+dosyalarýni oluþturmayý, evrensel alias sistemiyle çakýþmalarý önlemeyi, ve pdsXe.py ana yorumlayýcýsýný geliþtirmeyi hedefliyoruz. 
+Bu plan, bir plan.txt dosyasýna yazýlacak ve her modül için hafizandaki bilgiler incelenerek plan.txt dostasi yazilirken yani simdi guncellenecek.
+
+asagida daha once yukledigim modul listesi. bunlar statik moduller. 
+moduller
+add_exports.py
+auto_importer.py
+autoinstaller.py
+base_module_manager.py
+bus3.py
+bytecode_compiler.py
+bytecode_engine(core2duo)2.py
+bytecode_manager.py
+clazz.py
+command_executor.py su an tek dosya ancak bundan sonra her modul icin ayri olmali)
+data_structures.py
+database_sql_isam.py
+event3.py
+exception_manager3.py
+export_report_doc.py
+f11_backtrace_logger.py
+f12_timer_manager.py
+functional2.py
+graph2.py
+lib_db.py
+libx_concurrency.py
+libx_data.py
+libx_gui.py
+libx_jit.py
+libx_logic.py
+libx_ml.py
+libx_network.py
+libx_nlp.py
+lowlevel.py
+memory_manager.py
+module_manager.py
+module_validator.py
+multithreading_process.py
+oop_and_class2.py
+pdsX_exception2.py
+pipe.py
+pipe_monitor_gui.py
+reply_extension.py
+save.py
+save_load_system2.py
+sqlite.py
+tree3.py
+libx_task.py
+async_manager.py
+core2-6.py 
+
+ 
+daha once "Hafýzada Tutulan Modüllerin Listesi" seklinde asagidaki listeyi verdin.
+
+'pdsXuv13.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsXuv14.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsXuv14.-1g.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsXuv14.backup.20250611.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsXuv14.copy.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsXuv14eneski.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsXv11g.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsXu1.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsCv13u.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsxv13xxmxx2.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+pdsXv13.py (Ana modül, __pdsX_exports__ eklenmeyecek)
+bus3.py
+core2-5.py
+core2-6.py
+functional.py
+save_load_system2.py
+tree.py
+event3.py
+exception_manager3.py
+libx_concurrency.py
+lib_db.py
+f12_timer_manager.py
+libx_data.py
+f11_backtrace_logger.py
+graph2.py
+export_report_doc.py
+command_executor.py
+dependencies.json
+libx_logic.py
+libx_jit.py
+libx_gui.py
+bytecode_engine(core2duo)2.py
+libx_ml.py
+libx_network.py
+lowlevel.py
+libx_nlp.py
+module_validator.py
+memory_manager.py
+module_manager.py
+multithreading_process.py
+pdsx_exception.py (Ana modül deðil, __pdsX_exports__ eklenecek)
+database_sql_isam.py
+pipe.py
+autoinstaller.py
+libx_stream.py
+libx_security.py
+Not: core2-6.py, pdsx_exception.py, pipe.py, autoinstaller.py, libx_stream.py, libx_security.py modülleri içerik saðlanmadýðý için yer tutucu olarak kabul ediliyor. Ancak, baðýmlýlýklarý ve komutlarý diðer modüllerden türetilerek eklenecek.'
+
+daha onceki konusmalarimizda hafiza sorunun olmadigini ve tum modulleri hafizanda tuttugunu soylemistin. listedeki dosyalarin hepsine detaylari ile ulasabiliyor musun?
+ 
+statik modullerden baska ileride runtime dinamik olarakmodul ekleme sistemini gelistirdigimizi belirttim. ancak alias sitemimiz guzel ancak modulleri ve yonetici siniflari, icermiyor.
+evrensel alias sistemi ne ek olarak python modullerin dinamik eklenmesinde cakisan siniflarin nasil eklenecegini de yonetmeliyiz. (muhtemelen pdx export ile yapilabilir
+
+daha once sistemin nasil calistigina dair sana yazdigim bir konusmayi tekrar veriyorum. su anki planimiza uyarlamalisin.
+"once depencieste cekirdek modullerin kullandigi python kutuphaneler yazilmali.  ardindan bir modul calisma anindaki kullanilmak istenen pdsX python modulunun kodlarini inceler, importlari  bulur o modulun calismasi icin gerekli kutuphaneleri tespit eder, ardindan depencies.json'u okur, ve depencieste daha once yuklenmis python kutuphanelerinin haricindeki kalan python kutuphane lerini buraya yazar.  sistem bu sekilde devamli yukleme yapmaz. ayrica bu dosyaya gore yeni yuklenen ve kurulmamis python kutuphanesi pdsisolated env de kurulur. modul icin gerekli pdsXde calismasi icin gereken kod bolumu if main altindaki gerekli bolume yazilir. ardindan pdsX yeni yuklenen  modullerdeki siniflari ve fonksiyonlari metotlari komutlari kullanmak icin kendi komut kutuphanesi ile modul sinif fonksiyon metot kutuphanesi ile karsilastirir ve cakisma olabileceklere hemen alias atar reply ortaminda kullaniciya bilgi verir kullanici isterse isimleri alias komutu ile degistirir. yontem benim bu sende eklemek istersen yanlis eksik hatali bir durum gorursen soyle ben oncelikle eldeki pdsXlerin tum ozelliklerinin birlstirildigi mega bir pdsXi bu sistem ile planlamak istiyorum. "
+
+### PDS-X BASIC v14u için Hatalarý Düzeltme ve Mega PDS-X Sistemi Planlama
+dependecies<moduladi>.json dosyalari,  `autoinstaller` tarafýndan okunacak ve yeni modül yüklemelerinde kullanýlacak.
+`dependencies.json` dosyasýný `autoinstaller`’ýn bir modülü (`DependencyManager`) oluþturacak ve güncelleyecek. Dosya dýþarýda olmalý ve `autoinstaller` tarafýndan yönetilmeli. ramde hafizanin azaltilmasi gerekli.
+pdsX-basic de daha once as <alias> ve Alias <modul|sinif|fonksiyon|Komut|yerelfonksiyon> <eskiad> <yeniad> seklinde uyarlayabilecegimiz bir sistem olmali.
+dinamik sistemde modul yuklendikten sonra yapilan anliz ile, bir cakisma oldugunda pdsX reply ortaminda cakisan modul, sinif, fonksiyon ve pdsX komut ve pdsX yerel fonksiyon lari icin, pdsX bildirim yapacak komutu yazacak kullanimi ile ve oneri bir isim de yazacak. ardindan kullanicidan onay isteyecek. kac tane cakisma var toplam sayi, cakisaan sinif, cakisan modul, cakisan fonksiyon, cakisan pdsX komut ve cakisan pdsX yerel fonksiyon sayilarini da ayri ayri yazilmis olmali. her olumlu sonucta ilgili ve toplam azalmali ki kullanici ne zaman bitecek anlasin. kullanidan alias onaylamasi istendiginde pdsX in onerisini kaul ederse oneri ile alias devam edecek, kullanici alias onerisini kabul etmezse yeni bir isim istenecek, kullanicinin girdigi alias alias siteminde kontrol edilecek ve cakisma yoksa duzenleme ekrana yazilacak baska cakismalar varsa devam edilecek. yoksa yani kullanicinin girdigi yeni alias adinda bir cakisma varsa yeni alias ismi tekrar sorulacak ayni kontroller tekrar yapilacak ve baska cakismalar bitene kadar cakisma oonleme duzeltme sistemi bitene kadar devam edecek. islem bitince modulun pdsX e entegrasyonu tamamlanmis olacak ve yeni komutlar ve fonksiyonlar (pdsX de calisan) ekranda orecleri ile siralanacak ve calismaya baslanacak. ayrica alias komutu ile istedigi zaman kendi basina yeni alias verebilecek ama yine bu kontrol yapilacak. .basX dosyalarinin calismasinda cakisma olursa hata verecek aciklamasi yapilacak ve log dosyalarinda belirtilecek. ayrica ilk calismada log dosyasina tum cakisma analizi yapilinca ayrintili log yazilacak. basX dosya calistirmada da ayni kurallar gecerli.
+
+### 1.2. onceki planlanan  Alias Desteði
+- **Hata**: “Alias desteði yok” ifadesi yanlýþ. PDS-X sistemlerinde `AS <alias>` desteði düþünülmüþ, ancak her modülde tam uygulanmamýþ.
+- **Düzeltme**:
+  - PDS-X modüllerini inceledim (`bytecode_compiler.py`, `bytecode_manager.py`, `clazz.py`, `data_structures.py`, `command_executor.py`):
+    - `clazz.py`’de `CLAZZ DEFINE "<name>" AS <var>` gibi alias desteði var.
+    - `data_structures.py`’de `DS LIST [<items>] <var>` gibi deðiþken atamalarý var, ancak komut alias’larý eksik.
+    - `command_executor.py`’de `LET`, `PRINT` gibi komutlar için alias desteði yok.
+  - **Çözüm**: Tüm komutlar, fonksiyonlar, alt programlar, yerel fonksiyonlar ve veri yapýlarý (primitif türler hariç) için evrensel bir alias sistemi kuracaðým:
+    ```python
+    def alias(self, command: str, alias_name: str):
+        """Komut veya fonksiyona alias atar."""
+        command_upper = command.upper()
+        if command_upper in self.command_registry:
+            func, module, _, desc = self.command_registry[command_upper]
+            self.command_registry[alias_name.upper()] = (func, module, alias_name, desc)
+            log.debug(f"Alias atandý: {command} -> {alias_name}")
+        else:
+            raise PdsXException(f"Komut bulunamadý: {command}")
+    ```
+  - Kullaným örneði:
+    ```basic
+    ALIAS "DS LIST" AS "LIST_CREATE"
+    LIST_CREATE [1,2,3] my_list
+    ```
+  - Alias sistemi, `dependencies.json`’daki `commands` bölümüne entegre edilecek.
+
+### 1.3.onceki planlanan  `autoimporter` Yerine `autoinstaller`
+- **Hata**: “`autoimporter`’ýn JSON dosyasý olmadan dinamik yükleme yapmasý” yerine `autoinstaller` kastedilmiþ.
+- **Düzeltme**:
+  - `autoinstaller`’ýn `DependencyManager` sýnýfý, `dependencies.json`’ý okuyarak mevcut kütüphaneleri ve sýralamayý takip edecek.
+  - Yeni modül yüklemelerinde, modülün Python kodlarý analiz edilerek (`import` ifadeleri taranarak) gerekli kütüphaneler tespit edilecek.
+  - Örnek kod:
+    ```python
+    def analyze_module_imports(self, module_path: str) -> List[str]:
+        """Modülün import ettiði kütüphaneleri tespit eder."""
+        imports = []
+        with open(module_path, "r", encoding="utf-8") as f:
+            for line in f:
+                match = re.match(r"import\s+([\w_]+)|from\s+([\w_]+)\s+import", line)
+                if match:
+                    pkg = match.group(1) or match.group(2)
+                    if pkg not in sys.builtin_module_names:
+                        imports.append(pkg)
+        return imports
+
+    def install_module(self, module_name: str, module_path: str):
+        """Modülü yükler ve baðýmlýlýklarýný kurar."""
+        required_pkgs = self.analyze_module_imports(module_path)
+        with open("dependencies.json", "r", encoding="utf-8") as f:
+            deps = json.load(f)
+        installed_pkgs = {pkg["name"] for pkg in deps["installed_packages"]}
+        missing_pkgs = [pkg for pkg in required_pkgs if pkg not in installed_pkgs]
+        
+        for pkg in missing_pkgs:
+            self.install_package(pkg)
+            deps["installed_packages"].append({
+                "name": pkg,
+                "version": f">={self.get_latest_version(pkg)}",
+                "install_order": len(deps["installed_packages"]) + 1
+            })
+        
+        with open("dependencies.json", "w", encoding="utf-8") as f:
+            json.dump(deps, f, indent=2)
+        
+        self.load_module(module_name, module_path)
+    ```
+
+---
+
+## 2. onceki planlanan  `dependencies.json` Yönetim Sistemi
+
+### 2.1. `dependencies.json`’ýn Yeni Yapýsý
+- **Amaç**: Çekirdek modüllerin kullandýðý Python kütüphanelerini listelemek, yeni modüllerin baðýmlýlýklarýný dinamik olarak eklemek, ve komutlar için merkezi bir kayýt tutmak.
+- **Yapý**:
+  ```json
+  {
+    "installed_packages": [
+      {"name": "numpy", "version": ">=1.24.0", "install_order": 1},
+      {"name": "pandas", "version": ">=2.0.0", "install_order": 2},
+      {"name": "scipy", "version": ">=1.10.0", "install_order": 3},
+      {"name": "aiohttp", "version": ">=3.8.0", "install_order": 4},
+      {"name": "aiofiles", "version": ">=23.0.0", "install_order": 5},
+      {"name": "pyyaml", "version": ">=6.0.0", "install_order": 6},
+      {"name": "pdfplumber", "version": ">=0.10.0", "install_order": 7},
+      {"name": "graphviz", "version": ">=0.20.0", "install_order": 8},
+      {"name": "scikit-learn", "version": ">=1.2.0", "install_order": 9},
+      {"name": "pycryptodome", "version": ">=3.15.0", "install_order": 10},
+      {"name": "tensorflow", "version": ">=2.10.0", "install_order": 11},
+      {"name": "psutil", "version": ">=5.9.0", "install_order": 12},
+      {"name": "paho-mqtt", "version": ">=1.6.0", "install_order": 13},
+      {"name": "restrictedpython", "version": ">=5.2.0", "install_order": 14}
+    ],
+    "module_dependencies": {
+      "core2-6": ["bytecode_compiler", "bytecode_manager", "numpy", "pandas", "scipy", "tensorflow"],
+      "data_structures": ["graphviz", "numpy", "scikit-learn", "pycryptodome", "pyyaml"],
+      "clazz": ["graphviz", "numpy", "scikit-learn", "pycryptodome", "pyyaml"],
+      "bytecode_manager": ["numpy", "scikit-learn", "aiofiles"],
+      "bytecode_compiler": ["restrictedpython", "numpy", "scikit-learn"],
+      "command_executor": ["numpy", "pandas"],
+      "event": ["paho-mqtt"],
+      "module_manager": ["psutil"],
+      "auto_importer": ["psutil"],
+      "autoinstaller": ["psutil"]
+    },
+    "commands": {
+      "core2-6": {
+        "PRINT": {"function": "print", "alias": null, "description": "Deðeri yazdýrýr"},
+        "LET": {"function": "assign", "alias": "ASSIGN", "description": "Deðiþkene deðer atar"},
+        "DIM": {"function": "declare", "alias": "DECLARE", "description": "Deðiþken tanýmlar"}
+      },
+ }
+
+### 2.2. onceki planlanan  `autoinstaller` ile Dinamik Baðýmlýlýk Yönetimi
+- **Plan**:
+  1. **Baðýmlýlýk Analizi**:
+     - Yeni modülün Python kodu taranýr, `import` ifadeleri tespit edilir.
+     - Örnek: `libx_ml.py` modülü `import sklearn` içeriyorsa, `scikit-learn` baðýmlýlýðý eklenir.
+  2. **Mevcut Baðýmlýlýk Kontrolü**:
+     - `dependencies.json`’daki `installed_packages` okunur.
+     - Eksik kütüphaneler tespit edilir ve yüklenir.
+  3. **Yükleme ve Kayýt**:
+     - Kütüphaneler, `pds_isolated_env` (izole sanal ortam) içine kurulur.
+     - `dependencies.json` güncellenir, yeni kütüphaneler için `install_order` atanýr.
+  4. **Modül Kodu Entegrasyonu**:
+     - Yeni modülün çalýþmasý için gerekli kod, `__main__` altýna eklenir.
+     - Örnek: `if __name__ == "__main__": print("libx_ml yüklendi")`
+  5. **Çakýþma Önleme**:
+     - Modülün sýnýflarý, fonksiyonlarý, metodlarý ve komutlarý, PDS-X’in komut kütüphanesiyle karþýlaþtýrýlýr.
+     - Çakýþan isimlere otomatik alias atanýr ve kullanýcýya REPL’de bilgi verilir:
+       ```python
+       def check_command_conflicts(self, module_name: str, exports: Dict):
+           conflicts = []
+           for cmd in exports.get("commands", {}):
+               if cmd in self.command_registry:
+                   conflicts.append(cmd)
+                   alias = f"{module_name}_{cmd}"
+                   self.command_registry[alias.upper()] = self.command_registry[cmd]
+                   print(f"Çakýþma tespit edildi: {cmd}. Alias atandý: {alias}")
+           return conflicts
+       ```
+
+- **Örnek Kod**:
+  ```python
+  class DependencyManager:
+      def __init__(self, base_path: str):
+          self.base_path = base_path
+          self.dependencies = self.load_dependencies()
+          self.env_path = os.path.join(base_path, "pds_isolated_env")
+
+      def load_dependencies(self) -> Dict:
+          try:
+              with open("dependencies.json", "r", encoding="utf-8") as f:
+                  return json.load(f)
+          except FileNotFoundError:
+              return {"installed_packages": [], "module_dependencies": {}, "commands": {}, "functions": {}, "data_structures": {}}
+
+      def install_package(self, package_name: str, version: str = None):
+          """Paketi izole ortama kurar."""
+          cmd = f"{self.env_path}/bin/pip install {package_name}{version or ''}"
+          subprocess.run(cmd, shell=True, check=True)
+          log.debug(f"Paket kuruldu: {package_name}")
+
+      def update_dependencies(self, module_name: str, new_deps: List[Dict]):
+          """dependencies.json’u günceller."""
+          self.dependencies["module_dependencies"][module_name] = [dep["name"] for dep in new_deps]
+          for dep in new_deps:
+              if dep["name"] not in [pkg["name"] for pkg in self.dependencies["installed_packages"]]:
+                  self.dependencies["installed_packages"].append({
+                      "name": dep["name"],
+                      "version": dep.get("version", f">={self.get_latest_version(dep['name'])}"),
+                      "install_order": len(self.dependencies["installed_packages"]) + 1
+                  })
+          with open("dependencies.json", "w", encoding="utf-8") as f:
+              json.dump(self.dependencies, f, indent=2)
+  ```
+
+---
+
+## 3. onceki planlanan Alias Sisteminin Evrenselleþtirilmesi
+
+### 3.1. Mevcut Alias Kullanýmý
+- `clazz.py`’de `CLAZZ DEFINE "<name>" AS <var>` gibi alias’lar var.
+- `data_structures.py`’de `DS LIST [<items>] <var>` gibi deðiþken atamalarý mevcut, ancak komut alias’larý eksik.
+- `core2-6.py`’de `ALIAS <old_name> AS <new_name>` komutu var, ancak sýnýrlý kapsamda.
+
+### 3.2. onceki planlanan Alias Sistemi
+- **Amaç**: Tüm komutlar, fonksiyonlar, alt programlar, yerel fonksiyonlar ve veri yapýlarý için `ALIAS <original> AS <new_name>` desteði saðlamak.
+- **Plan**:
+  - `CommandParser` sýnýfýna `alias` metodu eklendi (yukarýda).
+  - Her modülün `__pdsX_exports__`’ýnda tanýmlý komutlar, fonksiyonlar ve veri yapýlarý için otomatik alias önerileri üretilecek.
+  - Çakýþma durumunda, kullanýcýya REPL’de öneriler sunulacak:
+    ```basic
+    Çakýþma: DS LIST -> Önerilen alias: LIST_CREATE
+    ALIAS "DS LIST" AS "LIST_CREATE"? [E/H]: E
+    ```
+- **Örnek Kod**:
+  ```python
+  def suggest_alias(self, original_name: str, module_name: str) -> str:
+      """Çakýþma için alias önerir."""
+      return f"{module_name}_{original_name.replace(' ', '_').upper()}"
+
+  def register_module_exports(self, module_name: str, exports: Dict):
+      """Modülün komutlarýný ve fonksiyonlarýný kaydeder."""
+      for cmd in exports.get("commands", {}):
+          if cmd in self.command_registry:
+              alias = self.suggest_alias(cmd, module_name)
+              print(f"Çakýþma: {cmd}. Önerilen alias: {alias}")
+              self.command_registry[alias.upper()] = (exports["commands"][cmd], module_name, alias, "")
+          else:
+              self.command_registry[cmd.upper()] = (exports["commands"][cmd], module_name, None, "")
+      for func in exports.get("functions", {}):
+          alias = self.suggest_alias(func, module_name) if func in self.command_registry else None
+          self.command_registry[func.upper()] = (exports["functions"][func], module_name, alias, "")
+  ```
+
+---
+
+## 4. onceki planlanan  Mega PDS-X Sistemi Tasarýmý
+
+### 4.1. Tüm Özelliklerin Birleþtirilmesi
+- **Varyasyonlar**:
+  - `pdsXv14_copilot.py`: Güncel modüller (`pipe3`, `tree3`) ve modülerlik.
+  - `pdsXv14_grok_baslangic.py`: Hafif ve hýzlý, ancak eski modüller.
+  - `pdsXv14_claude.py`: Güvenlik ve olay sistemi.
+- **Birleþtirme Planý**:
+  - **Modülerlik**: `copilot.py`’nin `PDSXIntegrator`’ý ve güncel modülleri temel alýnacak.
+  - **Güvenlik**: `claude.py`’nin olay sistemi ve `RestrictedPython` entegrasyonu kullanýlacak.
+  - **Hýz**: `grok_baslangic.py`’nin sade yapýsý optimize edilecek, `bytecode_manager`’ýn AI optimizasyonlarý eklenecek.
+  - **Yeni Özellikler**:
+    - Dinamik baðýmlýlýk yönetimi (`dependencies.json`).
+    - Evrensel alias sistemi.
+    - Çakýþma önleme ve otomatik alias önerileri.
+    - Ýzole ortam (`pds_isolated_env`).
+    - Kuantum ve AI entegrasyonlarý (`QuantumBytecodeCorrelator`, `SmartBytecodeOptimizer`).
+
+### 4.2. onceki planlanan  Güncellenmiþ `pdsXuv14.py` isketeti
+```python
+import os
+import sys
+import logging
+import asyncio
+import json
+import argparse
+from typing import Dict, Optional
+from pathlib import Path
+
+# Çekirdek Modüller
+from module_manager import ModuleManager
+from auto_importer import AutoImporter
+from autoinstaller import DependencyManager, AutoInstaller
+from module_validator import ModuleVersionValidator, validate_all_modules
+from add_exports import add_exports_to_file
+from core2_6 import CoreManager
+from libxcore import LibXCore
+from event import EventManager
+from bytecode_compiler import BytecodeCompiler
+from bytecode_manager import BytecodeManager
+from clazz import ClazzManager
+from data_structures import DataStructuresManager
+from command_executor import CommandExecutor
+from pdsx_exception import PdsXException
+
+# Loglama Ayarlarý
+logging.basicConfig(
+    filename="pdsxu_errors.log",
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+log = logging.getLogger("pdsXu")
+
+class CommandParser:
+    def __init__(self, interpreter):
+        self.interpreter = interpreter
+        self.command_registry = {}
+        self.load_commands_from_json("dependencies.json")
+
+    def load_commands_from_json(self, path: str):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            for module, commands in data.get("commands", {}).items():
+                for cmd_name, cmd_info in commands.items():
+                    self.command_registry[cmd_name.upper()] = (
+                        cmd_info["function"],
+                        module,
+                        cmd_info.get("alias"),
+                        cmd_info["description"]
+                    )
+                    if cmd_info.get("alias"):
+                        self.command_registry[cmd_info["alias"].upper()] = (
+                            cmd_info["function"],
+                            module,
+                            cmd_info["alias"],
+                            cmd_info["description"]
+                        )
+            log.debug(f"Komutlar yüklendi: {list(self.command_registry.keys())}")
+        except Exception as e:
+            log.error(f"Komut yükleme hatasý: {str(e)}")
+            raise PdsXException(f"Komut yükleme hatasý: {str(e)}")
+
+    def alias(self, command: str, alias_name: str):
+        command_upper = command.upper()
+        if command_upper in self.command_registry:
+            func, module, _, desc = self.command_registry[command_upper]
+            self.command_registry[alias_name.upper()] = (func, module, alias_name, desc)
+            log.debug(f"Alias atandý: {command} -> {alias_name}")
+        else:
+            raise PdsXException(f"Komut bulunamadý: {command}")
+
+    def parse_command(self, command: str, scope_name: Optional[str] = None) -> Any:
+        command = command.strip()
+        if not command:
+            return None
+        command_upper = command.upper()
+
+        try:
+            for cmd_name, (func, module, alias, desc) in self.command_registry.items():
+                if command_upper.startswith(cmd_name):
+                    args_match = re.match(rf"{cmd_name}\s*(.+)?", command, re.IGNORECASE)
+                    args = []
+                    if args_match and args_match.group(1):
+                        args_str = args_match.group(1)
+                        args = [self.interpreter.evaluate_expression(a.strip(), scope_name) 
+                                for a in args_str.split(",") if a.strip()]
+                    result = func(*args)
+                    log.debug(f"Komut yürütüldü: {cmd_name}, args={args}")
+                    return result
+            
+            return self.interpreter.command_executor.execute_command(command, scope_name)
+        
+        except Exception as e:
+            log.error(f"Komut ayrýþtýrma hatasý: {str(e)}")
+            raise PdsXException(f"Komut ayrýþtýrma hatasý: {str(e)}")
+
+class PdsXv14uInterpreter:
+    def __init__(self):
+        self.module_manager = ModuleManager(os.path.dirname(os.path.abspath(__file__)))
+        self.auto_importer = AutoImporter(self)
+        self.dependency_manager = DependencyManager(os.path.dirname(os.path.abspath(__file__)))
+        self.command_parser = CommandParser(self)
+        self.core = CoreManager(self)
+        self.event_manager = EventManager()
+        self.bytecode_compiler = BytecodeCompiler()
+        self.bytecode_manager = BytecodeManager(self)
+        self.clazz_manager = ClazzManager(self)
+        self.data_structures = DataStructuresManager(self)
+        self.command_executor = CommandExecutor(self)
+        self.modules = {}
+        self.current_scope = {}
+        self.initialize_system()
+
+    def initialize_system(self):
+        validator = ModuleVersionValidator()
+        core_modules = [
+            "core2-6", "bytecode_compiler", "bytecode_manager", "clazz", "data_structures",
+            "module_manager", "auto_importer", "autoinstaller", "module_validator", "add_exports"
+        ]
+        results = validate_all_modules(core_modules)
+        for module, is_valid in results.items():
+            if not is_valid:
+                log.warning(f"Modül doðrulanamadý: {module}")
+
+    async def load_module(self, module_name: str, alias: Optional[str] = None):
+        module = self.module_manager.load_module(module_name, alias)
+        self.dependency_manager.update_exports(module_name)
+        self.command_parser.register_module_exports(module_name, module.__pdsX_exports__)
+        return module
+
+    async def execute_command(self, command: str, scope_name: Optional[str] = None):
+        return self.command_parser.parse_command(command, scope_name)
+
+    async def run_async(self, code: str):
+        lines = code.split("\n")
+        for line in lines:
+            await self.execute_command(line.strip())
+
+    async def interactive_shell(self):
+        print("PDS-X REPL v14u - Çýkmak için EXIT yazýn")
+        while True:
+            command = input("[PDS-X]>>> ")
+            if command.upper() == "EXIT":
+                break
+            await self.execute_command(command)
+
+async def main():
+    parser = argparse.ArgumentParser(description="PDS-X BASIC v14u Yorumlayýcýsý")
+    parser.add_argument("--file", type=str, help=".basX dosyasýný çalýþtýrýr")
+    parser.add_argument("--interactive", action="store_true", help="Etkileþimli kabuk")
+    args = parser.parse_args()
+
+    interpreter = PdsXv14uInterpreter()
+    if args.file:
+        with open(args.file, "r", encoding="utf-8") as f:
+            code = f.read()
+        await interpreter.run_async(code)
+    elif args.interactive:
+        await interpreter.interactive_shell()
+
+if __name__ == "__main__":
+    if not (sys.version_info.major == 3 and sys.version_info.minor == 10):
+        sys.exit("[PDS-X] HATA: Python 3.10 gereklidir!")
+    asyncio.run(main())
+```
+
+---
+
+## 5. onceki planlanan  Hatalar ve Eksiklikler
+
+### 5.1. Önerdiðim Sistemin Potansiyel Eksikleri (bunlari gerceklestir) 
+- **Performans**: Dinamik modül yükleme sýrasýnda `analyze_module_imports` yavaþ olabilir. Çözüm: `ast` modülüyle daha hýzlý import analizi. 
+- **Güvenlik**: Yeni modüllerin kodlarý sandbox içinde çalýþtýrýlmalý. `RestrictedPython` bu konuda geliþtirilebilir.
+- **Alias Önerileri**: Otomatik alias önerileri bazen kullanýcý dostu olmayabilir. Kullanýcýya daha fazla kontrol verilmeli.
+
+### 5.2. Senin Önerilerindeki Potansiyel Hatalar (bunlari gerceklestir) 
+- **Modül Kodu Ekleme**: `__main__` altýna kod ekleme önerisi, modülün baðýmsýzlýðýný bozabilir. Alternatif: Modülün `__pdsX_exports__`’ýna bir `init` fonksiyonu eklemek.
+- **Çakýþma Tespiti**: Çakýþma kontrolü sadece komutlarla sýnýrlý kalmamalý, sýnýflar ve fonksiyonlar için de yapýlmalý.
+
+---
+
+## 6.  onceki planlanan  Sonuç ve Gelecek Adýmlar
+
+- **Düzeltmeler**: `dependencies.json` boþluk sorunu çözüldü, `autoinstaller` düzeltildi, alias sistemi evrenselleþtirildi.
+- **Mega PDS-X**: Yukarýdaki `pdsXuv14.py`, tüm varyasyonlarý birleþtiriyor ve önerdiðin dinamik baðýmlýlýk yönetimini uyguluyor.
+- **Gelecek**:
+  - Kuantum entegrasyonu (`QuantumBytecodeCorrelator`).
+  - AI tabanlý komut önerileri (`libx_nlp`).
+  - Hot-reload ve daðýtýk modül yükleme (`libx_network`).
+  - Açýk kaynak topluluk ve dokümantasyon.
+
+plani detayli analizlerinle yazalim ve onerilerini potansiyel hatalari ve cozum onerilerini de sun.

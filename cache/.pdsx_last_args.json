@@ -1,0 +1,9 @@
+{
+    "command": [
+        "pdsxuv14.py",
+        "--interactive"
+    ],
+    "timestamp": "2025-07-22T23:32:31.942370",
+    "working_directory": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14",
+    "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe"
+}

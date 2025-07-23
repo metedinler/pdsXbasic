@@ -1,0 +1,113 @@
+{"timestamp": "2025-07-21T01:06:40.839304", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T01:06:40.840304", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:06:40.841305", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T01:06:40.841305", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:06:40.841305", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:07:02.804565", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T01:07:02.804565", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T01:07:02.820143", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['program_manager.py']", "extra": {}}
+{"timestamp": "2025-07-21T01:07:02.820143", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T01:22:34.992360", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T01:22:34.992360", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:22:34.992360", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T01:22:34.992360", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:22:34.992360", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:22:58.345310", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T01:22:58.345310", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T01:22:58.347217", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['system_integration_test.py']", "extra": {}}
+{"timestamp": "2025-07-21T01:22:58.347217", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T01:24:47.149814", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T01:24:47.149814", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:24:47.149814", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T01:24:47.149814", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:24:47.164269", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:25:08.189204", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T01:25:08.189204", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T01:25:08.189204", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['simple_system_test.py']", "extra": {}}
+{"timestamp": "2025-07-21T01:25:08.189204", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T01:55:53.436660", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T01:55:53.453251", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:55:53.453251", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T01:55:53.453251", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:55:53.453251", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T01:56:13.951897", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T01:56:13.951897", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T01:56:13.951897", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['pdsx_launcher.py', '--no-interactive']", "extra": {}}
+{"timestamp": "2025-07-21T01:56:13.951897", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T02:18:44.917632", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T02:18:44.917632", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T02:18:44.917632", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T02:18:44.917632", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T02:18:44.917632", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T02:19:03.594232", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T02:19:03.594232", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T02:19:03.594232", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['program_manager.py']", "extra": {}}
+{"timestamp": "2025-07-21T02:19:03.594232", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:11:45.449469", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:11:45.451570", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:11:45.451570", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T03:11:45.452569", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:11:45.452569", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:12:05.070057", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T03:12:05.070057", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T03:12:05.070057", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['pdsxuv14.py', '--interactive']", "extra": {}}
+{"timestamp": "2025-07-21T03:12:05.070057", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:13:28.048249", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:13:28.049255", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:13:28.049255", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T03:13:28.050259", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:13:28.050259", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:13:46.949605", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T03:13:46.950605", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T03:13:46.951604", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['pdsxuv14.py', '--repl']", "extra": {}}
+{"timestamp": "2025-07-21T03:13:46.951604", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:26:45.087165", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:26:45.089171", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:26:45.090172", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T03:26:45.091177", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:26:45.091177", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:27:06.657141", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T03:27:06.657141", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T03:27:06.659140", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['pdsXuv14.py', '--repl']", "extra": {}}
+{"timestamp": "2025-07-21T03:27:06.659140", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:27:33.680341", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.694566", "level": "INFO", "message": "Real-time log monitoring stopped", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.695567", "level": "INFO", "message": "[PDS-X] AutoImporter görevini tamamladı, graceful shutdown başlatılıyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.696559", "level": "INFO", "message": "[PDS-X] ✅ Real-time monitoring durduruldu", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.696559", "level": "INFO", "message": "[PDS-X] ✅ Thread pool kapatıldı", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.698564", "level": "INFO", "message": "🛑 AutoImporter cleanup başlatıldı...", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.698564", "level": "INFO", "message": "✅ Real-time monitoring durduruldu", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.699564", "level": "INFO", "message": "✅ Thread pool kapatıldı", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.701569", "level": "INFO", "message": "✅ Cache temizlendi", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.702559", "level": "INFO", "message": "📊 Final Report:\nHenüz kurulum yapılmadı.", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.702559", "level": "INFO", "message": "✅ AutoImporter cleanup tamamlandı", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.703558", "level": "INFO", "message": "[PDS-X] ✅ Graceful shutdown manager çalıştırıldı", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.704565", "level": "INFO", "message": "[PDS-X] 📋 Henüz kurulum işlemi yapılmadı.", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.705591", "level": "INFO", "message": "[PDS-X] 🎯 AutoImporter görevi tamamlandı", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.706559", "level": "INFO", "message": "[PDS-X] 🚀 Sistem kontrolü PDS-X REPL'e devrediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:27:35.706559", "level": "INFO", "message": "[PDS-X] ✅ AutoImporter başarıyla kapatıldı", "extra": {}}
+{"timestamp": "2025-07-21T03:39:35.939732", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:39:35.941733", "level": "info", "message": "Ortam hazırlanıyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:39:35.941733", "level": "info", "message": "Zaten sanal ortamda çalışıyoruz.", "extra": {}}
+{"timestamp": "2025-07-21T03:39:35.942777", "level": "info", "message": "REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:39:35.942777", "level": "INFO", "message": "[AUTO-IMPORTER] REQUIRED_PACKAGES kontrol ediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:39:58.717468", "level": "INFO", "message": "[AUTO-IMPORTER] Tüm gerekli paketler mevcut", "extra": {}}
+{"timestamp": "2025-07-21T03:39:58.717468", "level": "INFO", "message": "REPL modu tespit edildi - AutoImporter monitoring devre dışı", "extra": {}}
+{"timestamp": "2025-07-21T03:39:58.717468", "level": "DEBUG", "message": "Komut argümanları kaydedildi: ['pdsXuv14.py', '--repl']", "extra": {}}
+{"timestamp": "2025-07-21T03:39:58.733096", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:40:06.999878", "level": "DEBUG", "message": "[AUTO-IMPORTER] Sanal ortam tespit edildi (prefix): C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.799746", "level": "INFO", "message": "Real-time log monitoring stopped", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.800750", "level": "INFO", "message": "[PDS-X] AutoImporter görevini tamamladı, graceful shutdown başlatılıyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.800750", "level": "INFO", "message": "[PDS-X] ✅ Real-time monitoring durduruldu", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.801748", "level": "INFO", "message": "[PDS-X] ✅ Thread pool kapatıldı", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.802748", "level": "INFO", "message": "🛑 AutoImporter cleanup başlatıldı...", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.803747", "level": "INFO", "message": "✅ Real-time monitoring durduruldu", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.803747", "level": "INFO", "message": "✅ Thread pool kapatıldı", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.804747", "level": "INFO", "message": "✅ Cache temizlendi", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.806748", "level": "INFO", "message": "📊 Final Report:\nHenüz kurulum yapılmadı.", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.807749", "level": "INFO", "message": "✅ AutoImporter cleanup tamamlandı", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.807749", "level": "INFO", "message": "[PDS-X] ✅ Graceful shutdown manager çalıştırıldı", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.808746", "level": "INFO", "message": "[PDS-X] 📋 Henüz kurulum işlemi yapılmadı.", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.809747", "level": "INFO", "message": "[PDS-X] 🎯 AutoImporter görevi tamamlandı", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.814747", "level": "INFO", "message": "[PDS-X] 🚀 Sistem kontrolü PDS-X REPL'e devrediliyor...", "extra": {}}
+{"timestamp": "2025-07-21T03:40:07.815748", "level": "INFO", "message": "[PDS-X] ✅ AutoImporter başarıyla kapatıldı", "extra": {}}

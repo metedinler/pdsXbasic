@@ -1,0 +1,180 @@
+- sqlite.py (kullanilacak)
+- lib_db.py (kullanilacak)
+- database_sql_isam.py (kullanilacak)
+- save_load_system2.py (Son sürüm) (kullanilacak)
+- save_load_system.py (kullanilmayacak)
+- save.py (kullanilacak)
+- data_structures.py  (kullanilacak)
+- tree3.py (Son sürüm) (kullanilacak)
+- tree2.py (kullanilmayacak)
+- tree.py (kullanilmayacak)
+- graph2.py (Son sürüm) (kullanilacak)
+- graph.py (kullanilmayacak)
+- core.py (Temel)  (kullanilmayacak)
+- core2-6.py (En son sürüm)  (kullanilacak)
+- bytecode_compiler.py  (kullanilacak)
+- bytecode_manager.py  (kullanilacak)
+- module_manager.py  (kullanilacak)
+- memory_manager.py  (kullanilacak)
+- lowlevel.py  (kullanilacak)
+- libxcore.py  (kullanilacak)
+- libx_jit.py (kullanilacak)
+- libx_data.py (kullanilacak)
+- libx_logic.py (kullanilacak)
+- libx_gui.py (kullanilacak)
+- libx_concurrency.py (kullanilacak)
+- libx_nlp.py (kullanilacak)
+- libx_network.py (kullanilacak)
+- libx_ml.py (kullanilacak)
+- pdsx_exception2.py (Son sürüm)  (kullanilacak)
+- pdsx_exception.py (kullanilmayacak)
+- exception_manager3.py  (kullanilacak)
+- oop_and_class2.py (Son sürüm)   (kullanilacak)
+- oop_and_class.py (kullanilmayacak)
+- clazz.py   (kullanilacak)
+- event.py (kullanilmayacak)
+- eventx3.py (kullanilacak)
+- lýbXevent.py  (kullanilmayacak)
+- multithreading_process.py (kullanilacak)
+- f11_backtrace_logger.py  (kullanilacak)
+- f12_timer_manager.py (kullanilacak)
+- auto_importer.py (kullanilacak)
+- autoinstaller.py (kullanilacak)
+- command_executor.py (kullanilacak)
+- pipe.py (kullanilacak)
+- pipe_monitor_gui.py (kullanilacak)
+- reply_extension.py (kullanilacak)
+- export_report_doc.py (kullanilacak)
+- pdsXuv14.py (Ana dosya) (kullanilacak)
+- pdsx_interpreter.py   (kullanilacak)
+- pdsXuv15(1).py (Yeni versiyon taslaðý) (kullanilmayacak)
+
+
+
+from bytecode_compiler import BytecodeCompiler
+from bytecode_manager import BytecodeManager
+
+# LibX Imports
+from core2_6 import CoreManager  # core2-6'dan CoreManager import edildi
+from libx_jit import LibXJIT
+from libx_data import LibXData
+from libx_logic import LibXLogic
+from libx_gui import LibXGui
+from libx_concurrency import LibXConcurrency, AsyncManager
+from libx_nlp import LibXNLP
+from libx_network import LibXNetwork
+from lib_db import LibDB
+from sqlite import SQLiteManager
+
+from lowlevel import LowLevelManager
+from memory_manager import MemoryManager
+from pipe3 import PipeManager
+from tree3 import TreeManager  # Güncellendi: tree -> tree3
+from graph2 import GraphManager  # Güncellendi: graph -> graph2
+from functional2 import FunctionalManager  # Güncellendi: functional -> functional2
+from save import SaveManager
+from f11_backtrace_logger import BacktraceLogger
+from f12_timer_manager import TimerManager
+from reply_extension import ReplyExtension
+from data_structures import DataStructures
+from oop_and_class2 import OOPManager
+from save_load_system2 import SaveLoadSystem
+from multithreading_process import MultithreadingProcessManager
+from database_sql_isam import DatabaseManager
+from pipe_monitor_gui import PipeMonitorGUIManager
+from export_report_doc import ExportReportDocManager
+
+from command_executor import execute_command
+
+
+
+yaninada  (kullanilacak) yazilan moduller pdsXuv14.py de kullanilacak.
+simdi aglarsin iste o sildigin bunlar gereksiz dedigin her kod parcasini yazman gerekecek tabi bulursan baska indirirsin. 
+ben sana sabahtan beri diyorum ki kodu ogren kodu anla diye beni devamli kandirdin . salak yerine koydun. bende dedim ki kendi bilir zamani gelince cok calisir ayni kodun daha iyisini ayni karmasiklikta yazar dedim 6 aydir yazdigim kodu nir salisede sildin. gzyzc
+- event.py,  lýbXevent.py ve - eventx.py (kullanilacak) bu uc dosyadaki tum ozellikler komutlar eventx.py de kullanilmak uzere birlestirilecek, hic bir ozellik kaybedilmeyecek. eventx.py den daha gelismis bir olay yoneticisi olusacak.
+core2-6 da, coredaki tum fonksiyonlar var bence. 
+(core ile core2-6) arasinda ne fark var? yani coreda olupta core2-6 da olmayan ne var? sabah bunu core2-5 icin sana sordum bir kac fonksiyon dedin. adlarini ve gorevlerini verdin. bende sana o fonksiyonlari yani coreda olupta, core2-5 de olmayan fonksiyonlari core2-5'e aktaramadin. (bir kac fonksiyon eksik olmali, core.py daki fazlafonksiyonlari' core2-6.py al dedim alamadin.) ama ben core2-5.py ye oturdum ekledim. core2-6.py olusturdum. sadece bu core2-6.py cekirdek kullanilacak)
+
+simdi pdsX ortaminda programlama yapmak icin tasarlanan pdsX in her hangi bir versiyonu icin genellestirilmis kurallarimi derledim.
+PDSX Tasarýmýnýn Temel Ýlkeleri
+1. Her Þey Bir Nesnedir (Everything is an Object): PDSX'te, komutlar, fonksiyonlar, deðiþkenler ve veri yapýlarý birer nesne olarak ele alýnýr. Bu, geniþ bir esneklik ve birbirleriyle etkileþim yeteneði saðlar.
+2. Prolog Entegrasyonu ve Atomlar: Tüm PDSX veri yapýlarý, komutlar ve fonksiyonlarin sonuclari ve girdileri, Prolog motoru için "atom" veya "terim" olarak iþlenebilir. Bu, mantýksal sorgulamalarýn dilin tüm veri ekosistemi üzerinde çalýþmasýna olanak tanýr.
+3. Girintileme (Indentation): PDSX'te girintileme zorunlu deðildir, ancak kullanýlýrsa sorunsuz bir þekilde iþlenir. Hem tab hem de boþluk ile girintileme desteklenir.
+4. Satýr Ýçi Ayýrýcý (:): Tek bir BASIC satýrýnda birden fazla komut çalýþtýrmak için : ayýrýcýsý kullanýlýr. Örneðin: i=10:print i.
+5. C Tarzý Kýsaltmalar: C benzeri operatör kýsaltmalarý (+=, -=, ++, --) ve ternary operatör (? :) desteklenir.
+II. Komut ve Fonksiyon Etkileþimi
+1. Ýç Ýçe Kullaným ve Parametreler: PDSX'teki tüm komutlar ve fonksiyonlar birbirinin içinde, iç içe ve diðer komut veya fonksiyonlarýn parametresi olarak kullanýlabilir. Bu kural, dilin yüksek derecede esnekliðini ve modülerliðini saðlar.
+2. Rekürsif Yapý: Tüm komutlar, fonksiyonlar ve alt programlar rekürsif (kendi kendini çaðýrma) özelliðini destekler, bu Prolog komutlarýný da kapsar.
+3. AS ve ALIAS Komutlarý:
+AS: Komutlarda sonuç deðiþkeni için kullanýlýr (örn. LET X = 5 AS RESULT). 
+ALIAS: Genel bir aliasing mekanizmasýdýr. Fonksiyon, alt program veya komut isimlerine ve veri yapilarina, takma ad atamak için kullanýlýr (örn. ALIAS SIN AS MY_SIN ile sin fonksiyonu MY_SIN olarak çaðrýlabilir).
+4. Fonksiyonel Programlama Yapýlarý (FUNC, GAMMA, OMEGA, lambda, ):
+FUNC: Kýsa, BASIC tarzý fonksiyon tanýmlamasý için kullanýlýr. Python lambda benzeri bir yapý sunar. Örn: FUNC x, y: x + y.
+GAMMA: Daha geliþkin bir fonksiyon üreticidir, argümanlar alýp bir ifade üretebilir.
+OMEGA: Basit lambda tarzý iþlev tanýmlamasý için core.omega fonksiyonu zaten mevcuttur.
+LAMBDA:
+5. Koþullu Yapýlar (IFTHEN, ?): IFTHEN: BASIC tarafýnda baðýmsýz bir komut olarak bulunur. (?:) C tarzý ternary operatör gibi kullanýlýr.
+6. Döngü Yapýlarý (FOR/NEXT, /): Klasik FOR...NEXT döngüsü desteklenir. Compact FOR/NEXT (/): Tek satýrda kýsa döngüler oluþturmak için / karakteri kullanýlýr. Örneðin, /f (for), /s (step), /n (next) gibi kýsaltmalar eklenecektir.
+FOREACH: Koleksiyonlar üzerinde döngü yapmak için FOREACH komutu bulunur. NEXT, PREV, EXIT FOR gibi kontrol komutlarý da mevcuttur.
+7. Harici Fonksiyon Çaðrýlarý (CALL API::, CALL DLL::): Önceki sürümlerde bulunan CALL API:: ve CALL DLL:: komutlarý PDSX'in Ultimate sürümüne mutlaka eklenecektir.
+8. Deklarasyonlar (DECLARE, DEF, SUB, FUNCTION): Her fonksiyon ve alt programýn açýkça DECLARE edilmesi zorunludur.
+III. Veri Yapýlarý ve Etkileþimleri
+1. Ýç Ýçe Kullaným: Tüm PDSX veri yapýlarý (ENUM hariç) birbirinin içinde ve CLASS, YAPI, CLAZZ gibi yapýlar içinde kullanýlabilir.
+2. Kullanýcý Tanýmlý Veri Tipleri:
+TYPE ... END TYPE: BASIC tarzý yapýlandýrýlmýþ veri tipleri oluþturmak için kullanýlýr. Her alan ayrý bellek kullanýr.
+STRUCT ... END STRUCT: C tarzý bir yapýdýr; birden fazla veri alanýný bir arada tutar ve her alan kendi belleðini kullanýr. Ýç içe STRUCT tanýmlarý desteklenir.
+UNION ... END UNION: C tarzý birleþimdir; ayný bellek alanýný farklý veri tipleriyle paylaþýr ve ayný anda sadece bir alan geçerli olabilir. Bellek optimizasyonu için kullanýlýr.
+ENUM ... END ENUM : Sabit deðer kümeleri tanýmlar.
+3. Nesne Yönelimli Programlama (OOP) Yapýlarý:
+CLASS ... END CLASS: Nesne yönelimli programlama için sýnýflar tanýmlar; nitelikler (veri) ve yöntemler (davranýþ) içerir. Kapsülleme, temel yöntem tanýmlarý ve sýnýrlý kalýtým ile çok biçimlilik destekler. NEW komutu ile nesne örneklenebilir. Kalýtým (EXTENDS), özel yöntemler (PRIVATE SUB), statik deðiþkenler, yapýcý (SUB New) ve yýkýcý (SUB Destroy) yöntemler, yöntem yeniden tanýmlama gibi ileri özellikler planlanmýþtýr.
+YAPI ... END YAPI: Nesne yönelimli olmayan bir sýnýf oluþturucu olarak tanýmlanmýþtýr. SUB ve FUNCTIONlarý metot olarak alabilir, ancak baþka bir CLASS veya CLAZZý doðrudan kapsayamaz.
+CLAZZ: Dinamik sýnýf oluþturucudur. CLASS DAN DAHA USTUN OOP OZELLIKLERI VARDIR VE DENEYSEL NEYNEYE YONELIMLI PROGRAMLAMADA DENEYSEL BILIMSEL EN SON TEKNIKLERI ICERIR. cLAZZ OLABILDIGINCE SAF PYTHON ILE YAZILMIS BIR MODULDUR. ICERIGINE BAZI YAPAY ZEKALAR TARAFINDAN CLASS KOMUT VE SISTEMLERI EKLENEREK KIRLETILMISTIR TEKRAR YAZILACAKTIR
+
+4. Temel Veri Tipleri ve Tanýmlamalar (DIM):
+Desteklenen primitif tipler: BYTE (1 byte), SHORT (2 byte), INTEGER (4 byte), LONG (8 byte) tamsayýlar; SINGLE (32 bit), DOUBLE (64 bit), FLOAT (128, 256, 512 bit) ondalýk sayýlar. SIGNED ve UNSIGNED durumlarý desteklenir.
+DIM komutu: Deðiþken tanýmlamak için kullanýlýr. Baþlangýç deðerleri verilebilir. Primitif tipler için tek satýrlýk tanýmlama veya isteðe baðlý kapanýþlý yazým desteklenir. 
+Array indeksleri BASIC tarzý olarak 1'den baþlar.
+5.Özel ve Geliþmiþ Veri Yapýlarý:?
+Matematiksel Yapýlar: SKALER, VECTOR, MATRIX, TENSOR gibi yapýlar NumPy/Pandas tabanlý olarak desteklenir. Bu veri yapilari icin end skaler end vector gibi kapanis sozdizimi zorunludur. ancak python benzeri tensor <tensor adi> (degisken as <yapi bilgisi>, ......) seklinde tanimlana bilir kullanilabilir. sadece tensor degil tum matematiksel yapilarda bu kullanimda desteklenir. 
+Ýç çarpým (dot), determinant (det), hýzlý Fourier dönüþümü (fft) gibi iþlemler yapýlabilir.
+Koleksiyonlar: LIST, DICT, SET, TUPLE, ARRAY, DATAFRAME gibi dinamik veri yapýlarý bulunur. Bu veri yapýlarý için END LIST, END VECTOR gibi kapanýþ sözdizimleri zorunlu olacaktýr.
+ancak python benzeri list  <list adi> (<yapi bilgisi>, ......) seklinde tanimlana bilir kullanilabilir. sadece tensor degil tum matematiksel yapilarda bu kullanimda desteklenir. 
+Bit Düzeyi Ýþlemler: BITSET ve BITGET komutlarý ile bit düzeyinde iþlemler yapýlabilir.
+REDIM, ERASE: Dizi boyutunu deðiþtirmek ve diziyi silmek için komutlar.
+tree end tree, graph end graph stream end stream gibi gelismis veri yapilari vardir
+stack end stack queue end queue void null nan pointer bitwise 
+IV. Geliþmiþ Özellikler ve Mekanizmalar
+1.Pipe (PIPE ... END PIPE): Veri akýþýný yönetmek için bir boru hattý sistemidir. Bir adýmýn çýktýsý, bir sonraki adýmýn girdisi olur. Fonksiyonlar, koþullar (WHERE) ve adlandýrýlmýþ adýmlar (nesne(n)) desteklenir. pipe <pipe adi> <giris degiskeni> (komut|komut|fonksiyon:altprogram|komut|label:komut komutkomut) seklinde tanimlanabilir
+2. Olay Sistemi (ON EVENT, RAISE EVENT): Baðýmsýz bir ON EVENT komutu mevcuttur. Ardýndan her türlü komut gelebilir.
+3. Prolog Motoru: PDSX'in Prolog motoru (PrologV3), temel ve geliþmiþ özelliklerde çalýþýr. pFACT (gerçek ekleme), pRULE (kural ekleme), pQUERY (sorgu yapma), pASSERT (koþullu veri ekleme), pRETRACT (veri geri çekme/silme) ve pCLR (tüm kural ve gerçekleri temizleme) gibi komutlarý içerir. Sorgular tüm deðiþkenleri, nesneleri ve veritabaný sonuçlarýný kullanabilir.
+4. Veri Yönetimi (DATA ... END DATA, READ, RESTORE): Kod içinde veri bloklarý tanýmlamak için DATA ... END DATA yapýsý kullanýlýr. Bu verilere READ ile eriþilir ve RESTORE ile veri iþaretçisi sýfýrlanabilir.
+5. Kaydetme ve Yükleme (SAVE, LOAD): Yorumlayýcý durumunu kaydetme ve yükleme için geliþmiþ SAVE ve LOAD komutlarý bulunur. Sýkýþtýrma desteði de mevcuttur.
+6. Dosya Ýþlemleri ve Sistem Yönetimi: OPEN, CLOSE, WRITE, INPUT, SEEK, GET, PUT, LINE INPUT, LOF (dosya uzunluðu), EOF (dosya sonu), LOCK (dosya kilitleme), UNLOCK (kilidi açma), KILL (dosya silme), NAME (yeniden adlandýrma), FILES (dizin içeriði), DIR$ (dizin içeriði dizesi), ISDIR (dizin kontrolü), CHDIR (dizin deðiþtirme), MKDIR (dizin oluþturma), RMDIR (dizin silme) gibi kapsamlý komutlar mevcuttur. Kodlama (UTF-8, CP1254 vb.), JSON/Excel desteði, ZIP/TAR sýkýþtýrma, kullanýcý dostu hata mesajlarý, büyük dosya desteði ve filtreleme/desen eþleþtirme gibi ek geliþtirmeler önerilmiþtir.
+7.
+Satýr Ýçi Derleme (INLINE C/ASM/REPLY)code ... end code: Satýr içi C ve Assembly kodu yazma, derleme ve çalýþtýrma desteði bulunur. Ayrýca satýr içi REPL (Read-Eval-Print Loop) desteði de vardýr.
+8.JIT ve Inline Derleme: JIT (Just-In-Time) derleme özelliði korunacak ve CODE ... END CODE bloklarýyla satýr içi derleme desteði saðlanacaktýr. JIT hýzlý prototipleme için, inline derleme ise performans kritik görevler için önerilir.
+9.Otomatik Implementasyon (AUTO IMPLEMENTS): Bir arayüzdeki metotlarýn bir sýnýfa otomatik olarak kopyalanýp yerleþtirilmesini saðlayan bir sistemdir.
+10.Yapýcýlar ve Yýkýcýlar (CONSTRUCTOR, DESTRUCTOR): Nesne oluþturma ve yok etme için özel metotlar (SUB Constructor, SUB Destructor) desteklenir.
+11.Arayüz Kalýtýmý (INTERFACE EXTENDS): Bir arayüzün baþka bir arayüzü geniþletmesini saðlar.
+12.Varsayýlan Implementasyon: Arayüz içinde varsayýlan fonksiyonlar yazýlabilir.
+13.Mixin Tarzý Ekleme: Birden fazla arayüzden metotlarý kopyalayýp bir sýnýfa gömerek çalýþtýrma imkaný sunar.
+14.Çoklu Metot (Multimethod): Ayný isimli ancak farklý parametreli fonksiyon tanýmlamaya olanak tanýr.
+15.Eriþim Belirleyiciler (Access Modifiers): PUBLIC, PRIVATE, PROTECT, GLOBAL gibi eriþim belirleyicileri deðiþkenler, fonksiyonlar ve sýnýflar için kullanýlabilir.
+16.Hata Yönetimi ve Loglama: Güçlü hata yönetimi, TRY/FINALLY/CATCH bloklarý, detaylý loglama ve çift dilli hata mesajlarý (HELP dot lang=tr) desteklenir.
+17.Bellek Yönetimi: MemoryManager ile düþük seviyeli bellek iþlemleri, StructInstance, UnionInstance, Pointer sýnýflarý tam desteklidir. MALLOC, FREE, MEMCPY, MEMSET, PTR, DEREF, PEEK, POKE, SIZEOF, NEW, DELETE gibi komutlar mevcuttur.
+18.Eþzamanlýlýk ve Paralel Ýþlem: ASYNC, WAIT, THREAD, PROCESS, LOCK, UNLOCK gibi komutlar mevcuttur. Ayrýca CRON (zaman tabanlý görev planlama), Priority Queue, Cancellation Token ve Context Propagation gibi kavramlar da desteklenir.
+19.Stream Ýþleme komutu(STREAMs ... END STREAMs): Sürekli ve sonsuz veri akýþlarýný iþlemek için tasarlanmýþtýr. Bellek verimliliði ve gerçek zamanlý iþlem saðlar, özellikle internet uygulamalarý için idealdir.
+20.ISAM / SQLite Entegrasyonu: PDSX'in doðuþtan gelen bir özelliði olan ISAM (Indexed Sequential Access Method) desteði, SQLite kullanýlarak taklit edilmektedir. Komutlarý net, anlaþýlýr ve güçlüdür.
+21. Yapay Zeka / Makine Öðrenimi Entegrasyonu: Gömme (embedding) dosyalarýndan konu bazlý arama, kümelenme analizi, yapay zeka fine-tuning iþlemleri gibi özellikler mevcuttur. Contriever, Specter, MiniLM, SciBERT, MPNet, GTE gibi çeþitli embedding modelleri desteklenir. Ayrýca nlp_ner gibi doðal dil iþleme fonksiyonlarý da bulunur. Symbolic computation (denklem çözme, sadeleþtirme) da bir bonus teklif olarak düþünülmüþtür.
+OMEGA a, b : expr	Lambda benzeri fonksiyon
+CALL API::GET ...	Web API çaðrýsý
+CALL DLL::Func()	Native DLL fonksiyonu çaðýrýr
+
+CALL API::GET "https://api.github.com"
+CALL DLL::user32.MessageBoxA(0, "Hello", "PDSX", 1)
+V. Genel PDSX Vizyonu ve Geliþtirme Süreci
+PDSX, v11'den baþlayýp v12c, v12u, v13u ve v15 gibi sürümlerle sürekli geliþen bir projedir. Nihai hedef, dünya üzerinde BASIC, Python, Prolog, C ve Assembly özelliklerini bir araya getiren ilk yorumlayýcýyý oluþturmaktýr.
+"Pass Yok" Prensibi: Tüm fonksiyonlar ve modüller iþlevsel olacak, hiçbir pass ifadesi veya eksik implementasyon býrakýlmayacaktýr.
+Deneysel Özellikler: Her modül,kendi alaninda  daha önce eklenen deneysel/bilimsel iþlevleri koruyacak ve gelistirecek ve 5 yeni deneysel/bilimsel iþlev gelistirecektir(örn. kuantum simülasyonu, kaotik sistem analizi, genetik algoritmalar gibi) eklenecektir.
+Dokümantasyon: Yeni komutlar ve özellikler için komut/fonksiyon listeleri, programlama kýlavuzlarý ve ileri düzey kýlavuzlar dahil olmak üzere kapsamlý ve çift dilli dokümantasyon saðlanacaktir
+-

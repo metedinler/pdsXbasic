@@ -1,0 +1,45 @@
+{
+  "test_summary": {
+    "total_tests": 10,
+    "passed": 8,
+    "failed": 2,
+    "duration": 31.329499006271362,
+    "timestamp": "2025-07-21 01:22:59"
+  },
+  "passed_tests": [
+    "Core System Import Test",
+    "Hybrid Executor Test",
+    "AutoInstaller Test",
+    "AutoImporter Test",
+    "Command Routing Test",
+    "Alias System Test",
+    "Exception Handling Test",
+    "Performance Test"
+  ],
+  "failed_tests": [
+    "Program Manager Init Test",
+    "Full Integration Test"
+  ],
+  "detailed_results": {
+    "core_imports": {
+      "Core2_6": true,
+      "LibX": true,
+      "MemoryManager": true,
+      "AutoImporter": true,
+      "AutoInstaller": true,
+      "HybridExecutor": true
+    },
+    "Program Manager Init Test": {
+      "status": "FAILED",
+      "error": "Program Manager init failed: cannot import name 'MultLineProgramManager' from 'program_manager' (C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\program_manager.py)"
+    },
+    "Full Integration Test": {
+      "status": "FAILED",
+      "error": "Full integration test failed: Program manager not initialized"
+    },
+    "performance": {
+      "core_system_import": 0.0,
+      "total_test_time": 0.0
+    }
+  }
+}

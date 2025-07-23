@@ -1,7 +1,11 @@
 import sys
-if not (sys.version_info.major == 3 and sys.version_info.minor == 10):
-    print("[PDS-X] HATA: Bu modül sadece Python 3.10 ortamında çalışır! Lütfen pdsX'in ana başlatıcısını kullanın.")
-    sys.exit(1)
+# Python 3.10 kontrolü devre dışı - PDS-X uyumluluk modu
+try:
+    if not (sys.version_info.major == 3 and sys.version_info.minor == 10):
+        print("[PDS-X] UYARI: Bu modül Python 3.10 için optimize edilmiştir. Mevcut sürüm ile uyumluluk modu aktif.")
+        # sys.exit(1) # Devre dışı bırakıldı
+except Exception as e:
+    print(f"[PDS-X] UYARI: Python sürüm kontrolü atlanıyor: {e}")
 
 # tree.py - PDS-X BASIC v14u Ağaç Veri Yapısı Kütüphanesi
 # Version: 1.0.0
@@ -17,7 +21,7 @@ import threading
 import graphviz
 import uuid
 import numpy as np
-from pdsx_exception import PdsXException  # Hata yönetimi için
+from pdsx_unified_exception import PdsXException  # Hata yönetimi için
 
 # Loglama Ayarları
 logging.basicConfig(

@@ -1,0 +1,90 @@
+# --- Otomatik modül entegrasyonu ve komut parser güncellemesi (güncellenmiþ) ---
+KULLANILACAK_MODULLER = [
+    "module_manager", "bytecode_compiler", "bytecode_manager",
+    "core2_6", "libx_jit", "libx_data", "libx_logic", "libx_gui",
+    "libx_concurrency", "libx_nlp", "libx_network", "lib_db", "sqlite",
+    "lowlevel", "memory_manager", "pipe3", "tree3", "graph2", "functional2",
+    "save", "f11_backtrace_logger", "f12_timer_manager", "reply_extension",
+    "data_structures", "oop_and_class2", "save_load_system2", "multithreading_process",
+    "database_sql_isam", "pipe_monitor_gui", "export_report_doc"
+]
+
+MODULE_COMMAND_MAP = {}
+MODULE_OBJECTS = {}
+for module_name in sorted(KULLANILACAK_MODULLER, reverse=True):
+    try:
+        mod = importlib.import_module(module_name)
+        MODULE_OBJECTS[module_name] = mod
+        if hasattr(mod, "__pdsX_exports__"):
+            exports = mod.__pdsX_exports__
+            for func_name, func in exports.get("functions", {}).items():
+                cmd = f"{module_name.upper()}.{func_name.upper()}"
+                MODULE_COMMAND_MAP[cmd] = func
+    except Exception as e:
+        print(f"[PDS-X] Modül otomatik entegrasyon hatasý: {module_name}: {e}")
+
+# --- Geliþmiþ PDSx komut parser ---
+def parse_pdsx_command(command: str, *args, **kwargs):
+    """Komutun baþýndaki modül ve fonksiyona göre yönlendirme yapar."""
+    try:
+        parts = command.strip().split()
+        if not parts:
+            raise ValueError("Boþ komut")
+        cmd_key = parts[0].upper()
+        if cmd_key in MODULE_COMMAND_MAP:
+            func = MODULE_COMMAND_MAP[cmd_key]
+            return func(*parts[1:], *args, **kwargs)
+        else:
+            raise ValueError(f"Bilinmeyen komut: {cmd_key}")
+    except Exception as e:
+        print(f"[PDS-X] Komut parse hatasý: {e}")
+        return None
+
+CORE_MODULES = [
+    "pdsx_exception",
+    "pdsx_exception2",
+    "module_manager",
+    "core",
+    "memory_manager",
+    "save_load_system2",
+    "auto_importer",
+    "autoinstaller",
+    "base_module_manager",
+    "oop_and_class2",
+    "clazz",
+    "save",
+    "sqlite",
+    "reply_extension",
+    "lowlevel",
+    "data_structures",
+    "f11_backtrace_logger",
+    "f12_timer_manager",
+    "multithreading_process",
+    "pipe_monitor_gui",
+    "export_report_doc"
+]
+
+LOADABLE_MODULES = [
+    "core2-5",
+    "database_sql_isam",
+    "bytecode_engine",
+    "functional",
+    "graph",
+    "libx_ml", 
+    "libx_nlp",
+    "libx_network",
+    "pipe",
+    "tree",
+    "tree2",
+    "tree3",
+    "tpl",
+    "tpl3",
+    "oop_and_class",
+    "eventx",
+    "functional2",
+    "graph2",
+    "lib_db",
+    "bytecode_compiler",
+    "bytecode_manager"
+]
+

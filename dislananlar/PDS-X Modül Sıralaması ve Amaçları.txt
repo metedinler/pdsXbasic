@@ -1,0 +1,196 @@
+Modül Sýralamasý ve Amaçlarý
+Plan gereði, önce üretimi yapýlacak modüller alfabetik sýrayla sýralanacak ve her birinin amacý belirtilecek. Aþaðýda, PDSxV15 için planlanan modüllerin listesi ve amaçlarý yer alýyor. Baðýmlýlýklar dikkate alýnarak sýralama ayarlandý (örneðin, pdsx_exception2.py önce yazýlacak, çünkü diðer modüller buna baðýmlý).
+
+
+Sýra	Modül Adý	Amaç
+1	autoimporter.py	Gerekli kütüphaneleri otomatik yükler, baðýmlýlýklarý yönetir.
+2	bytecode_engine.py	PDS-X BASIC kodunu bytecode’a derler ve yürütür, performans optimizasyonu saðlar.
+3	core2.py	Çekirdek komutlarý iþler, platformun temel mantýðýný yönetir.
+4	database_sql_isam2.py	SQL ve ISAM veritabaný iþlemlerini yönetir, kuantum sorgu desteði ekler.
+5	event2.py	Olay ve kesme yönetimini saðlar, asenkron olaylar için geliþmiþ destek.
+6	export_report_doc2.py	Veri ihracý, rapor ve belge oluþturma, LaTeX/PDF desteði.
+7	f11_backtrace_logger2.py	Hata izleme ve loglama, yýðýn analizi ve görselleþtirme.
+8	f12_timer_manager2.py	Zamanlayýcý yönetimi, performans ölçümleri ve görev zamanlama.
+9	functional2.py	Fonksiyonel programlama paradigmalarýný entegre eder, monadik yapýlar.
+10	graph2.py	Graf veri yapýlarýný yönetir, geliþmiþ algoritmalar (Dijkstra, A*).
+11	lib_db2.py	SQL ve ISAM veritabaný iþlemleri için yüksek seviye API’ler.
+12	libx_concurrency2.py	Eþzamanlýlýk ve paralelleþtirme, thread/process yönetimi.
+13	libx_data2.py	Veri iþleme ve analiz, NumPy/Pandas entegrasyonu.
+14	libx_gui2.py	Kullanýcý arayüzü oluþturma, çoklu dil ve tema desteði.
+15	libx_jit2.py	Just-In-Time derleme, bytecode yürütme optimizasyonu.
+16	libx_logic2.py	Mantýksal programlama, Prolog entegrasyonu.
+17	libx_ml2.py	Makine öðrenimi ve yapay zeka, kuantum model desteði.
+18	libx_network2.py	Að ve iletiþim iþlemleri, WebSocket ve OAuth desteði.
+19	libx_nlp2.py	Doðal dil iþleme, metin analizi ve üretimi.
+20	lowlevel2.py	Düþük seviyeli bellek ve iþaretçi iþlemleri.
+21	memory_manager2.py	Bellek tahsisi ve veri tipi yönetimi.
+22	multithreading_process2.py	Çoklu iþ parçacýðý ve iþlem yönetimi, asenkron görevler.
+23	oop_and_class2x.py	Nesne yönelimli programlama, geliþmiþ sýnýf yönetimi.
+24	pdsx_exception2.py	Hata yönetimi, geliþmiþ istisna hiyerarþisi ve loglama.
+25	pipe2.py	Boru hattý iþleme, esnek pipeline desenleri.
+26	pipe_monitor_gui2.py	Boru hattý izleme ve görselleþtirme, gerçek zamanlý performans.
+27	reply_extension2.py	Yanýt oluþturma ve gönderme, WebSocket ve SQS desteði.
+28	save_load_system2.py	Veri kaydetme/yükleme, yerel ve daðýtýk depolama.
+29	sqlite2.py	SQLite veritabaný iþlemleri, hafif veritabaný yönetimi.
+30	tree3.py	Aðaç veri yapýlarýný yönetir, B-aðaçlarý ve trie desteði.
+Not: autoimporter.py hariç tüm modüller, v14’teki karþýlýklarýndan daha saðlam, hata korumalý ve iþlevsel olarak zengin olacak. Baðýmlýlýklar nedeniyle pdsx_exception2.py önce yazýlacak.
+
+# pdsXu_v15.py
+# Version: 1.5.0
+# Description: PDS-X BASIC v15 yorumlayýcýsý, QBASIC 7.1 benzeri, özelleþtirilmiþ.
+# Author: metedinler
+# License: MIT
+
+import argparse
+import asyncio
+import json
+import logging
+import sys
+from typing import Dict, List, Optional
+from autoimporter import install_library
+from core2 import CoreV15
+from pdsx_exception2 import PdsXException, PdsXSyntaxError, PdsXRuntimeError
+
+# Loglama ayarlarý
+logging.basicConfig(
+    filename="pdsxu_errors.log",
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
+log = logging.getLogger("pdsXu")
+
+class PDSXInterpreter:
+    """PDS-X BASIC v15 yorumlayýcýsý."""
+    
+    def __init__(self):
+        self.core = CoreV15(self)
+        self.program: List[str] = []
+        self.program_counter: int = 0
+        self.global_vars: Dict = {}
+        self.shared_vars: Dict = {}
+        self.scopes: List[Dict] = [{}]
+        self.labels: Dict[str, int] = {}
+        self.file_handles: Dict[int, asyncio.StreamReader] = {}
+        self.object_counter: Dict[str, int] = {}
+        self.object_registry: Dict[int, Dict] = {}
+        self.restricted_scopes: set = set()
+        self.restricted_vars: set = set()
+        self.exception_manager = PdsXException(self)
+        self.config: Dict = {}
+
+    def current_scope(self) -> Dict:
+        """Geçerli kapsamý döndürür."""
+        return self.scopes[-1]
+
+    async def load_config(self, config_file: str) -> None:
+        """Yapýlandýrma dosyasýný yükler."""
+        try:
+            async with aiofiles.open(config_file, "r", encoding="utf-8") as f:
+                self.config = json.loads(await f.read())
+            log.debug(f"Yapýlandýrma yüklendi: {config_file}")
+        except Exception as e:
+            raise PdsXRuntimeError(f"Yapýlandýrma yükleme hatasý: {str(e)}")
+
+    async def load_program(self, file_path: str) -> None:
+        """Program dosyasýný yükler."""
+        try:
+            async with aiofiles.open(file_path, "r", encoding="utf-8") as f:
+                self.program = [line.strip() for line in await f.readlines() if line.strip()]
+            self.labels = {line.split(":")[0].strip(): i for i, line in enumerate(self.program) if ":" in line}
+            log.debug(f"Program yüklendi: {file_path}, Satýr sayýsý: {len(self.program)}")
+        except Exception as e:
+            raise PdsXRuntimeError(f"Program yükleme hatasý: {str(e)}")
+
+    async def execute_command(self, command: str) -> Optional[int]:
+        """Komutu yürütür."""
+        try:
+            return await self.core.parse_core_command(command)
+        except PdsXException as e:
+            await self.exception_manager.handle_error(e)
+            return None
+
+    async def run(self) -> None:
+        """Programý çalýþtýrýr."""
+        self.program_counter = 0
+        while 0 <= self.program_counter < len(self.program):
+            command = self.program[self.program_counter]
+            next_line = await self.execute_command(command)
+            self.program_counter = next_line if next_line is not None else self.program_counter + 1
+            log.debug(f"Komut yürütüldü: {command}, PC: {self.program_counter}")
+
+    async def interactive_shell(self) -> None:
+        """Etkileþimli kabuðu baþlatýr."""
+        print("PDS-X BASIC v15.0 - Etkileþimli Kabuk")
+        while True:
+            try:
+                command = input("PDSX> ")
+                if command.lower() in ("exit", "quit"):
+                    break
+                await self.execute_command(command)
+            except KeyboardInterrupt:
+                print("\nÇýkýþ için 'exit' yazýn.")
+            except Exception as e:
+                log.error(f"Kabuk hatasý: {str(e)}")
+                print(f"Hata: {str(e)}")
+
+def parse_args() -> argparse.Namespace:
+    """Komut satýrý argümanlarýný ayrýþtýrýr."""
+    parser = argparse.ArgumentParser(description="PDS-X BASIC v15 Yorumlayýcýsý")
+    parser.add_argument("--version", action="version", version="PDS-X BASIC v15.0")
+    parser.add_argument("--file", type=str, help=".basX dosyasýný çalýþtýrýr")
+    parser.add_argument("--debug", action="store_true", help="Hata ayýklama modu")
+    parser.add_argument("--interactive", action="store_true", help="Etkileþimli kabuk")
+    parser.add_argument("--output", type=str, help="Çýktý dosyasý (CSV/JSON/YAML)")
+    parser.add_argument("--config", type=str, help="Yapýlandýrma dosyasý (JSON/TXT/YAML)")
+    parser.add_argument("--silent", action="store_true", help="Konsol çýktýsýný kapatýr")
+    parser.add_argument("--profile", action="store_true", help="Performans profili")
+    parser.add_argument("--trace", action="store_true", help="Komut izleme")
+    parser.add_argument("--help", action="store_true", help="Çift dilli yardým (tr/en)")
+    parser.add_argument("--plugin", type=str, help="Eklenti yükler")
+    parser.add_argument("--log-level", type=str, default="DEBUG", help="Log seviyesi")
+    parser.add_argument("--lang", type=str, default="tr", help="Dil seçimi (tr/en)")
+    parser.add_argument("--theme", type=str, default="dark", help="Tema (dark/light)")
+    parser.add_argument("--test", type=str, help="Test çalýþtýrýr")
+    parser.add_argument("--bytecode", type=str, help="Bytecode derler/çalýþtýrýr")
+    parser.add_argument("--secure", action="store_true", help="Güvenli mod")
+    parser.add_argument("--monitor", action="store_true", help="Kaynak izleme")
+    return parser.parse_args()
+
+async def main():
+    """Ana yürütme fonksiyonu."""
+    args = parse_args()
+    
+    # Baðýmlýlýklarý yükle
+    required_libs = ["numpy", "pandas", "scipy", "aiohttp", "aiofiles", "pyyaml", "pdfplumber"]
+    for lib in required_libs:
+        install_library(lib)
+
+    interpreter = PDSXInterpreter()
+
+    # Yapýlandýrmayý yükle
+    if args.config:
+        await interpreter.load_config(args.config)
+
+    # Log seviyesini ayarla
+    logging.getLogger().setLevel(getattr(logging, args.log_level.upper(), logging.DEBUG))
+
+    # Programý çalýþtýr
+    if args.file:
+        await interpreter.load_program(args.file)
+        await interpreter.run()
+    elif args.interactive:
+        await interpreter.interactive_shell()
+    elif args.test:
+        # Test çalýþtýrma (pytest entegrasyonu)
+        import pytest
+        sys.exit(pytest.main([args.test]))
+    elif args.bytecode:
+        # Bytecode çalýþtýrma (bytecode_engine.py ile)
+        from bytecode_engine import BytecodeEngine
+        engine = BytecodeEngine(interpreter)
+        await engine.execute_bytecode(args.bytecode)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+

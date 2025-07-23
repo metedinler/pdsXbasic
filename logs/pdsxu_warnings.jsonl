@@ -1,0 +1,6 @@
+{"time": "2025-07-17 04:09:52,749", "level": "WARNING", "message": "Elasticsearch bağlantısı başarısız: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x000001D587F10820>: Failed to establish a new connection: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı))"}
+{"time": "2025-07-17 04:09:52,749", "level": "WARNING", "message": "Elasticsearch bağlantısı başarısız: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x000001D587F10B80>: Failed to establish a new connection: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı))"}
+{"time": "2025-07-17 18:59:30,784", "warning": "Kayıt defteri yüklenirken hata: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"}
+{"time": "2025-07-17 18:59:30,784", "warning": "Kayıt defteri yüklenirken hata: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"}
+{"time": "2025-07-17 19:03:53,715", "warning": "Kayıt defteri yüklenirken hata: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"}
+{"time": "2025-07-17 19:03:53,715", "warning": "Kayıt defteri yüklenirken hata: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"}

@@ -1,0 +1,68 @@
+{"time": "2025-07-17 04:09:36,462", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 04:09:36,462", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 04:09:36,462", "level": "INFO", "message": "Gerçek zamanlı izleyici 15 saniye aralıkla başlatıldı."}
+{"time": "2025-07-17 04:09:52,749", "level": "WARNING", "message": "Elasticsearch bağlantısı başarısız: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x000001D587F10820>: Failed to establish a new connection: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı))"}
+{"time": "2025-07-17 04:09:52,749", "level": "WARNING", "message": "Elasticsearch bağlantısı başarısız: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x000001D587F10B80>: Failed to establish a new connection: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı))"}
+{"time": "2025-07-17 04:09:52,758", "level": "INFO", "message": "AutoImporter başlatıldı: mode=NORMAL, silent_install=False"}
+{"time": "2025-07-17 04:09:52,759", "level": "INFO", "message": "Sanal ortamda çalışılıyor, paketler kontrol ediliyor."}
+{"time": "2025-07-17 04:09:52,760", "level": "INFO", "message": "Gerekli paketler kontrol ediliyor ve yükleniyor..."}
+{"time": "2025-07-17 04:10:28,693", "level": "INFO", "message": "✓ markdown-it-py>=2.2.0 başarıyla yüklendi"}
+{"time": "2025-07-17 04:10:43,906", "level": "INFO", "message": "Paket kurulum tamamlandı: 134/134 başarılı"}
+{"time": "2025-07-17 04:10:43,906", "level": "INFO", "message": "Son argümanlar kaydedildi: ['--demo']"}
+{"time": "2025-07-17 04:10:47,256", "level": "INFO", "message": "AutoImporter temizlik işlemleri..."}
+{"time": "2025-07-17 04:10:48,133", "level": "INFO", "message": "Gerçek zamanlı izleyici durduruldu."}
+{"time": "2025-07-17 04:10:48,140", "level": "INFO", "message": "Kurulum özeti: 0 başarılı, 0 başarısız, 0 atlanan"}
+{"time": "2025-07-17 04:10:48,142", "level": "INFO", "message": "AutoImporter temizlik tamamlandı."}
+{"time": "2025-07-17 04:14:05,426", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 04:14:05,426", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 04:15:03,070", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 04:15:03,071", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 12:01:25,413", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 12:01:25,413", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 12:07:19,475", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 12:07:19,475", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 12:36:34,655", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 12:36:34,655", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 12:52:18,946", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 12:52:18,946", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 13:04:50,716", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 13:04:50,716", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 13:08:02,739", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 13:08:02,739", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 13:32:37,732", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 13:32:37,732", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 13:40:25,663", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 13:40:25,678", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 15:42:53,908", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 15:42:53,908", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 15:53:42,641", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 15:53:42,641", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 16:06:28,892", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 16:06:28,895", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-17 16:16:10,882", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-17 16:16:10,882", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"timestamp": "2025-07-17 18:59:30,784", "level": "ERROR", "message": "Kayıt defteri yüklenirken hata: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"}
+{"timestamp": "2025-07-17 18:59:30,784", "level": "INFO", "message": "[INFO] Arka plan servisleri başlatıldı"}
+{"timestamp": "2025-07-17 18:59:30,784", "level": "INFO", "message": "[INFO] Bileşenler başarıyla başlatıldı"}
+{"timestamp": "2025-07-17 18:59:30,784", "level": "ERROR", "message": "Kayıt defteri yüklenirken hata: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"}
+{"timestamp": "2025-07-17 18:59:30,784", "level": "INFO", "message": "[INFO] Arka plan servisleri başlatıldı"}
+{"timestamp": "2025-07-17 18:59:30,784", "level": "INFO", "message": "[INFO] Bileşenler başarıyla başlatıldı"}
+{"timestamp": "2025-07-17 18:59:30,799", "level": "INFO", "message": "[INFO] Arka plan servisleri başlatıldı"}
+{"timestamp": "2025-07-17 18:59:37,243", "level": "INFO", "message": "[INFO] AutoImporter kapatılıyor..."}
+{"timestamp": "2025-07-17 18:59:37,813", "level": "INFO", "message": "[INFO] AutoImporter temizlik işlemleri başlatılıyor..."}
+{"timestamp": "2025-07-17 18:59:37,813", "level": "INFO", "message": "[INFO] AutoImporter temizlik tamamlandı."}
+{"timestamp": "2025-07-17 18:59:37,813", "level": "INFO", "message": "[INFO] AutoImporter başarıyla kapatıldı."}
+{"timestamp": "2025-07-17 19:03:53,331", "level": "INFO", "message": "Python 3.10 bulundu: C:\Users\mete\AppData\Local\Programs\Python\Python310\python.exe"}
+{"timestamp": "2025-07-17 19:03:53,353", "level": "INFO", "message": "Python 3.10 bulundu: C:\Users\mete\AppData\Local\Programs\Python\Python310\python.exe"}
+{"timestamp": "2025-07-17 19:03:53,353", "level": "INFO", "message": "Python 3.10 bulundu: C:\Users\mete\AppData\Local\Programs\Python\Python310\python.exe"}
+{"timestamp": "2025-07-17 19:03:53,715", "level": "ERROR", "message": "Kayıt defteri yüklenirken hata: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"}
+{"timestamp": "2025-07-17 19:03:53,715", "level": "INFO", "message": "[INFO] Arka plan servisleri başlatıldı"}
+{"timestamp": "2025-07-17 19:03:53,715", "level": "INFO", "message": "[INFO] Bileşenler başarıyla başlatıldı"}
+{"timestamp": "2025-07-17 19:03:53,715", "level": "ERROR", "message": "Kayıt defteri yüklenirken hata: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"}
+{"timestamp": "2025-07-17 19:03:53,728", "level": "INFO", "message": "[INFO] Arka plan servisleri başlatıldı"}
+{"timestamp": "2025-07-17 19:03:53,728", "level": "INFO", "message": "[INFO] Bileşenler başarıyla başlatıldı"}
+{"timestamp": "2025-07-17 19:03:53,738", "level": "INFO", "message": "[INFO] Arka plan servisleri başlatıldı"}
+{"timestamp": "2025-07-17 19:03:59,916", "level": "INFO", "message": "[INFO] AutoImporter kapatılıyor..."}
+{"timestamp": "2025-07-17 19:04:00,749", "level": "INFO", "message": "[INFO] AutoImporter temizlik işlemleri başlatılıyor..."}
+{"timestamp": "2025-07-17 19:04:00,749", "level": "INFO", "message": "[INFO] AutoImporter temizlik tamamlandı."}
+{"timestamp": "2025-07-17 19:04:00,749", "level": "INFO", "message": "[INFO] AutoImporter başarıyla kapatıldı."}

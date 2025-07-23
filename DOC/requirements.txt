@@ -1,0 +1,118 @@
+# Temel bilimsel ve ML kütüphaneleri
+numpy<2.2.0  # TF uyumluluğu için sabitlendi
+scipy==1.11.4
+pandas==2.1.4
+scikit-learn==1.3.2
+joblib
+threadpoolctl
+matplotlib==3.8.4
+kiwisolver
+cycler
+pyparsing
+python-dateutil
+pillow
+packaging
+seaborn
+statsmodels
+tornado
+plotly
+tenacity
+dash
+flask
+jinja2
+werkzeug
+
+# Veri işleme ve analiz
+colorama
+textblob
+mysql-connector-python
+psutil
+pyyaml
+graphviz
+aiofiles==23.2.1
+RestrictedPython>=6.2,<8.0
+pdfplumber
+requests
+psycopg2-binary==2.9.9
+elasticsearch
+elastic-transport
+nltk  # textblob için zorunlu bağımlılık
+
+# Derin öğrenme ve bilimsel
+tensorflow==2.15.0
+torch==2.2.2
+torch-geometric==2.5.3
+spacy==3.5.3  # Versiyon sabitlendi
+transformers
+pycryptodome
+
+# İletişim ve protokol
+grpcio
+protobuf
+aiohttp
+async-timeout
+yarl
+multidict
+attrs
+frozenlist
+pyzmq
+websocket-client
+paho-mqtt  # MQTT client desteği
+boto3  # AWS SDK
+botocore
+kafka-python
+river
+qiskit
+networkx
+websockets
+rich
+
+# Bağımlı kütüphaneler 
+jmespath  # boto3/botocore için
+pdfminer.six==20250327  # pdfplumber için
+pypdfium2>=4.18.0  # pdfplumber için
+markdown-it-py>=2.2.0  # rich için
+pygments>=2.13.0,<3.0.0  # rich için
+catalogue<2.1.0,>=2.0.6  # spacy için
+cymem<2.1.0,>=2.0.2  # spacy için
+langcodes<4.0.0,>=3.2.0  # spacy için
+murmurhash<1.1.0,>=0.28.0  # spacy için
+preshed<3.1.0,>=3.0.2  # spacy için
+pydantic!=1.8,!=1.8.1,<3.0.0,>=1.7.4  # spacy için
+spacy-legacy<3.1.0,>=0.0.11  # spacy için
+spacy-loggers<2.0.0,>=1.0.0  # spacy için
+srsly<3.0.0,>=2.4.3  # spacy için
+thinc<8.4.0,>=8.3.4  # spacy için
+typer<1.0.0,>=0.3.0  # spacy için
+wasabi<1.2.0,>=0.9.1  # spacy için
+weasel<0.5.0,>=0.1.0  # spacy için
+huggingface-hub<1.0,>=0.30.0  # transformers için
+regex!=2019.12.17  # transformers için
+safetensors>=0.4.3  # transformers için
+tokenizers<0.22,>=0.21  # transformers için
+cryptography  # pdfminer.six için
+cffi  # cryptography için
+pycparser  # cffi için 
+six  # cryptography için
+pyasn1  # cryptography için
+pyasn1-modules  # cryptography için
+idna  # requests için
+charset_normalizer  # requests için
+urllib3  # requests için
+certifi  # requests için
+chardet  # textblob için
+blis<1.4.0,>=1.3.0  # thinc için
+confection<1.0.0,>=0.0.1  # thinc, weasel için
+shellingham>=1.3.0  # typer için
+smart-open<8.0.0,>=5.2.1  # weasel için
+cloudpathlib<1.0.0,>=0.7.0  # weasel için
+annotated-types>=0.6.0  # pydantic için
+pydantic-core==2.33.2  # pydantic için
+typing-inspection>=0.4.0  # pydantic için
+
+# Geliştirme araçları
+pytest>=6.2.0
+black>=21.5b2
+pylint>=2.8.0
+mypy>=0.910
+coverage>=6.2

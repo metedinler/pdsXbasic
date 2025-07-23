@@ -38,7 +38,7 @@ try:
 except ImportError as e:
     print('scikit-learn ensemble import error:', e)
     IsolationForest = None
-from pdsx_exception import PdsXException
+from pdsx_unified_exception import PdsXException
 
 import threading
 

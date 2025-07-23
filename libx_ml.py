@@ -38,7 +38,7 @@ except ImportError as e:
 import aiofiles
 import torch
 import torch.nn as nn
-from pdsx_exception import PdsXException
+from pdsx_unified_exception import PdsXException
 import functools
 from save_load_system2 import format_registry, supported_encodings, compression_methods, decompression_methods
 from bytecode_manager import Bytecode, Opcode, OPCODE_TABLE

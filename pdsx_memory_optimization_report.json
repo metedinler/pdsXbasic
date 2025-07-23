@@ -1,0 +1,217 @@
+{
+  "memory_analysis": {
+    "auto_importer_lite": {
+      "module": "auto_importer_lite",
+      "memory_increase_mb": 0.10546875,
+      "load_time_ms": 1.8203258514404297,
+      "total_memory_mb": 16.4765625,
+      "success": true,
+      "memory_hotspots": [
+        [
+          "  File \"<frozen importlib._bootstrap_external>\", line 672"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\auto_importer_lite.py\", line 33",
+          "    class AutoImporterLite:"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\auto_importer_lite.py\", line 279",
+          "    class EnvironmentDetector:"
+        ]
+      ]
+    },
+    "auto_importer_heavy": {
+      "module": "auto_importer_heavy",
+      "memory_increase_mb": 114.6015625,
+      "load_time_ms": 3868.02339553833,
+      "total_memory_mb": 131.359375,
+      "success": true,
+      "memory_hotspots": [
+        [
+          "  File \"<frozen importlib._bootstrap_external>\", line 672"
+        ],
+        [
+          "  File \"<frozen importlib._bootstrap>\", line 241"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\AppData\\Local\\Programs\\Python\\Python310\\lib\\abc.py\", line 106",
+          "    cls = super().__new__(mcls, name, bases, namespace, **kwargs)"
+        ]
+      ]
+    },
+    "pdsx_repl": {
+      "module": "pdsx_repl",
+      "memory_increase_mb": 0.0078125,
+      "load_time_ms": 1.735687255859375,
+      "total_memory_mb": 135.14453125,
+      "success": true,
+      "memory_hotspots": [
+        [
+          "  File \"<frozen importlib._bootstrap_external>\", line 672"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\pdsx_repl.py\", line 24",
+          "    class PDSXREPLEnvironment:"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\pdsx_repl.py\", line 12",
+          "    import importlib"
+        ]
+      ]
+    },
+    "reply_extension": {
+      "module": "reply_extension",
+      "memory_increase_mb": 797.65234375,
+      "load_time_ms": 48428.48801612854,
+      "total_memory_mb": 932.85546875,
+      "success": true,
+      "memory_hotspots": [
+        [
+          "  File \"<frozen importlib._bootstrap_external>\", line 672"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\AppData\\Local\\Programs\\Python\\Python310\\lib\\linecache.py\", line 137",
+          "    lines = fp.readlines()"
+        ],
+        [
+          "  File \"<frozen importlib._bootstrap>\", line 241"
+        ]
+      ]
+    },
+    "program_manager": {
+      "module": "program_manager",
+      "memory_increase_mb": 0.0,
+      "load_time_ms": 0.0,
+      "total_memory_mb": 1054.71875,
+      "success": true,
+      "memory_hotspots": [
+        [
+          "  File \"<string>\", line 1"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\psutil\\_pswindows.py\", line 827",
+          "    return pmem(*(rss, vms) + t)"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\psutil\\_pswindows.py\", line 798",
+          "    return cext.proc_memory_info(self.pid)"
+        ]
+      ]
+    },
+    "core_system": {
+      "module": "core_system",
+      "memory_increase_mb": 0.0,
+      "load_time_ms": 4.476308822631836,
+      "total_memory_mb": 1054.73828125,
+      "success": true,
+      "memory_hotspots": [
+        [
+          "  File \"<frozen importlib._bootstrap_external>\", line 672"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\core_system.py\", line 149",
+          "    def is_hybrid_executor_available():"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\core_system.py\", line 208",
+          "    HYBRID_EXECUTOR_AVAILABLE = is_hybrid_executor_available()"
+        ]
+      ]
+    },
+    "memory_manager": {
+      "module": "memory_manager",
+      "memory_increase_mb": 0.0,
+      "load_time_ms": 0.0,
+      "total_memory_mb": 1054.8046875,
+      "success": true,
+      "memory_hotspots": []
+    },
+    "event3": {
+      "module": "event3",
+      "memory_increase_mb": 0,
+      "load_time_ms": 0,
+      "total_memory_mb": 1056.71875,
+      "success": false,
+      "error": "No module named 'complex_event_processing'"
+    },
+    "libxcore": {
+      "module": "libxcore",
+      "memory_increase_mb": 0.00390625,
+      "load_time_ms": 5.959033966064453,
+      "total_memory_mb": 1056.72265625,
+      "success": true,
+      "memory_hotspots": [
+        [
+          "  File \"<frozen importlib._bootstrap_external>\", line 672"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\libxcore.py\", line 41",
+          "    class LibXCore:"
+        ],
+        [
+          "  File \"C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\libxcore.py\", line 38",
+          "    class PdsXException(Exception):"
+        ]
+      ]
+    },
+    "module_manager": {
+      "module": "module_manager",
+      "memory_increase_mb": 0.0,
+      "load_time_ms": 0.0,
+      "total_memory_mb": 1056.72265625,
+      "success": true,
+      "memory_hotspots": []
+    },
+    "data_structures": {
+      "module": "data_structures",
+      "memory_increase_mb": 0.0,
+      "load_time_ms": 0.05316734313964844,
+      "total_memory_mb": 1056.72265625,
+      "success": true,
+      "memory_hotspots": []
+    },
+    "summary": {
+      "total_modules_tested": 11,
+      "successful_loads": 10,
+      "total_memory_increase_mb": 912.37109375,
+      "average_memory_per_module_mb": 82.94282670454545
+    }
+  },
+  "optimization_config": {
+    "pdsx_optimization": {
+      "strategy": "BALANCED",
+      "memory_budget_mb": 1359.842578125,
+      "max_modules": 15,
+      "auto_importer_mode": "HEAVY",
+      "modules": {
+        "priority": [
+          "auto_importer_heavy",
+          "reply_extension",
+          "libxcore",
+          "event3"
+        ],
+        "lazy_load": false,
+        "background_services": true,
+        "cache_size_mb": 271.968515625
+      },
+      "performance": {
+        "aggressive_gc": false,
+        "memory_monitoring": true,
+        "startup_optimization": true
+      }
+    },
+    "generated": {
+      "timestamp": "2025-07-22 21:38:33",
+      "system_ram_gb": 15.657806396484375,
+      "available_ram_gb": 4.426570892333984,
+      "memory_usage_percent": 71.7
+    }
+  },
+  "system_info": {
+    "total_ram_gb": 15.657806396484375,
+    "available_ram_gb": 4.426570892333984,
+    "memory_usage_percent": 71.7,
+    "python_version": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+    "platform": "win32"
+  }
+}

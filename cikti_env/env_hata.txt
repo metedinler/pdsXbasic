@@ -1,0 +1,185 @@
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\bus3.py: invalid syntax (<unknown>, line 184)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 184
+    except PdsXBusError as e:
+    ^^^^^^
+SyntaxError: invalid syntax
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\bytecode_engine(core2duo)2.py: invalid syntax (<unknown>, line 863)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 863
+    dismutase PdsXTypeError(f"Geçersiz yapı: {var_name}", code="SETFIELD002")
+              ^^^^^^^^^^^^^
+SyntaxError: invalid syntax
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\auto_importer.py: unmatched '}' (<unknown>, line 2925)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 2925
+    }   "analysis_count": 0,
+    ^
+SyntaxError: unmatched '}'
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\command_executor2.py: 'utf-8' codec can't decode byte 0xe7 in position 90: invalid continuation byte
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 267, in _cached_ast_parse
+    content = f.read()
+              ^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe7 in position 90: invalid continuation byte
+
+--------------------------------------------------
+[2025-06-24 15:50:44] scan_file: C:/Users/mete/Zotero/basic/pdsXuv14\command_executor2.py: 'utf-8' codec can't decode byte 0xe7 in position 90: invalid continuation byte
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 433, in scan_file
+    content = f.read()
+              ^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe7 in position 90: invalid continuation byte
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\command_executorx1.py: invalid syntax (<unknown>, line 1)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1
+    ```python
+    ^
+SyntaxError: invalid syntax
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\commoand_executorx2z.py: invalid syntax (<unknown>, line 1)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1
+    ```python
+    ^
+SyntaxError: invalid syntax
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\auto_importer_broken.py: unexpected indent (<unknown>, line 1673)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1673
+    args = parser.parse_args()
+IndentationError: unexpected indent
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\auto_importer v1795 copilot yarim copy.py: unmatched ']' (<unknown>, line 2385)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 2385
+    ],        package = match.strip()
+    ^
+SyntaxError: unmatched ']'
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\core2-5.py: expected an indented block after function definition on line 1317 (<unknown>, line 1318)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1318
+    """Koşullu boru hattı atlaması."""
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+IndentationError: expected an indented block after function definition on line 1317
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\auto_importerv17941.py: expected ':' (<unknown>, line 1150)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1150
+    except
+          ^
+SyntaxError: expected ':'
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\pdsx_analysis.py: unterminated triple-quoted string literal (detected at line 1210) (<unknown>, line 1)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1
+    """
+    ^
+SyntaxError: unterminated triple-quoted string literal (detected at line 1210)
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\pdsxeu_v14.py: '{' was never closed (<unknown>, line 237)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 237
+    self.function_table: Dict[str, Callable] = {
+                                               ^
+SyntaxError: '{' was never closed
+
+--------------------------------------------------
+[2025-06-24 15:50:44] parse_ast: C:/Users/mete/Zotero/basic/pdsXuv14\auto_importerv17941z.py: expected ':' (<unknown>, line 1150)
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\zotasistan\env_olusturucu\env_olusturucu11.py", line 268, in _cached_ast_parse
+    tree = ast.parse(content)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mete\anaconda3\Lib\ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1150
+    except
+          ^
+SyntaxError: expected ':'
+
+--------------------------------------------------

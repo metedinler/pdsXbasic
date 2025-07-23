@@ -1,0 +1,937 @@
+PowerShell Extension v2025.0.0
+Copyright (c) Microsoft Corporation.
+
+https://aka.ms/vscode-powershell
+Type 'help' to get help.
+
+(base) PS C:\Users\mete\Zotero\basic\pdsXuv14> python pdsxuv14.py --repl
+[PDS-X] Python Executable: C:\Users\mete\anaconda3\python.exe
+[PDS-X] Python Version: 3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 13:17:27) [MSC v.1929 64 bit (AMD64)]
+[PDS-X] P R O G R A M M E R   D E V E L O P M E N T   S Y S T E M .
+[PDS-X]       PDS-X BASIC v14u Çok-Paradigmalý Yorumlayýcý
+[PDS-X] Python 3.10 arama baþlatýldý...
+[PDS-X] PATH'de bulundu: C:\Users\mete\anaconda3\python.EXE (Python 3.12.7)
+[PDS-X] py launcher ile bulundu: py -3.10 (Python 3.10.11)
+[PDS-X] Python 3.10 bulundu: py -3.10
+[PDS-X] PATH'e eklemek için add_pdsx_path.bat veya add_pdsx_path.ps1 dosyasýný yönetici olarak çalýþtýrýn!
+[PDS-X] Sanal ortam oluþturuluyor (.pdsx_isolated_env)...
+[PDS-X] pip güncelleniyor...
+Requirement already satisfied: pip in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (23.0.1)
+Collecting pip
+  Using cached pip-25.1.1-py3-none-any.whl (1.8 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 23.0.1
+    Uninstalling pip-23.0.1:
+      Successfully uninstalled pip-23.0.1
+Successfully installed pip-25.1.1
+[PDS-X] Ortam hazýrlanýyor, tekrar baþlatýlýyor...
+(base) PS C:\Users\mete\Zotero\basic\pdsXuv14> [PDS-X] Python Executable: C:\Users\mete\Zotero\basic\pdsXuv14\.pdsx_isolated_env\Scripts\python.exe
+[PDS-X] Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+[PDS-X] P R O G R A M M E R   D E V E L O P M E N T   S Y S T E M .
+[PDS-X]       PDS-X BASIC v14u Çok-Paradigmalý Yorumlayýcý
+[PDS-X] Python 3.10 arama baþlatýldý...
+[PDS-X] PATH'de bulundu: C:\Users\mete\anaconda3\python.EXE (Python 3.12.7)
+[PDS-X] py launcher ile bulundu: py -3.10 (Python 3.10.11)
+[PDS-X] Python 3.10 bulundu: py -3.10
+[PDS-X] PATH'e eklemek için add_pdsx_path.bat veya add_pdsx_path.ps1 dosyasýný yönetici olarak çalýþtýrýn!
+[PDS-X] pip cache temizleniyor...
+Files removed: 938 (1521.0 MB)
+[PDS-X] Ana ML/bilimsel paketler tek seferde kuruluyor (numpy==1.26.4 sabit)...
+Collecting numpy==1.26.4
+Collecting scipy==1.11.4
+  Downloading scipy-1.11.4-cp310-cp310-win_amd64.whl.metadata (60 kB)
+Collecting pandas==2.1.4
+  Downloading pandas-2.1.4-cp310-cp310-win_amd64.whl.metadata (18 kB)
+Collecting scikit-learn==1.3.2
+  Downloading scikit_learn-1.3.2-cp310-cp310-win_amd64.whl.metadata (11 kB)
+Collecting matplotlib==3.8.4
+  Downloading matplotlib-3.8.4-cp310-cp310-win_amd64.whl.metadata (5.9 kB)
+Collecting seaborn==0.13.2
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting tensorflow==2.15.0
+  Downloading tensorflow-2.15.0-cp310-cp310-win_amd64.whl.metadata (3.6 kB)
+Collecting torch==2.2.2
+  Downloading torch-2.2.2-cp310-cp310-win_amd64.whl.metadata (26 kB)
+Collecting torch-geometric==2.5.3
+  Downloading torch_geometric-2.5.3-py3-none-any.whl.metadata (64 kB)
+Collecting qiskit
+  Downloading qiskit-2.0.2-cp39-abi3-win_amd64.whl.metadata (12 kB)
+Collecting dash
+  Downloading dash-3.0.4-py3-none-any.whl.metadata (10 kB)
+Collecting plotly
+  Downloading plotly-6.1.2-py3-none-any.whl.metadata (6.9 kB)
+Collecting flask
+  Downloading flask-3.1.1-py3-none-any.whl.metadata (3.0 kB)
+Collecting grpcio
+  Downloading grpcio-1.72.1-cp310-cp310-win_amd64.whl.metadata (4.0 kB)
+Collecting river
+  Downloading river-0.22.0-cp310-cp310-win_amd64.whl.metadata (9.0 kB)
+Collecting python-dateutil>=2.8.2 (from pandas==2.1.4)
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas==2.1.4)
+  Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.1 (from pandas==2.1.4)
+  Downloading tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting joblib>=1.1.1 (from scikit-learn==1.3.2)
+  Downloading joblib-1.5.1-py3-none-any.whl.metadata (5.6 kB)
+Collecting threadpoolctl>=2.0.0 (from scikit-learn==1.3.2)
+  Downloading threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+Collecting contourpy>=1.0.1 (from matplotlib==3.8.4)
+  Downloading contourpy-1.3.2-cp310-cp310-win_amd64.whl.metadata (5.5 kB)
+Collecting cycler>=0.10 (from matplotlib==3.8.4)
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.22.0 (from matplotlib==3.8.4)
+  Downloading fonttools-4.58.2-cp310-cp310-win_amd64.whl.metadata (108 kB)
+Collecting kiwisolver>=1.3.1 (from matplotlib==3.8.4)
+  Downloading kiwisolver-1.4.8-cp310-cp310-win_amd64.whl.metadata (6.3 kB)
+Collecting packaging>=20.0 (from matplotlib==3.8.4)
+  Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting pillow>=8 (from matplotlib==3.8.4)
+  Downloading pillow-11.2.1-cp310-cp310-win_amd64.whl.metadata (9.1 kB)
+Collecting pyparsing>=2.3.1 (from matplotlib==3.8.4)
+  Downloading pyparsing-3.2.3-py3-none-any.whl.metadata (5.0 kB)
+Collecting tensorflow-intel==2.15.0 (from tensorflow==2.15.0)
+  Downloading tensorflow_intel-2.15.0-cp310-cp310-win_amd64.whl.metadata (5.1 kB)
+Collecting filelock (from torch==2.2.2)
+  Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting typing-extensions>=4.8.0 (from torch==2.2.2)
+  Downloading typing_extensions-4.14.0-py3-none-any.whl.metadata (3.0 kB)
+Collecting sympy (from torch==2.2.2)
+  Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx (from torch==2.2.2)
+  Downloading networkx-3.4.2-py3-none-any.whl.metadata (6.3 kB)
+Collecting jinja2 (from torch==2.2.2)
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec (from torch==2.2.2)
+  Downloading fsspec-2025.5.1-py3-none-any.whl.metadata (11 kB)
+Collecting tqdm (from torch-geometric==2.5.3)
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+Collecting aiohttp (from torch-geometric==2.5.3)
+  Downloading aiohttp-3.12.10-cp310-cp310-win_amd64.whl.metadata (7.9 kB)
+Collecting requests (from torch-geometric==2.5.3)
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting psutil>=5.8.0 (from torch-geometric==2.5.3)
+  Downloading psutil-7.0.0-cp37-abi3-win_amd64.whl.metadata (23 kB)
+Collecting absl-py>=1.0.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading absl_py-2.3.0-py3-none-any.whl.metadata (2.4 kB)
+Collecting astunparse>=1.6.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading astunparse-1.6.3-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting flatbuffers>=23.5.26 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading flatbuffers-25.2.10-py2.py3-none-any.whl.metadata (875 bytes)
+Collecting gast!=0.5.0,!=0.5.1,!=0.5.2,>=0.2.1 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading gast-0.6.0-py3-none-any.whl.metadata (1.3 kB)
+Collecting google-pasta>=0.1.1 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading google_pasta-0.2.0-py3-none-any.whl.metadata (814 bytes)
+Collecting h5py>=2.9.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading h5py-3.14.0-cp310-cp310-win_amd64.whl.metadata (2.7 kB)
+Collecting libclang>=13.0.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading libclang-18.1.1-py2.py3-none-win_amd64.whl.metadata (5.3 kB)
+Collecting ml-dtypes~=0.2.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading ml_dtypes-0.2.0-cp310-cp310-win_amd64.whl.metadata (20 kB)
+Collecting opt-einsum>=2.3.2 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading opt_einsum-3.4.0-py3-none-any.whl.metadata (6.3 kB)
+Collecting protobuf!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.20.3 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading protobuf-4.25.8-cp310-abi3-win_amd64.whl.metadata (541 bytes)
+Requirement already satisfied: setuptools in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (65.5.0)
+Collecting six>=1.12.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting termcolor>=1.1.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading termcolor-3.1.0-py3-none-any.whl.metadata (6.4 kB)
+Collecting wrapt<1.15,>=1.11.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading wrapt-1.14.1-cp310-cp310-win_amd64.whl.metadata (6.7 kB)
+Collecting tensorflow-io-gcs-filesystem>=0.23.1 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading tensorflow_io_gcs_filesystem-0.31.0-cp310-cp310-win_amd64.whl.metadata (14 kB)
+Collecting tensorboard<2.16,>=2.15 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading tensorboard-2.15.2-py3-none-any.whl.metadata (1.7 kB)
+Collecting tensorflow-estimator<2.16,>=2.15.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading tensorflow_estimator-2.15.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting keras<2.16,>=2.15.0 (from tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading keras-2.15.0-py3-none-any.whl.metadata (2.4 kB)
+Collecting google-auth<3,>=1.6.3 (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading google_auth-2.40.3-py2.py3-none-any.whl.metadata (6.2 kB)
+Collecting google-auth-oauthlib<2,>=0.5 (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading google_auth_oauthlib-1.2.2-py3-none-any.whl.metadata (2.7 kB)
+Collecting markdown>=2.6.8 (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading markdown-3.8-py3-none-any.whl.metadata (5.1 kB)
+Collecting tensorboard-data-server<0.8.0,>=0.7.0 (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading tensorboard_data_server-0.7.2-py3-none-any.whl.metadata (1.1 kB)
+Collecting werkzeug>=1.0.1 (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading werkzeug-3.1.3-py3-none-any.whl.metadata (3.7 kB)
+Collecting cachetools<6.0,>=2.0.0 (from google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting pyasn1-modules>=0.2.1 (from google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting rsa<5,>=3.1.4 (from google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading rsa-4.9.1-py3-none-any.whl.metadata (5.6 kB)
+Collecting requests-oauthlib>=0.7.0 (from google-auth-oauthlib<2,>=0.5->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading requests_oauthlib-2.0.0-py2.py3-none-any.whl.metadata (11 kB)
+Collecting charset-normalizer<4,>=2 (from requests->torch-geometric==2.5.3)
+  Downloading charset_normalizer-3.4.2-cp310-cp310-win_amd64.whl.metadata (36 kB)
+Collecting idna<4,>=2.5 (from requests->torch-geometric==2.5.3)
+  Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+Collecting urllib3<3,>=1.21.1 (from requests->torch-geometric==2.5.3)
+  Downloading urllib3-2.4.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting certifi>=2017.4.17 (from requests->torch-geometric==2.5.3)
+  Downloading certifi-2025.4.26-py3-none-any.whl.metadata (2.5 kB)
+Collecting pyasn1>=0.1.3 (from rsa<5,>=3.1.4->google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading pyasn1-0.6.1-py3-none-any.whl.metadata (8.4 kB)
+Collecting rustworkx>=0.15.0 (from qiskit)
+  Downloading rustworkx-0.16.0-cp39-abi3-win_amd64.whl.metadata (10 kB)
+Collecting dill>=0.3 (from qiskit)
+  Downloading dill-0.4.0-py3-none-any.whl.metadata (10 kB)
+Collecting stevedore>=3.0.0 (from qiskit)
+  Downloading stevedore-5.4.1-py3-none-any.whl.metadata (2.3 kB)
+Collecting symengine<0.14,>=0.11 (from qiskit)
+  Downloading symengine-0.13.0-cp310-cp310-win_amd64.whl.metadata (1.2 kB)
+Collecting flask
+  Downloading flask-3.0.3-py3-none-any.whl.metadata (3.2 kB)
+Collecting werkzeug>=1.0.1 (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading werkzeug-3.0.6-py3-none-any.whl.metadata (3.7 kB)
+Collecting importlib-metadata (from dash)
+  Downloading importlib_metadata-8.7.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting retrying (from dash)
+  Downloading retrying-1.3.4-py3-none-any.whl.metadata (6.9 kB)
+Collecting nest-asyncio (from dash)
+  Downloading nest_asyncio-1.6.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting itsdangerous>=2.1.2 (from flask)
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting click>=8.1.3 (from flask)
+  Downloading click-8.2.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting blinker>=1.6.2 (from flask)
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting MarkupSafe>=2.1.1 (from werkzeug>=1.0.1->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading MarkupSafe-3.0.2-cp310-cp310-win_amd64.whl.metadata (4.1 kB)
+Collecting narwhals>=1.15.1 (from plotly)
+  Downloading narwhals-1.41.1-py3-none-any.whl.metadata (11 kB)
+INFO: pip is looking at multiple versions of river to determine which version is compatible with other requirements. This could take a while.
+Collecting river
+  Downloading river-0.21.2-cp310-cp310-win_amd64.whl.metadata (9.0 kB)
+  Downloading river-0.21.1-cp310-cp310-win_amd64.whl.metadata (9.0 kB)
+Collecting polars<0.21.0,>=0.20.8 (from river)
+  Downloading polars-0.20.31-cp38-abi3-win_amd64.whl.metadata (14 kB)
+Collecting wheel<1.0,>=0.23.0 (from astunparse>=1.6.0->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading wheel-0.45.1-py3-none-any.whl.metadata (2.3 kB)
+Collecting colorama (from click>=8.1.3->flask)
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting oauthlib>=3.0.0 (from requests-oauthlib>=0.7.0->google-auth-oauthlib<2,>=0.5->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0)
+  Downloading oauthlib-3.2.2-py3-none-any.whl.metadata (7.5 kB)
+Collecting pbr>=2.0.0 (from stevedore>=3.0.0->qiskit)
+  Downloading pbr-6.1.1-py2.py3-none-any.whl.metadata (3.4 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy->torch==2.2.2)
+  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting aiohappyeyeballs>=2.5.0 (from aiohttp->torch-geometric==2.5.3)
+  Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.1.2 (from aiohttp->torch-geometric==2.5.3)
+  Downloading aiosignal-1.3.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting async-timeout<6.0,>=4.0 (from aiohttp->torch-geometric==2.5.3)
+  Downloading async_timeout-5.0.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting attrs>=17.3.0 (from aiohttp->torch-geometric==2.5.3)
+  Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp->torch-geometric==2.5.3)
+  Downloading frozenlist-1.6.2-cp310-cp310-win_amd64.whl.metadata (17 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp->torch-geometric==2.5.3)
+  Downloading multidict-6.4.4-cp310-cp310-win_amd64.whl.metadata (5.5 kB)
+Collecting propcache>=0.2.0 (from aiohttp->torch-geometric==2.5.3)
+  Downloading propcache-0.3.1-cp310-cp310-win_amd64.whl.metadata (11 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp->torch-geometric==2.5.3)
+  Downloading yarl-1.20.0-cp310-cp310-win_amd64.whl.metadata (74 kB)
+Collecting zipp>=3.20 (from importlib-metadata->dash)
+  Downloading zipp-3.22.0-py3-none-any.whl.metadata (3.6 kB)
+Downloading numpy-1.26.4-cp310-cp310-win_amd64.whl (15.8 MB)
+   ???????????????????????????????????????? 15.8/15.8 MB 5.5 MB/s eta 0:00:00
+Downloading scipy-1.11.4-cp310-cp310-win_amd64.whl (44.1 MB)
+   ???????????????????????????????????????? 44.1/44.1 MB 6.0 MB/s eta 0:00:00
+Downloading pandas-2.1.4-cp310-cp310-win_amd64.whl (10.7 MB)
+   ???????????????????????????????????????? 10.7/10.7 MB 5.9 MB/s eta 0:00:00
+Downloading scikit_learn-1.3.2-cp310-cp310-win_amd64.whl (9.3 MB)
+   ???????????????????????????????????????? 9.3/9.3 MB 6.2 MB/s eta 0:00:00
+Downloading matplotlib-3.8.4-cp310-cp310-win_amd64.whl (7.7 MB)
+   ???????????????????????????????????????? 7.7/7.7 MB 6.2 MB/s eta 0:00:00
+Downloading seaborn-0.13.2-py3-none-any.whl (294 kB)
+Downloading tensorflow-2.15.0-cp310-cp310-win_amd64.whl (2.1 kB)
+Downloading torch-2.2.2-cp310-cp310-win_amd64.whl (198.6 MB)
+   ???????????????????????????????????????? 198.6/198.6 MB 5.4 MB/s eta 0:00:00
+Downloading torch_geometric-2.5.3-py3-none-any.whl (1.1 MB)
+   ???????????????????????????????????????? 1.1/1.1 MB 6.0 MB/s eta 0:00:00
+Downloading tensorflow_intel-2.15.0-cp310-cp310-win_amd64.whl (300.9 MB)
+   ???????????????????????????????????????? 300.9/300.9 MB 3.6 MB/s eta 0:00:00
+Downloading grpcio-1.72.1-cp310-cp310-win_amd64.whl (4.2 MB)
+   ???????????????????????????????????????? 4.2/4.2 MB 3.7 MB/s eta 0:00:00
+Downloading keras-2.15.0-py3-none-any.whl (1.7 MB)
+   ???????????????????????????????????????? 1.7/1.7 MB 3.9 MB/s eta 0:00:00
+Downloading ml_dtypes-0.2.0-cp310-cp310-win_amd64.whl (938 kB)
+   ???????????????????????????????????????? 938.6/938.6 kB 4.0 MB/s eta 0:00:00
+Downloading protobuf-4.25.8-cp310-abi3-win_amd64.whl (413 kB)
+Downloading tensorboard-2.15.2-py3-none-any.whl (5.5 MB)
+   ???????????????????????????????????????? 5.5/5.5 MB 3.9 MB/s eta 0:00:00
+Downloading google_auth-2.40.3-py2.py3-none-any.whl (216 kB)
+Downloading cachetools-5.5.2-py3-none-any.whl (10 kB)
+Downloading google_auth_oauthlib-1.2.2-py3-none-any.whl (19 kB)
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+Downloading charset_normalizer-3.4.2-cp310-cp310-win_amd64.whl (105 kB)
+Downloading idna-3.10-py3-none-any.whl (70 kB)
+Downloading rsa-4.9.1-py3-none-any.whl (34 kB)
+Downloading tensorboard_data_server-0.7.2-py3-none-any.whl (2.4 kB)
+Downloading tensorflow_estimator-2.15.0-py2.py3-none-any.whl (441 kB)
+Downloading urllib3-2.4.0-py3-none-any.whl (128 kB)
+Downloading wrapt-1.14.1-cp310-cp310-win_amd64.whl (35 kB)
+Downloading qiskit-2.0.2-cp39-abi3-win_amd64.whl (6.2 MB)
+   ???????????????????????????????????????? 6.2/6.2 MB 3.9 MB/s eta 0:00:00
+Downloading symengine-0.13.0-cp310-cp310-win_amd64.whl (17.8 MB)
+   ???????????????????????????????????????? 17.8/17.8 MB 3.8 MB/s eta 0:00:00
+Downloading dash-3.0.4-py3-none-any.whl (7.9 MB)
+   ???????????????????????????????????????? 7.9/7.9 MB 4.6 MB/s eta 0:00:00
+Downloading flask-3.0.3-py3-none-any.whl (101 kB)
+Downloading werkzeug-3.0.6-py3-none-any.whl (227 kB)
+Downloading plotly-6.1.2-py3-none-any.whl (16.3 MB)
+   ???????????????????????????????????????? 16.3/16.3 MB 3.9 MB/s eta 0:00:00
+Downloading river-0.21.1-cp310-cp310-win_amd64.whl (2.0 MB)
+   ???????????????????????????????????????? 2.0/2.0 MB 4.4 MB/s eta 0:00:00
+Downloading polars-0.20.31-cp38-abi3-win_amd64.whl (28.8 MB)
+   ???????????????????????????????????????? 28.8/28.8 MB 4.5 MB/s eta 0:00:00
+Downloading absl_py-2.3.0-py3-none-any.whl (135 kB)
+Downloading astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading wheel-0.45.1-py3-none-any.whl (72 kB)
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading certifi-2025.4.26-py3-none-any.whl (159 kB)
+Downloading click-8.2.1-py3-none-any.whl (102 kB)
+Downloading contourpy-1.3.2-cp310-cp310-win_amd64.whl (221 kB)
+Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading dill-0.4.0-py3-none-any.whl (119 kB)
+Downloading flatbuffers-25.2.10-py2.py3-none-any.whl (30 kB)
+Downloading fonttools-4.58.2-cp310-cp310-win_amd64.whl (2.2 MB)
+   ???????????????????????????????????????? 2.2/2.2 MB 3.0 MB/s eta 0:00:00
+Downloading gast-0.6.0-py3-none-any.whl (21 kB)
+Downloading google_pasta-0.2.0-py3-none-any.whl (57 kB)
+Downloading h5py-3.14.0-cp310-cp310-win_amd64.whl (2.9 MB)
+   ???????????????????????????????????????? 2.9/2.9 MB 2.1 MB/s eta 0:00:00
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading joblib-1.5.1-py3-none-any.whl (307 kB)
+Downloading kiwisolver-1.4.8-cp310-cp310-win_amd64.whl (71 kB)
+Downloading libclang-18.1.1-py2.py3-none-win_amd64.whl (26.4 MB)
+   ???????????????????????????????????????? 26.4/26.4 MB 3.4 MB/s eta 0:00:00
+Downloading markdown-3.8-py3-none-any.whl (106 kB)
+Downloading MarkupSafe-3.0.2-cp310-cp310-win_amd64.whl (15 kB)
+Downloading narwhals-1.41.1-py3-none-any.whl (358 kB)
+Downloading opt_einsum-3.4.0-py3-none-any.whl (71 kB)
+Downloading packaging-25.0-py3-none-any.whl (66 kB)
+Downloading pillow-11.2.1-cp310-cp310-win_amd64.whl (2.7 MB)
+   ???????????????????????????????????????? 2.7/2.7 MB 2.7 MB/s eta 0:00:00
+Downloading psutil-7.0.0-cp37-abi3-win_amd64.whl (244 kB)
+Downloading pyasn1-0.6.1-py3-none-any.whl (83 kB)
+Downloading pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+Downloading pyparsing-3.2.3-py3-none-any.whl (111 kB)
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+Downloading requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+Downloading oauthlib-3.2.2-py3-none-any.whl (151 kB)
+Downloading rustworkx-0.16.0-cp39-abi3-win_amd64.whl (2.0 MB)
+   ???????????????????????????????????????? 2.0/2.0 MB 2.5 MB/s eta 0:00:00
+Downloading stevedore-5.4.1-py3-none-any.whl (49 kB)
+Downloading pbr-6.1.1-py2.py3-none-any.whl (108 kB)
+Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ???????????????????????????????????????? 6.3/6.3 MB 3.2 MB/s eta 0:00:00
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ???????????????????????????????????????? 536.2/536.2 kB 3.5 MB/s eta 0:00:00
+Downloading tensorflow_io_gcs_filesystem-0.31.0-cp310-cp310-win_amd64.whl (1.5 MB)
+   ???????????????????????????????????????? 1.5/1.5 MB 3.4 MB/s eta 0:00:00
+Downloading termcolor-3.1.0-py3-none-any.whl (7.7 kB)
+Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Downloading typing_extensions-4.14.0-py3-none-any.whl (43 kB)
+Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+Downloading aiohttp-3.12.10-cp310-cp310-win_amd64.whl (449 kB)
+Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+Downloading multidict-6.4.4-cp310-cp310-win_amd64.whl (38 kB)
+Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ???????????????????????????????????????? 6.3/6.3 MB 3.2 MB/s eta 0:00:00
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ???????????????????????????????????????? 536.2/536.2 kB 3.5 MB/s eta 0:00:00
+Downloading tensorflow_io_gcs_filesystem-0.31.0-cp310-cp310-win_amd64.whl (1.5 MB)
+   ???????????????????????????????????????? 1.5/1.5 MB 3.4 MB/s eta 0:00:00
+Downloading termcolor-3.1.0-py3-none-any.whl (7.7 kB)
+Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Downloading typing_extensions-4.14.0-py3-none-any.whl (43 kB)
+Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+Downloading aiohttp-3.12.10-cp310-cp310-win_amd64.whl (449 kB)
+Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+Downloading multidict-6.4.4-cp310-cp310-win_amd64.whl (38 kB)
+Downloading tensorflow_io_gcs_filesystem-0.31.0-cp310-cp310-win_amd64.whl (1.5 MB)
+   ???????????????????????????????????????? 1.5/1.5 MB 3.4 MB/s eta 0:00:00
+Downloading termcolor-3.1.0-py3-none-any.whl (7.7 kB)
+Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Downloading typing_extensions-4.14.0-py3-none-any.whl (43 kB)
+Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+Downloading aiohttp-3.12.10-cp310-cp310-win_amd64.whl (449 kB)
+Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+Downloading multidict-6.4.4-cp310-cp310-win_amd64.whl (38 kB)
+Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+Downloading multidict-6.4.4-cp310-cp310-win_amd64.whl (38 kB)
+Downloading yarl-1.20.0-cp310-cp310-win_amd64.whl (92 kB)
+Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+Downloading frozenlist-1.6.2-cp310-cp310-win_amd64.whl (45 kB)
+Downloading propcache-0.3.1-cp310-cp310-win_amd64.whl (45 kB)
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+Downloading fsspec-2025.5.1-py3-none-any.whl (199 kB)
+Downloading importlib_metadata-8.7.0-py3-none-any.whl (27 kB)
+Downloading zipp-3.22.0-py3-none-any.whl (9.8 kB)
+Downloading nest_asyncio-1.6.0-py3-none-any.whl (5.2 kB)
+Downloading networkx-3.4.2-py3-none-any.whl (1.7 MB)
+   ???????????????????????????????????????? 1.7/1.7 MB 3.3 MB/s eta 0:00:00
+Downloading retrying-1.3.4-py3-none-any.whl (11 kB)
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+Installing collected packages: pytz, mpmath, libclang, flatbuffers, zipp, wrapt, wheel, urllib3, tzdata, typing-extensions, threadpoolctl, termcolor, tensorflow-io-gcs-filesystem, tensorflow-estimator, tensorboard-data-server, sympy, symengine, 
+six, pyparsing, pyasn1, psutil, protobuf, propcache, polars, pillow, pbr, packaging, opt-einsum, oauthlib, numpy, networkx, nest-asyncio, narwhals, MarkupSafe, markdown, kiwisolver, keras, joblib, itsdangerous, idna, grpcio, gast, fsspec, frozenlist, fonttools, filelock, dill, cycler, colorama, charset-normalizer, certifi, cachetools, blinker, attrs, async-timeout, aiohappyeyeballs, absl-py, werkzeug, tqdm, stevedore, scipy, rustworkx, rsa, retrying, requests, python-dateutil, pyasn1-modules, plotly, multidict, ml-dtypes, jinja2, importlib-metadata, h5py, google-pasta, contourpy, click, astunparse, aiosignal, yarl, torch, scikit-learn, requests-oauthlib, qiskit, pandas, matplotlib, google-auth, flask, seaborn, river, google-auth-oauthlib, dash, aiohttp, torch-geometric, tensorboard, tensorflow-intel, tensorflow
+Successfully installed MarkupSafe-3.0.2 absl-py-2.3.0 aiohappyeyeballs-2.6.1 aiohttp-3.12.10 aiosignal-1.3.2 astunparse-1.6.3 async-timeout-5.0.1 attrs-25.3.0 blinker-1.9.0 cachetools-5.5.2 certifi-2025.4.26 charset-normalizer-3.4.2 click-8.2.1 
+colorama-0.4.6 contourpy-1.3.2 cycler-0.12.1 dash-3.0.4 dill-0.4.0 filelock-3.18.0 flask-3.0.3 flatbuffers-25.2.10 fonttools-4.58.2 frozenlist-1.6.2 fsspec-2025.5.1 gast-0.6.0 google-auth-2.40.3 google-auth-oauthlib-1.2.2 google-pasta-0.2.0 grpcio-1.72.1 h5py-3.14.0 idna-3.10 importlib-metadata-8.7.0 itsdangerous-2.2.0 jinja2-3.1.6 joblib-1.5.1 keras-2.15.0 kiwisolver-1.4.8 libclang-18.1.1 markdown-3.8 matplotlib-3.8.4 ml-dtypes-0.2.0 mpmath-1.3.0 multidict-6.4.4 narwhals-1.41.1 nest-asyncio-1.6.0 networkx-3.4.2 numpy-1.26.4 oauthlib-3.2.2 opt-einsum-3.4.0 packaging-25.0 pandas-2.1.4 pbr-6.1.1 pillow-11.2.1 plotly-6.1.2 polars-0.20.31 propcache-0.3.1 protobuf-4.25.8 psutil-7.0.0 pyasn1-0.6.1 pyasn1-modules-0.4.2 pyparsing-3.2.3 python-dateutil-2.9.0.post0 pytz-2025.2 qiskit-2.0.2 requests-2.32.3 requests-oauthlib-2.0.0 retrying-1.3.4 river-0.21.1 rsa-4.9.1 rustworkx-0.16.0 scikit-learn-1.3.2 scipy-1.11.4 seaborn-0.13.2 six-1.17.0 stevedore-5.4.1 symengine-0.13.0 sympy-1.14.0 tensorboard-2.15.2 tensorboard-data-server-0.7.2 tensorflow-2.15.0 tensorflow-estimator-2.15.0 tensorflow-intel-2.15.0 tensorflow-io-gcs-filesystem-0.31.0 termcolor-3.1.0 threadpoolctl-3.6.0 torch-2.2.2 torch-geometric-2.5.3 tqdm-4.67.1 typing-extensions-4.14.0 tzdata-2025.2 urllib3-2.4.0 werkzeug-3.0.6 wheel-0.45.1 wrapt-1.14.1 yarl-1.20.0 zipp-3.22.0
+[PDS-X] Paket zaten yüklü: joblib
+[PDS-X] Paket zaten yüklü: threadpoolctl
+[PDS-X] Paket zaten yüklü: kiwisolver
+[PDS-X] Paket zaten yüklü: cycler
+[PDS-X] Paket zaten yüklü: pyparsing
+[PDS-X] Paket zaten yüklü: python-dateutil
+[PDS-X] Paket zaten yüklü: pillow
+[PDS-X] Paket zaten yüklü: packaging
+[PDS-X] Paket yükleniyor: statsmodels
+Collecting statsmodels
+  Downloading statsmodels-0.14.4-cp310-cp310-win_amd64.whl.metadata (9.5 kB)
+Downloading statsmodels-0.14.4-cp310-cp310-win_amd64.whl (9.8 MB)
+   ???????????????????????????????????????? 9.8/9.8 MB 5.2 MB/s eta 0:00:00
+Installing collected packages: statsmodels
+Successfully installed statsmodels-0.14.4
+[PDS-X] Paket yükleniyor: tornado
+Collecting tornado
+  Downloading tornado-6.5.1-cp39-abi3-win_amd64.whl.metadata (2.9 kB)
+Downloading tornado-6.5.1-cp39-abi3-win_amd64.whl (444 kB)
+Installing collected packages: tornado
+Successfully installed tornado-6.5.1
+[PDS-X] Paket yükleniyor: tenacity
+Collecting tenacity
+  Downloading tenacity-9.1.2-py3-none-any.whl.metadata (1.2 kB)
+Downloading tenacity-9.1.2-py3-none-any.whl (28 kB)
+Installing collected packages: tenacity
+Successfully installed tenacity-9.1.2
+[PDS-X] Paket zaten yüklü: jinja2
+[PDS-X] Paket zaten yüklü: werkzeug
+[PDS-X] Paket zaten yüklü: itsdangerous
+[PDS-X] Paket zaten yüklü: markupsafe
+[PDS-X] Paket zaten yüklü: click
+[PDS-X] Paket zaten yüklü: protobuf
+[PDS-X] Paket zaten yüklü: aiohttp
+[PDS-X] Paket zaten yüklü: async-timeout
+[PDS-X] Paket zaten yüklü: yarl
+[PDS-X] Paket zaten yüklü: multidict
+[PDS-X] Paket zaten yüklü: attrs
+[PDS-X] Paket zaten yüklü: frozenlist
+[PDS-X] Paket yükleniyor: pyzmq
+Collecting pyzmq
+  Downloading pyzmq-26.4.0-cp310-cp310-win_amd64.whl.metadata (6.0 kB)
+Downloading pyzmq-26.4.0-cp310-cp310-win_amd64.whl (643 kB)
+   ???????????????????????????????????????? 643.8/643.8 kB 4.1 MB/s eta 0:00:00
+Installing collected packages: pyzmq
+Successfully installed pyzmq-26.4.0
+[PDS-X] Paket yükleniyor: websocket-client
+Collecting websocket-client
+  Downloading websocket_client-1.8.0-py3-none-any.whl.metadata (8.0 kB)
+Downloading websocket_client-1.8.0-py3-none-any.whl (58 kB)
+Installing collected packages: websocket-client
+Successfully installed websocket-client-1.8.0
+[PDS-X] Paket yükleniyor: paho-mqtt
+Collecting paho-mqtt
+  Downloading paho_mqtt-2.1.0-py3-none-any.whl.metadata (23 kB)
+Downloading paho_mqtt-2.1.0-py3-none-any.whl (67 kB)
+Installing collected packages: paho-mqtt
+Successfully installed paho-mqtt-2.1.0
+[PDS-X] Paket yükleniyor: kafka-python
+Collecting kafka-python
+  Downloading kafka_python-2.2.11-py2.py3-none-any.whl.metadata (10.0 kB)
+Downloading kafka_python-2.2.11-py2.py3-none-any.whl (309 kB)
+Installing collected packages: kafka-python
+Successfully installed kafka-python-2.2.11
+[PDS-X] Paket zaten yüklü: networkx
+[PDS-X] Paket yükleniyor: boto3
+Collecting boto3
+  Downloading boto3-1.38.32-py3-none-any.whl.metadata (6.6 kB)
+Downloading boto3-1.38.32-py3-none-any.whl (139 kB)
+Installing collected packages: boto3
+Successfully installed boto3-1.38.32
+[PDS-X] Paket yükleniyor: botocore
+Collecting botocore
+  Downloading botocore-1.38.32-py3-none-any.whl.metadata (5.7 kB)
+Downloading botocore-1.38.32-py3-none-any.whl (13.6 MB)
+   ???????????????????????????????????????? 13.6/13.6 MB 5.7 MB/s eta 0:00:00
+Installing collected packages: botocore
+Successfully installed botocore-1.38.32
+[PDS-X] Paket yükleniyor: websockets
+Collecting websockets
+  Downloading websockets-15.0.1-cp310-cp310-win_amd64.whl.metadata (7.0 kB)
+Downloading websockets-15.0.1-cp310-cp310-win_amd64.whl (176 kB)
+Installing collected packages: websockets
+Successfully installed websockets-15.0.1
+[PDS-X] Paket yükleniyor: rich
+Collecting rich
+  Downloading rich-14.0.0-py3-none-any.whl.metadata (18 kB)
+Downloading rich-14.0.0-py3-none-any.whl (243 kB)
+Installing collected packages: rich
+Successfully installed rich-14.0.0
+[PDS-X] Paket zaten yüklü: colorama
+[PDS-X] Paket yükleniyor: textblob
+Collecting textblob
+  Downloading textblob-0.19.0-py3-none-any.whl.metadata (4.4 kB)
+Downloading textblob-0.19.0-py3-none-any.whl (624 kB)
+   ???????????????????????????????????????? 624.3/624.3 kB 2.3 MB/s eta 0:00:00
+Installing collected packages: textblob
+Successfully installed textblob-0.19.0
+[PDS-X] Paket yükleniyor: mysql-connector-python
+Collecting mysql-connector-python
+  Downloading mysql_connector_python-9.3.0-cp310-cp310-win_amd64.whl.metadata (7.5 kB)
+Downloading mysql_connector_python-9.3.0-cp310-cp310-win_amd64.whl (16.4 MB)
+   ???????????????????????????????????????? 16.4/16.4 MB 4.6 MB/s eta 0:00:00
+Installing collected packages: mysql-connector-python
+Successfully installed mysql-connector-python-9.3.0
+[PDS-X] Paket zaten yüklü: psutil
+[PDS-X] Paket yükleniyor: pyyaml
+Collecting pyyaml
+  Downloading PyYAML-6.0.2-cp310-cp310-win_amd64.whl.metadata (2.1 kB)
+Downloading PyYAML-6.0.2-cp310-cp310-win_amd64.whl (161 kB)
+Installing collected packages: pyyaml
+Successfully installed pyyaml-6.0.2
+[PDS-X] Paket yükleniyor: graphviz
+Collecting graphviz
+  Downloading graphviz-0.20.3-py3-none-any.whl.metadata (12 kB)
+Downloading graphviz-0.20.3-py3-none-any.whl (47 kB)
+Installing collected packages: graphviz
+Successfully installed graphviz-0.20.3
+[PDS-X] Paket yükleniyor: aiofiles==23.2.1
+Collecting aiofiles==23.2.1
+  Downloading aiofiles-23.2.1-py3-none-any.whl.metadata (9.7 kB)
+Downloading aiofiles-23.2.1-py3-none-any.whl (15 kB)
+Installing collected packages: aiofiles
+Successfully installed aiofiles-23.2.1
+[PDS-X] RestrictedPython Python 3.10 ile uyumsuz, atlanýyor.
+[PDS-X] Paket yükleniyor: pdfplumber
+Collecting pdfplumber
+  Downloading pdfplumber-0.11.6-py3-none-any.whl.metadata (42 kB)
+Downloading pdfplumber-0.11.6-py3-none-any.whl (60 kB)
+Installing collected packages: pdfplumber
+Successfully installed pdfplumber-0.11.6
+[PDS-X] Paket zaten yüklü: requests
+
+[PDS-X] Paket yükleme özeti:
+  joblib: Yüklü
+  threadpoolctl: Yüklü
+  kiwisolver: Yüklü
+  cycler: Yüklü
+  pyparsing: Yüklü
+  python-dateutil: Yüklü
+  pillow: Yüklü
+  packaging: Yüklü
+  statsmodels: HATA!
+  tornado: Yüklü
+  tenacity: Yüklü
+  jinja2: Yüklü
+  werkzeug: Yüklü
+  itsdangerous: Yüklü
+  markupsafe: Yüklü
+  click: Yüklü
+  protobuf: Yüklü
+  aiohttp: Yüklü
+  async-timeout: Yüklü
+  yarl: Yüklü
+  multidict: Yüklü
+  attrs: Yüklü
+  frozenlist: Yüklü
+  pyzmq: Yüklü
+  websocket-client: Yüklü
+  paho-mqtt: Yüklü
+  kafka-python: Yüklü
+  networkx: Yüklü
+  boto3: HATA!
+  botocore: Yüklü
+  websockets: Yüklü
+  rich: Yüklü
+  colorama: Yüklü
+  textblob: HATA!
+  mysql-connector-python: Yüklü
+  psutil: Yüklü
+  pyyaml: Yüklü
+  graphviz: Yüklü
+  aiofiles==23.2.1: Yüklü
+  RestrictedPython==6.3.0: Atlandý
+  pdfplumber: HATA!
+  requests: Yüklü
+[PDS-X] Eðer bir paket HATA verdiyse, elle tekrar yüklemeyi deneyin veya pip cache temizleyin.
+2025-06-07 18:09:51.216792: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[PDS-X] pip cache temizleniyor...
+Files removed: 686 (787.8 MB)
+[PDS-X] Ana ML/bilimsel paketler tek seferde kuruluyor (numpy==1.26.4 sabit)...
+Requirement already satisfied: numpy==1.26.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (1.26.4)
+Requirement already satisfied: scipy==1.11.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (1.11.4)
+Requirement already satisfied: pandas==2.1.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (2.1.4)
+Requirement already satisfied: scikit-learn==1.3.2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (1.3.2)
+Requirement already satisfied: matplotlib==3.8.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (3.8.4)
+Requirement already satisfied: seaborn==0.13.2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (0.13.2)
+Requirement already satisfied: tensorflow==2.15.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (2.15.0)
+Requirement already satisfied: torch==2.2.2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (2.2.2)
+Requirement already satisfied: torch-geometric==2.5.3 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (2.5.3)
+Requirement already satisfied: qiskit in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (2.0.2)
+Requirement already satisfied: dash in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (3.0.4)
+Requirement already satisfied: plotly in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (6.1.2)
+Requirement already satisfied: flask in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (3.0.3)
+Requirement already satisfied: grpcio in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (1.72.1)
+Requirement already satisfied: river in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (0.21.1)
+Requirement already satisfied: python-dateutil>=2.8.2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from pandas==2.1.4) (2.9.0.post0)
+Requirement already satisfied: pytz>=2020.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from pandas==2.1.4) (2025.2)
+Requirement already satisfied: tzdata>=2022.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from pandas==2.1.4) (2025.2)
+Requirement already satisfied: joblib>=1.1.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from scikit-learn==1.3.2) (1.5.1)
+Requirement already satisfied: threadpoolctl>=2.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from scikit-learn==1.3.2) (3.6.0)
+Requirement already satisfied: contourpy>=1.0.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from matplotlib==3.8.4) (1.3.2)
+Requirement already satisfied: cycler>=0.10 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from matplotlib==3.8.4) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from matplotlib==3.8.4) (4.58.2)
+Requirement already satisfied: kiwisolver>=1.3.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from matplotlib==3.8.4) (1.4.8)
+Requirement already satisfied: packaging>=20.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from matplotlib==3.8.4) (25.0)
+Requirement already satisfied: pillow>=8 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from matplotlib==3.8.4) (11.2.1)
+Requirement already satisfied: pyparsing>=2.3.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from matplotlib==3.8.4) (3.2.3)
+Requirement already satisfied: tensorflow-intel==2.15.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow==2.15.0) (2.15.0)
+Requirement already satisfied: filelock in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch==2.2.2) (3.18.0)
+Requirement already satisfied: typing-extensions>=4.8.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch==2.2.2) (4.14.0)
+Requirement already satisfied: sympy in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch==2.2.2) (1.14.0)
+Requirement already satisfied: networkx in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch==2.2.2) (3.4.2)
+Requirement already satisfied: jinja2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch==2.2.2) (3.1.6)
+Requirement already satisfied: fsspec in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch==2.2.2) (2025.5.1)
+Requirement already satisfied: tqdm in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch-geometric==2.5.3) (4.67.1)
+Requirement already satisfied: aiohttp in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch-geometric==2.5.3) (3.12.10)
+Requirement already satisfied: requests in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch-geometric==2.5.3) (2.32.3)
+Requirement already satisfied: psutil>=5.8.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from torch-geometric==2.5.3) (7.0.0)
+Requirement already satisfied: absl-py>=1.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (2.3.0)
+Requirement already satisfied: astunparse>=1.6.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (1.6.3)
+Requirement already satisfied: flatbuffers>=23.5.26 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (25.2.10)
+Requirement already satisfied: gast!=0.5.0,!=0.5.1,!=0.5.2,>=0.2.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (0.6.0)
+Requirement already satisfied: google-pasta>=0.1.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (0.2.0)
+Requirement already satisfied: h5py>=2.9.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (3.14.0)
+Requirement already satisfied: libclang>=13.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (18.1.1)
+Requirement already satisfied: ml-dtypes~=0.2.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (0.2.0)
+Requirement already satisfied: opt-einsum>=2.3.2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (3.4.0)
+Requirement already satisfied: protobuf!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.20.3 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (4.25.8)
+Requirement already satisfied: setuptools in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (65.5.0)
+Requirement already satisfied: six>=1.12.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (1.17.0)
+Requirement already satisfied: termcolor>=1.1.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (3.1.0)
+Requirement already satisfied: wrapt<1.15,>=1.11.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (1.14.1)
+Requirement already satisfied: tensorflow-io-gcs-filesystem>=0.23.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (0.31.0)
+Requirement already satisfied: tensorboard<2.16,>=2.15 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (2.15.2)
+Requirement already satisfied: tensorflow-estimator<2.16,>=2.15.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (2.15.0)
+Requirement already satisfied: keras<2.16,>=2.15.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorflow-intel==2.15.0->tensorflow==2.15.0) (2.15.0)
+Requirement already satisfied: google-auth<3,>=1.6.3 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (2.40.3)
+Requirement already satisfied: google-auth-oauthlib<2,>=0.5 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (1.2.2)
+Requirement already satisfied: markdown>=2.6.8 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (3.8)
+Requirement already satisfied: tensorboard-data-server<0.8.0,>=0.7.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (0.7.2)
+Requirement already satisfied: werkzeug>=1.0.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (3.0.6)
+Requirement already satisfied: cachetools<6.0,>=2.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (5.5.2)
+Requirement already satisfied: pyasn1-modules>=0.2.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (0.4.2)
+Requirement already satisfied: rsa<5,>=3.1.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (4.9.1)
+Requirement already satisfied: requests-oauthlib>=0.7.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from google-auth-oauthlib<2,>=0.5->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (2.0.0)
+Requirement already satisfied: charset-normalizer<4,>=2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from requests->torch-geometric==2.5.3) (3.4.2)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from requests->torch-geometric==2.5.3) (3.10)
+Requirement already satisfied: urllib3<3,>=1.21.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from requests->torch-geometric==2.5.3) (2.4.0)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from requests->torch-geometric==2.5.3) (2025.4.26)
+Requirement already satisfied: pyasn1>=0.1.3 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from rsa<5,>=3.1.4->google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (0.6.1)
+Requirement already satisfied: rustworkx>=0.15.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from qiskit) (0.16.0)
+Requirement already satisfied: dill>=0.3 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from qiskit) (0.4.0)
+Requirement already satisfied: stevedore>=3.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from qiskit) (5.4.1)
+Requirement already satisfied: symengine<0.14,>=0.11 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from qiskit) (0.13.0)
+Requirement already satisfied: importlib-metadata in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from dash) (8.7.0)
+Requirement already satisfied: retrying in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from dash) (1.3.4)
+Requirement already satisfied: nest-asyncio in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from dash) (1.6.0)
+Requirement already satisfied: itsdangerous>=2.1.2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from flask) (2.2.0)
+Requirement already satisfied: click>=8.1.3 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from flask) (8.2.1)
+Requirement already satisfied: blinker>=1.6.2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from flask) (1.9.0)
+Requirement already satisfied: MarkupSafe>=2.1.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from werkzeug>=1.0.1->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (3.0.2)
+Requirement already satisfied: narwhals>=1.15.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from plotly) (1.41.1)
+Requirement already satisfied: polars<0.21.0,>=0.20.8 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from river) (0.20.31)
+Requirement already satisfied: wheel<1.0,>=0.23.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from astunparse>=1.6.0->tensorflow-intel==2.15.0->tensorflow==2.15.0) (0.45.1)
+Requirement already satisfied: colorama in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from click>=8.1.3->flask) (0.4.6)
+Requirement already satisfied: oauthlib>=3.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from requests-oauthlib>=0.7.0->google-auth-oauthlib<2,>=0.5->tensorboard<2.16,>=2.15->tensorflow-intel==2.15.0->tensorflow==2.15.0) (3.2.2)
+Requirement already satisfied: pbr>=2.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from stevedore>=3.0.0->qiskit) (6.1.1)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from sympy->torch==2.2.2) (1.3.0)
+Requirement already satisfied: aiohappyeyeballs>=2.5.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from aiohttp->torch-geometric==2.5.3) (2.6.1)
+Requirement already satisfied: aiosignal>=1.1.2 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from aiohttp->torch-geometric==2.5.3) (1.3.2)
+Requirement already satisfied: async-timeout<6.0,>=4.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from aiohttp->torch-geometric==2.5.3) (5.0.1)
+Requirement already satisfied: attrs>=17.3.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from aiohttp->torch-geometric==2.5.3) (25.3.0)
+Requirement already satisfied: frozenlist>=1.1.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from aiohttp->torch-geometric==2.5.3) (1.6.2)
+Requirement already satisfied: multidict<7.0,>=4.5 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from aiohttp->torch-geometric==2.5.3) (6.4.4)
+Requirement already satisfied: propcache>=0.2.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from aiohttp->torch-geometric==2.5.3) (0.3.1)
+Requirement already satisfied: yarl<2.0,>=1.17.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from aiohttp->torch-geometric==2.5.3) (1.20.0)
+Requirement already satisfied: zipp>=3.20 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from importlib-metadata->dash) (3.22.0)
+[PDS-X] Paket zaten yüklü: joblib
+[PDS-X] Paket zaten yüklü: threadpoolctl
+[PDS-X] Paket zaten yüklü: kiwisolver
+[PDS-X] Paket zaten yüklü: cycler
+[PDS-X] Paket zaten yüklü: pyparsing
+[PDS-X] Paket zaten yüklü: python-dateutil
+[PDS-X] Paket zaten yüklü: pillow
+[PDS-X] Paket zaten yüklü: packaging
+[PDS-X] Paket yükleniyor: statsmodels
+Collecting statsmodels
+  Downloading statsmodels-0.14.4-cp310-cp310-win_amd64.whl.metadata (9.5 kB)
+Downloading statsmodels-0.14.4-cp310-cp310-win_amd64.whl (9.8 MB)
+   ???????????????????????????????????????? 9.8/9.8 MB 5.1 MB/s eta 0:00:00
+Installing collected packages: statsmodels
+  Attempting uninstall: statsmodels
+    Found existing installation: statsmodels 0.14.4
+    Uninstalling statsmodels-0.14.4:
+      Successfully uninstalled statsmodels-0.14.4
+Successfully installed statsmodels-0.14.4
+[PDS-X] Paket zaten yüklü: tornado
+[PDS-X] Paket zaten yüklü: tenacity
+[PDS-X] Paket zaten yüklü: jinja2
+[PDS-X] Paket zaten yüklü: werkzeug
+[PDS-X] Paket zaten yüklü: itsdangerous
+[PDS-X] Paket zaten yüklü: markupsafe
+[PDS-X] Paket zaten yüklü: click
+[PDS-X] Paket zaten yüklü: protobuf
+[PDS-X] Paket zaten yüklü: aiohttp
+[PDS-X] Paket zaten yüklü: async-timeout
+[PDS-X] Paket zaten yüklü: yarl
+[PDS-X] Paket zaten yüklü: multidict
+[PDS-X] Paket zaten yüklü: attrs
+[PDS-X] Paket zaten yüklü: frozenlist
+[PDS-X] Paket zaten yüklü: pyzmq
+[PDS-X] Paket zaten yüklü: websocket-client
+[PDS-X] Paket zaten yüklü: paho-mqtt
+[PDS-X] Paket zaten yüklü: kafka-python
+[PDS-X] Paket zaten yüklü: networkx
+[PDS-X] Paket yükleniyor: boto3
+Collecting boto3
+  Downloading boto3-1.38.32-py3-none-any.whl.metadata (6.6 kB)
+Downloading boto3-1.38.32-py3-none-any.whl (139 kB)
+Installing collected packages: boto3
+  Attempting uninstall: boto3
+    Found existing installation: boto3 1.38.32
+    Uninstalling boto3-1.38.32:
+      Successfully uninstalled boto3-1.38.32
+Successfully installed boto3-1.38.32
+[PDS-X] Paket zaten yüklü: botocore
+[PDS-X] Paket zaten yüklü: websockets
+[PDS-X] Paket zaten yüklü: rich
+[PDS-X] Paket zaten yüklü: colorama
+[PDS-X] Paket yükleniyor: textblob
+Collecting textblob
+  Downloading textblob-0.19.0-py3-none-any.whl.metadata (4.4 kB)
+Downloading textblob-0.19.0-py3-none-any.whl (624 kB)
+   ???????????????????????????????????????? 624.3/624.3 kB 3.9 MB/s eta 0:00:00
+Installing collected packages: textblob
+  Attempting uninstall: textblob
+    Found existing installation: textblob 0.19.0
+    Uninstalling textblob-0.19.0:
+      Successfully uninstalled textblob-0.19.0
+Successfully installed textblob-0.19.0
+[PDS-X] Paket zaten yüklü: mysql-connector-python
+[PDS-X] Paket zaten yüklü: psutil
+[PDS-X] Paket zaten yüklü: pyyaml
+[PDS-X] Paket zaten yüklü: graphviz
+[PDS-X] Paket zaten yüklü: aiofiles==23.2.1
+[PDS-X] RestrictedPython Python 3.10 ile uyumsuz, atlanýyor.
+[PDS-X] Paket yükleniyor: pdfplumber
+Collecting pdfplumber
+  Downloading pdfplumber-0.11.6-py3-none-any.whl.metadata (42 kB)
+Downloading pdfplumber-0.11.6-py3-none-any.whl (60 kB)
+Installing collected packages: pdfplumber
+  Attempting uninstall: pdfplumber
+    Found existing installation: pdfplumber 0.11.6
+    Uninstalling pdfplumber-0.11.6:
+      Successfully uninstalled pdfplumber-0.11.6
+Successfully installed pdfplumber-0.11.6
+[PDS-X] Paket zaten yüklü: requests
+
+[PDS-X] Paket yükleme özeti:
+  joblib: Yüklü
+  threadpoolctl: Yüklü
+  kiwisolver: Yüklü
+  cycler: Yüklü
+  pyparsing: Yüklü
+  python-dateutil: Yüklü
+  pillow: Yüklü
+  packaging: Yüklü
+  statsmodels: HATA!
+  tornado: Yüklü
+  tenacity: Yüklü
+  jinja2: Yüklü
+  werkzeug: Yüklü
+  itsdangerous: Yüklü
+  markupsafe: Yüklü
+  click: Yüklü
+  protobuf: Yüklü
+  aiohttp: Yüklü
+  async-timeout: Yüklü
+  yarl: Yüklü
+  multidict: Yüklü
+  attrs: Yüklü
+  frozenlist: Yüklü
+  pyzmq: Yüklü
+  websocket-client: Yüklü
+  paho-mqtt: Yüklü
+  kafka-python: Yüklü
+  networkx: Yüklü
+  boto3: HATA!
+  botocore: Yüklü
+  rich: Yüklü
+  colorama: Yüklü
+  textblob: HATA!
+  mysql-connector-python: Yüklü
+  psutil: Yüklü
+  pyyaml: Yüklü
+  graphviz: Yüklü
+  aiofiles==23.2.1: Yüklü
+  RestrictedPython==6.3.0: Atlandý
+  pdfplumber: HATA!
+  requests: Yüklü
+[PDS-X] Eðer bir paket HATA verdiyse, elle tekrar yüklemeyi deneyin veya pip cache temizleyin.
+Traceback (most recent call last):
+  File "C:\Users\mete\Zotero\basic\pdsXuv14\pdsxuv14.py", line 37, in <module>
+    from libxcore import LibXCore
+  File "C:\Users\mete\Zotero\basic\pdsXuv14\libxcore.py", line 22, in <module>
+    import pdfplumber
+  File "C:\Users\mete\Zotero\basic\pdsXuv14\.pdsx_isolated_env\lib\site-packages\pdfplumber\__init__.py", line 10, in <module>                                                                                                                  odule>
+    import pdfminer
+ModuleNotFoundError: No module named 'pdfminer'
+                                               & .\.pdsx_isolated_env\Scripts\python.exe -m pip install pdfminer.six==20250327 'pypdfium2>=4.18.0' patsy jmespath s3transfer nltk
+Collecting pdfminer.six==20250327
+  Downloading pdfminer_six-20250327-py3-none-any.whl.metadata (4.1 kB)
+Collecting pypdfium2>=4.18.0
+  Downloading pypdfium2-4.30.1-py3-none-win_amd64.whl.metadata (48 kB)
+Requirement already satisfied: patsy in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (1.0.1)Requirement already satisfied: jmespath in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (1.0.1)
+Requirement already satisfied: s3transfer in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (0.13.0)
+Requirement already satisfied: nltk in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (3.9.1) 
+Requirement already satisfied: charset-normalizer>=2.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from pdfminer.six==20250327) (3.4.2)
+Requirement already satisfied: cryptography>=36.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from pdfminer.six==20250327) (45.0.3)
+Requirement already satisfied: numpy>=1.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from patsy) (1.26.4)
+Requirement already satisfied: botocore<2.0a.0,>=1.37.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from s3transfer) (1.38.32)
+Requirement already satisfied: python-dateutil<3.0.0,>=2.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from botocore<2.0a.0,>=1.37.4->s3transfer) (2.9.0.post0)
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from botocore<2.0a.0,>=1.37.4->s3transfer) (2.4.0)
+Requirement already satisfied: six>=1.5 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from python-dateutil<3.0.0,>=2.1->botocore<2.0a.0,>=1.37.4->s3transfer) (1.17.0)
+Requirement already satisfied: click in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from nltk) (8.2.1)
+Requirement already satisfied: joblib in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from 
+nltk) (1.5.1)
+Requirement already satisfied: regex>=2021.8.3 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from nltk) (2024.11.6)
+Requirement already satisfied: tqdm in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from nltk) (4.67.1)
+Requirement already satisfied: cffi>=1.14 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from cryptography>=36.0.0->pdfminer.six==20250327) (1.17.1)
+Requirement already satisfied: pycparser in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from cffi>=1.14->cryptography>=36.0.0->pdfminer.six==20250327) (2.22)
+Requirement already satisfied: colorama in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from click->nltk) (0.4.6)
+Downloading pdfminer_six-20250327-py3-none-any.whl (5.6 MB)
+   ???????????????????????????????????????? 5.6/5.6 MB 4.2 MB/s eta 0:00:00
+Downloading pypdfium2-4.30.1-py3-none-win_amd64.whl (3.0 MB)
+   ???????????????????????????????????????? 3.0/3.0 MB 4.5 MB/s eta 0:00:00
+Installing collected packages: pypdfium2, pdfminer.six
+  Attempting uninstall: pdfminer.six
+    Found existing installation: pdfminer.six 20250506
+    Uninstalling pdfminer.six-20250506:
+      Successfully uninstalled pdfminer.six-20250506
+Successfully installed pdfminer.six-20250327 pypdfium2-4.30.1
+(base) PS C:\Users\mete\Zotero\basic\pdsXuv14> 
+
+(base) PS C:\Users\mete\Zotero\basic\pdsXuv14> & .\.pdsx_isolated_env\Scripts\python.exe -m pip install pdfminer.six patsy jmespath s3transfer nltk
+Collecting pdfminer.six
+  Downloading pdfminer_six-20250506-py3-none-any.whl.metadata (4.2 kB)
+Collecting patsy
+  Downloading patsy-1.0.1-py2.py3-none-any.whl.metadata (3.3 kB)
+Collecting jmespath
+  Downloading jmespath-1.0.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting s3transfer
+  Downloading s3transfer-0.13.0-py3-none-any.whl.metadata (1.7 kB)
+Collecting nltk
+  Downloading nltk-3.9.1-py3-none-any.whl.metadata (2.9 kB)
+Requirement already satisfied: charset-normalizer>=2.0.0 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from pdfminer.six) (3.4.2)
+Collecting cryptography>=36.0.0 (from pdfminer.six)
+  Downloading cryptography-45.0.3-cp37-abi3-win_amd64.whl.metadata (5.7 kB)
+Requirement already satisfied: numpy>=1.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from patsy) (1.26.4)
+Requirement already satisfied: botocore<2.0a.0,>=1.37.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from s3transfer) (1.38.32)
+Requirement already satisfied: python-dateutil<3.0.0,>=2.1 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from botocore<2.0a.0,>=1.37.4->s3transfer) (2.9.0.post0)
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from botocore<2.0a.0,>=1.37.4->s3transfer) (2.4.0)
+Requirement already satisfied: six>=1.5 in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from python-dateutil<3.0.0,>=2.1->botocore<2.0a.0,>=1.37.4->s3transfer) (1.17.0)
+Requirement already satisfied: click in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from nltk) (8.2.1)
+Requirement already satisfied: joblib in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from 
+nltk) (1.5.1)
+Collecting regex>=2021.8.3 (from nltk)
+  Downloading regex-2024.11.6-cp310-cp310-win_amd64.whl.metadata (41 kB)
+Requirement already satisfied: tqdm in c:\users\mete\zotero\basic\pdsxuv14\.pdsx_isolated_env\lib\site-packages (from nltk) (4.67.1)
+Collecting cffi>=1.14 (from cryptography>=36.0.0->pdfminer.six)
+  Downloading cffi-1.17.1-cp310-cp310-win_amd64.whl.metadata (1.6 kB)
+Collecting pycparser (from cffi>=1.14->cryptography>=36.0.0->pdfminer.six)
+  Downloading pycparser-2.22-py3-none-any.whl.metadata (943 bytes)
+m click->nltk) (0.4.6)
+Downloading pdfminer_six-20250506-py3-none-any.whl (5.6 MB)
+Downloading patsy-1.0.1-py2.py3-none-any.whl (232 kB)
+Downloading jmespath-1.0.1-py3-none-any.whl (20 kB)
+Downloading s3transfer-0.13.0-py3-none-any.whl (85 kB)
+Downloading nltk-3.9.1-py3-none-any.whl (1.5 MB)
+   ???????????????????????????????????????? 1.5/1.5 MB 6.6 MB/s eta 0:00:00
+Downloading cryptography-45.0.3-cp37-abi3-win_amd64.whl (3.4 MB)
+   ???????????????????????????????????????? 3.4/3.4 MB 6.5 MB/s eta 0:00:00
+Downloading cffi-1.17.1-cp310-cp310-win_amd64.whl (181 kB)
+Downloading regex-2024.11.6-cp310-cp310-win_amd64.whl (274 kB)
+Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+Installing collected packages: regex, pycparser, patsy, jmespath, nltk, cffi, s3transfer, cryptography, pdfminer.six    
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+pdfplumber 0.11.6 requires pypdfium2>=4.18.0, which is not installed.
+pdfplumber 0.11.6 requires pdfminer.six==20250327, but you have pdfminer-six 20250506 which is incompatible.
+Successfully installed cffi-1.17.1 cryptography-45.0.3 jmespath-1.0.1 nltk-3.9.1 patsy-1.0.1 pdfminer.six-20250506 pycparser-2.22 regex-2024.11.6 s3transfer-0.13.0
+(base) PS C:\Users\mete\Zotero\basic\pdsXuv14> & .\.pdsx_isolated_env\Scripts\python.exe -m pip cache purge
+Files removed: 78 (24.0 MB)
+(base) PS C:\Users\mete\Zotero\basic\pdsXuv14> & .\.pdsx_isolated_env\Scripts\python.exe -m pip install --force-reinstall --no-cache-dir --no-deps statsmodels boto3 textblob pdfplumber
+Collecting statsmodels
+  Downloading statsmodels-0.14.4-cp310-cp310-win_amd64.whl.metadata (9.5 kB)
+Collecting boto3
+  Downloading boto3-1.38.32-py3-none-any.whl.metadata (6.6 kB)
+Collecting textblob
+  Downloading textblob-0.19.0-py3-none-any.whl.metadata (4.4 kB)
+Collecting pdfplumber
+  Downloading pdfplumber-0.11.6-py3-none-any.whl.metadata (42 kB)
+Downloading statsmodels-0.14.4-cp310-cp310-win_amd64.whl (9.8 MB)
+   ???????????????????????????????????????? 9.8/9.8 MB 4.4 MB/s eta 0:00:00
+Downloading boto3-1.38.32-py3-none-any.whl (139 kB)
+Downloading textblob-0.19.0-py3-none-any.whl (624 kB)
+   ???????????????????????????????????????? 624.3/624.3 kB 7.7 MB/s eta 0:00:00
+Downloading pdfplumber-0.11.6-py3-none-any.whl (60 kB)
+Installing collected packages: textblob, statsmodels, pdfplumber, boto3
+  Attempting uninstall: textblob
+    Found existing installation: textblob 0.19.0
+    Uninstalling textblob-0.19.0:
+      Successfully uninstalled textblob-0.19.0
+  Attempting uninstall: statsmodels
+    Found existing installation: statsmodels 0.14.4
+    Uninstalling statsmodels-0.14.4:
+      Successfully uninstalled statsmodels-0.14.4
+  Attempting uninstall: pdfplumber
+    Found existing installation: pdfplumber 0.11.6
+    Uninstalling pdfplumber-0.11.6:
+      Successfully uninstalled pdfplumber-0.11.6
+  Attempting uninstall: boto3
+    Found existing installation: boto3 1.38.32
+    Uninstalling boto3-1.38.32:
+      Successfully uninstalled boto3-1.38.32
+Successfully installed boto3-1.38.32 pdfplumber-0.11.6 statsmodels-0.14.4 textblob-0.19.0
+(base) PS C:\Users\mete\Zotero\basic\pdsXuv14> & .\.pdsx_isolated_env\Scripts\python.exe                                
+Python 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> & .\.pdsx_isolated_env\Scripts\python.exe -m pip install pdfminer.six==20250327 pypdfium2>=4.18.0 patsy jmespath s3transfer nltk
+  File "<stdin>", line 1
+    & .\.pdsx_isolated_env\Scripts\python.exe -m pip install pdfminer.six==20250327 pypdfium2>=4.18.0 patsy jmespath s3transfer nltk
+    ^
+SyntaxError: invalid syntax
+>>> & .\.pdsx_isolated_env\Scripts\python.exe -m pip install pdfminer.six==20250327 pypdfium2>=4.18.0 patsy jmespath s3transfer nltk
+  File "<stdin>", line 1
+    & .\.pdsx_isolated_env\Scripts\python.exe -m pip install pdfminer.six==20250327 pypdfium2>=4.18.0 patsy jmespath s3transfer nltk
+    ^
+SyntaxError: invalid syntax
+>>> & .\.pdsx_isolated_env\Scripts\python.exe -m pip install pdfminer.six==20250327 'pypdfium2>=4.18.0' patsy jmespath s3transfer nltk
+  File "<stdin>", line 1
+    & .\.pdsx_isolated_env\Scripts\python.exe -m pip install pdfminer.six==20250327 'pypdfium2>=4.18.0' patsy jmespath s3transfer nltk
+    ^
+SyntaxError: invalid syntax
+>>>

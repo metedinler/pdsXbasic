@@ -28,7 +28,7 @@ import websockets
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from sklearn.ensemble import IsolationForest
-from pdsx_exception import PdsXException
+from pdsx_unified_exception import PdsXException
 import functools
 
 # Loglama Ayarları

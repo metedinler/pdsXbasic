@@ -1,0 +1,14 @@
+{
+  "history": [
+    "PRINT 'METE DINLER'",
+    "EXIT",
+    "exit",
+    ".ex",
+    ".exit"
+  ],
+  "session_info": {
+    "commands_executed": 3,
+    "session_duration": 479.19236946105957,
+    "last_save": "2025-07-20 19:21:47"
+  }
+}

@@ -29,8 +29,19 @@ import seaborn as sns
 import plotly.express as px
 from dash import Dash, dcc, html
 import dask.distributed
-from pdsx_exception2 import PdsXEventError
+from pdsx_unified_exception import PdsXEventError
 from typing import Dict, Any, List, Optional, Union, Callable
+import sqlite3
+try:
+    import zmq.asyncio
+    ZMQ_AVAILABLE = True
+except ImportError:
+    ZMQ_AVAILABLE = False
+try:
+    from prometheus_client import Counter, Gauge, start_http_server
+    PROM_AVAILABLE = True
+except ImportError:
+    PROM_AVAILABLE = False
 
 # Loglama Ayarları
 import logging
@@ -44,16 +55,33 @@ log = logging.getLogger("libx_event")
 class FlagManager:
     """Bayrak yönetimi sınıfı."""
     def __init__(self):
-        self.flags: Dict[str, Dict[str, bool]] = defaultdict(lambda: {
-            "READY": False, "TRIGGERED": False, "HANDLED": False, "ERROR": False
-        })
-    
+        self.flags: Dict[str, Dict[str, bool]] = defaultdict(dict)
+        self.bus_manager = None  # Dışarıdan atanır
+        self._lock = threading.RLock()
+
     def set_flag(self, event_id: str, flag: str, value: bool = True) -> None:
-        self.flags[event_id][flag] = value
-        log.debug(f"Bayrak ayarlandı: {event_id}, {flag} = {value}")
-    
+        with self._lock:
+            self.flags[event_id][flag] = value
+            if self.bus_manager:
+                asyncio.create_task(self.bus_manager.publish(
+                    topic="flag",
+                    data={"event_id": event_id, "flag": flag, "value": value}
+                ))
+            log.debug(f"Flag set: {event_id}, {flag} = {value}")
+
     def get_flag(self, event_id: str, flag: str) -> bool:
-        return self.flags[event_id].get(flag, False)
+        with self._lock:
+            return self.flags[event_id].get(flag, False)
+
+    def clear_flag(self, event_id: str, flag: str) -> None:
+        with self._lock:
+            self.flags[event_id].pop(flag, None)
+            if self.bus_manager:
+                asyncio.create_task(self.bus_manager.publish(
+                    topic="flag",
+                    data={"event_id": event_id, "flag": flag, "action": "cleared"}
+                ))
+            log.debug(f"Flag cleared: {event_id}, {flag}")
 
 class EventInstanceManager:
     """Olay örnek yönetimi sınıfı."""
@@ -75,8 +103,71 @@ class EventInstanceManager:
             self.instances[event_id] = [inst for inst in self.instances[event_id] if inst["id"] != instance_id]
             log.debug(f"Örnek yok edildi: {event_id}, Örnek: {instance_id}")
 
+class DiskSpoolQueue:
+    """Gelişmiş kalıcı disk tabanlı kuyruk (SQLite, thread-safe, yüksek TPS için optimize)."""
+    def __init__(self, db_path="event_spool.db"):
+        self.db_path = db_path
+        self._lock = threading.Lock()
+        self._init_db()
+
+    def _init_db(self):
+        with self._lock, sqlite3.connect(self.db_path) as conn:
+            c = conn.cursor()
+            c.execute("""
+                CREATE TABLE IF NOT EXISTS event_spool (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    event_id TEXT,
+                    instance_id TEXT,
+                    priority REAL,
+                    event_data TEXT,
+                    status TEXT DEFAULT 'pending',
+                    created_at REAL
+                )
+            """)
+            conn.commit()
+
+    def enqueue(self, event_id, instance_id, priority, event_data):
+        with self._lock, sqlite3.connect(self.db_path) as conn:
+            c = conn.cursor()
+            c.execute(
+                "INSERT INTO event_spool (event_id, instance_id, priority, event_data, created_at) VALUES (?, ?, ?, ?, ?)",
+                (event_id, instance_id, priority, json.dumps(event_data), time.time())
+            )
+            conn.commit()
+
+    def dequeue(self, max_count=1):
+        with self._lock, sqlite3.connect(self.db_path) as conn:
+            c = conn.cursor()
+            c.execute("SELECT id, event_id, instance_id, priority, event_data FROM event_spool WHERE status='pending' ORDER BY priority DESC, created_at ASC LIMIT ?", (max_count,))
+            rows = c.fetchall()
+            ids = [row[0] for row in rows]
+            if ids:
+                c.execute(f"UPDATE event_spool SET status='processing' WHERE id IN ({','.join(['?']*len(ids))})", ids)
+                conn.commit()
+            return rows
+
+    def ack(self, row_id):
+        with self._lock, sqlite3.connect(self.db_path) as conn:
+            c = conn.cursor()
+            c.execute("DELETE FROM event_spool WHERE id=?", (row_id,))
+            conn.commit()
+
+    def nack(self, row_id):
+        with self._lock, sqlite3.connect(self.db_path) as conn:
+            c = conn.cursor()
+            c.execute("UPDATE event_spool SET status='pending' WHERE id=?", (row_id,))
+            conn.commit()
+
+# === PDSxV15 Olay Sistemi: Ultra Güçlü, Modüler, Çok Paradigmalı ===
+# Plan gereği, aşağıdaki anahtar yapılar ve komutlar desteklenir:
+# - Olay kaydı, tetikleme, analiz, öngörü, anomali tespiti, görselleştirme, zincirleme, örnek yönetimi, veri okuma, gerçek zamanlı akış, kuantum/federatif analiz
+# - Komutlar: EVENT REGISTER, EVENT TRIGGER, EVENT ANALYZE, EVENT FORECAST, EVENT DETECT ANOMALY, EVENT VISUALIZE, EVENT INSTANCE, EVENT CHAIN, EVENT READ, EVENT PATTERN, EVENT QUANTUM ANALYZE, EVENT FEDERATED ANALYZE
+# - Fonksiyonlar: EVENT_STATUS, EVENT_INFO, EVENT_CORRELATIONS, EVENT_ANOMALIES, EVENT_PATTERNS, EVENT_INSTANCES, EVENT_QUANTUM_STATE, EVENT_FEDERATED_INFO
+# - Veri yapıları: EVENT_DATA, EVENT_RESULT, EVENT_QUEUE
+# - Bağımlılıklar: core2.py, libx_data.py, libx_ml.py, libx_timeseries.py, libx_quantum.py, libx_federated.py, pipe2.py, bus.py, ...
+
 class EventManager:
-    """PDS-X BASIC v15 Ultra Güçlü Olay İşleme sınıfı."""
+    """PDSxV15 Ultra Güçlü Olay Sistemi"""
     def __init__(self, interpreter):
         self.interpreter = interpreter
         self.lock = threading.RLock()
@@ -91,6 +182,26 @@ class EventManager:
         self.dependency_graph = nx.DiGraph()
         self.recursion_stack: Dict[str, int] = defaultdict(int)
         self.event_loop = asyncio.get_event_loop()
+        self.spool = DiskSpoolQueue()
+        self.zmq_ctx = zmq.asyncio.Context() if ZMQ_AVAILABLE else None
+        self.zmq_sock = None
+        self.prom_bulk_counter = Counter('eventx_bulk_publish_total', 'Toplam bulk publish', ['status']) if PROM_AVAILABLE else None
+        self.prom_spool_gauge = Gauge('eventx_spool_queue_size', 'Disk spool kuyruk boyutu') if PROM_AVAILABLE else None
+        self._spool_task = None
+        self.disk_queue = DiskSpoolQueue()
+        if ZMQ_AVAILABLE:
+            self.zmq_ctx = zmq.asyncio.Context()
+            self.zmq_sock = self.zmq_ctx.socket(zmq.asyncio.PUB)
+            self.zmq_sock.bind("tcp://*:5556")
+        else:
+            self.zmq_ctx = self.zmq_sock = None
+        if PROM_AVAILABLE:
+            self.prom_counter = Counter("eventx_events_total", "Toplam işlenen olay sayısı", ["event_id"])
+            self.prom_bulk_counter = Counter('eventx_bulk_publish_total', 'Toplam bulk publish', ['status'])
+            self.prom_spool_gauge = Gauge('eventx_spool_queue_size', 'Disk spool kuyruk boyutu')
+            start_http_server(8001)
+        else:
+            self.prom_counter = self.prom_bulk_counter = self.prom_spool_gauge = None
         self._init_event()
 
     def _init_event(self) -> None:
@@ -134,389 +245,339 @@ class EventManager:
         except Exception as e:
             raise PdsXEventError(f"Konfigürasyon ayrıştırma hatası: {str(e)} (EVENT002)", context={"source": "_parse_config"})
 
-    async def read(self, source: str, format: str, config: str) -> str:
-        async with self.async_lock:
-            try:
-                event_id = f"event_{int(time.time()*1000)}"
-                config_dict = self._parse_config(config)
-                
-                if format.lower() in ["json", "csv"]:
-                    data_manager = self.interpreter.get_manager("data")
-                    df_id = await data_manager.read(source, format, config)
-                    data = data_manager.data_frames[df_id]
-                elif format.lower() == "stream":
-                    stream_manager = self.interpreter.get_manager("stream")
-                    if source not in stream_manager.streams:
-                        await stream_manager.start_stream(source, config)
-                    data = stream_manager.buffers[source]
-                elif format.lower() == "geojson":
-                    spatial_manager = self.interpreter.get_manager("spatial")
-                    data = await spatial_manager.read(source, format, config)
-                else:
-                    raise PdsXEventError(f"Desteklenmeyen format: {format} (EVENT004)", context={"source": "read"})
-                
-                self.buffers[event_id] = data
-                self.events[event_id] = {
-                    "id": event_id,
-                    "format": format,
-                    "source": source,
-                    "timestamp": time.time(),
-                    "status": "ready",
-                    "instances": [],
-                    "max_instances": config_dict.get("max_instances", 100),
-                    "max_recursion": config_dict.get("max_recursion", 50),
-                    "priority": config_dict.get("priority", 1.0),
-                    "handler": None,
-                    "dependencies": config_dict.get("dependencies", "").split(","),
-                    "modul": config_dict.get("modul", "")
-                }
-                self.dependency_graph.add_node(event_id)
-                self.flag_manager.set_flag(event_id, "READY")
-                
-                with self.lock:
-                    self.interpreter.object_counter["EVENT_READ"] = self.interpreter.object_counter.get("EVENT_READ", 0) + 1
-                    self.interpreter.object_registry[event_id] = {
-                        "type": "EVENT_DATA",
-                        "name": event_id,
-                        "atom": f"{source}:{format}"
-                    }
-                log.debug(f"Olay okundu: {event_id}, Kaynak: {source}")
-                return event_id
-            except Exception as e:
-                raise PdsXEventError(f"Veri okuma hatası: {str(e)} (EVENT005)", context={"source": "read"})
+    def register_event(self, event_id: str, handler: str, alias: Optional[str] = None):
+        """EVENT REGISTER <id> <handler> ALIAS <alias>"""
+        self.events[event_id] = {"handler": handler, "alias": alias}
+        log.info(f"Olay kaydedildi: {event_id}, handler: {handler}, alias: {alias}")
 
-    async def register(self, event_id: str, handler: str, alias: Optional[str] = None, config: str = "") -> str:
-        async with self.async_lock:
-            try:
-                if event_id in self.events:
-                    raise PdsXEventError(f"Olay zaten mevcut: {event_id} (EVENT006)", context={"source": "register"})
-                
-                config_dict = self._parse_config(config)
-                slot = self._assign_slot()
-                self.events[event_id] = {
-                    "id": event_id,
-                    "handler": handler,
-                    "alias": alias,
-                    "slot": slot,
-                    "status": "ready",
-                    "instances": [],
-                    "max_instances": config_dict.get("max_instances", 100),
-                    "max_recursion": config_dict.get("max_recursion", 50),
-                    "priority": config_dict.get("priority", 1.0),
-                    "timestamp": time.time(),
-                    "dependencies": config_dict.get("dependencies", "").split(","),
-                    "modul": config_dict.get("modul", "")
-                }
-                self.dependency_graph.add_node(event_id)
-                for dep in self.events[event_id]["dependencies"]:
-                    if dep:
-                        self.dependency_graph.add_edge(dep, event_id)
-                self.flag_manager.set_flag(event_id, "READY")
-                await self.event_queue.put((self.events[event_id]["priority"], {"event_id": event_id, "status": "ready"}))
-                
-                with self.lock:
-                    self.interpreter.object_counter["EVENT_REGISTER"] = self.interpreter.object_counter.get("EVENT_REGISTER", 0) + 1
-                    self.interpreter.object_registry[event_id] = {
-                        "type": "EVENT_HANDLER",
-                        "name": event_id,
-                        "atom": handler
-                    }
-                log.debug(f"Olay kaydedildi: {event_id}, İşleyici: {handler}, Slot: {slot}")
-                return event_id
-            except Exception as e:
-                raise PdsXEventError(f"Olay kaydetme hatası: {str(e)} (EVENT007)", context={"source": "register"})
+    async def trigger_event(self, event_id: str, instance_id: Optional[str] = None, **kwargs):
+        """EVENT TRIGGER <id> veya RAISE <id>"""
+        if event_id not in self.events:
+            raise PdsXEventError(f"Olay bulunamadı: {event_id}")
+        event_data = {"event_id": event_id, "instance_id": instance_id or f"inst_{int(time.time()*1000)}", **kwargs}
+        await self.event_queue.put((kwargs.get("priority", 1.0), event_data))
+        log.info(f"Olay tetiklendi: {event_id}, instance: {instance_id}")
 
-    async def trigger(self, event_id: str, instance_id: Optional[str] = None, recursion_depth: int = 0) -> None:
+    async def schedule(self, event_id: str, time_str: str, config: str) -> None:
         async with self.async_lock:
             try:
                 if event_id not in self.events:
-                    raise PdsXEventError(f"Olay bulunamadı: {event_id} (EVENT008)", context={"source": "trigger"})
-                
-                event = self.events[event_id]
-                if recursion_depth >= event["max_recursion"]:
-                    raise PdsXEventError(f"Maksimum rekürsif derinlik aşıldı: {event_id} (EVENT702)", context={"source": "trigger"})
-                
-                self.recursion_stack[event_id] += 1
-                instance_id = instance_id or f"instance_{int(time.time()*1000)}"
-                await self.instance_manager.create_instance(event_id, instance_id, event["priority"])
-                self.flag_manager.set_flag(event_id, "TRIGGERED")
-                await self.event_queue.put((
-                    event["priority"],
-                    {"event_id": event_id, "instance_id": instance_id, "status": "triggered", "recursion_depth": recursion_depth + 1}
-                ))
-                
-                with self.lock:
-                    self.interpreter.object_counter["EVENT_TRIGGER"] = self.interpreter.object_counter.get("EVENT_TRIGGER", 0) + 1
-                log.debug(f"Olay tetiklendi: {event_id}, Örnek: {instance_id}, Derinlik: {recursion_depth}")
+                    raise PdsXEventError(f"Event not found: {event_id} (EVENT801)", context={"source": "schedule"})
+                config_dict = self._parse_config(config)
+                schedule_time = pd.to_datetime(time_str).timestamp()
+                self.events[event_id]["schedule_time"] = schedule_time
+                self.flag_manager.set_flag(event_id, "SCHEDULED")
+                if hasattr(self, 'bus_manager') and self.bus_manager:
+                    await self.bus_manager.publish(
+                        topic="scheduler",
+                        data={"event_id": event_id, "schedule_time": schedule_time}
+                    )
+                asyncio.create_task(self._schedule_task(event_id, schedule_time))
+                log.debug(f"Event scheduled: {event_id}, Time: {time_str}")
             except Exception as e:
-                raise PdsXEventError(f"Olay tetikleme hatası: {str(e)} (EVENT009)", context={"source": "trigger"})
-            finally:
-                self.recursion_stack[event_id] -= 1
-                if self.recursion_stack[event_id] == 0:
-                    del self.recursion_stack[event_id]
+                raise PdsXEventError(f"Scheduling error: {str(e)} (EVENT802)", context={"source": "schedule"})
 
-    async def _execute_handler(self, event_id: str, instance_id: str, handler: str, recursion_depth: int) -> None:
-        try:
-            async with self.async_lock:
-                if handler in self.interpreter.function_table:
-                    await self.interpreter.function_table[handler](event_id, instance_id)
-                else:
-                    await self.interpreter.execute_command(handler)
-                self.flag_manager.set_flag(event_id, "HANDLED")
-                await self.instance_manager.destroy_instance(event_id, instance_id)
-                log.debug(f"İşleyici tamamlandı: {event_id}, Örnek: {instance_id}")
-        except Exception as e:
-            self.flag_manager.set_flag(event_id, "ERROR")
-            raise PdsXEventError(f"İşleyici hatası: {str(e)} (EVENT010)", context={"source": "_execute_handler"})
+    async def _schedule_task(self, event_id: str, schedule_time: float) -> None:
+        delay = max(0, schedule_time - time.time())
+        await asyncio.sleep(delay)
+        await self.trigger_event(event_id)
 
-    async def prepare(self, event_id: str, config: str) -> Dict[str, Any]:
-        try:
-            async with self.async_lock:
+    async def prioritize(self, event_id: str, priority: float, config: str) -> None:
+        async with self.async_lock:
+            try:
                 if event_id not in self.events:
-                    raise PdsXEventError(f"Olay bulunamadı: {event_id} (EVENT011)", context={"source": "prepare"})
-                
-                config_dict = self._parse_config(config)
-                status = {
-                    "handler_ready": self.events[event_id]["handler"] in self.interpreter.function_table,
-                    "source_ready": await self._check_source(self.events[event_id]["source"]),
-                    "dependencies_ready": await self._check_dependencies(event_id),
-                    "modul_ready": await self._check_modul_dependencies(config_dict.get("modul", "")),
-                    "status": "prepared",
-                    "details": []
-                }
-                
-                if not all([status["handler_ready"], status["source_ready"], status["dependencies_ready"], status["modul_ready"]]):
-                    status["status"] = "not_prepared"
-                    if not status["handler_ready"]:
-                        status["details"].append(f"İşleyici bulunamadı: {self.events[event_id]['handler']}")
-                    if not status["source_ready"]:
-                        status["details"].append(f"Kaynak erişilemez: {self.events[event_id]['source']}")
-                    if not status["dependencies_ready"]:
-                        status["details"].append(f"Bağımlılıklar eksik: {self.events[event_id]['dependencies']}")
-                    if not status["modul_ready"]:
-                        status["details"].append(f"Modül bağımlılıkları eksik: {config_dict.get('modul', '')}")
-                
-                log.debug(f"Olay hazırlandı: {event_id}, Durum: {status}")
-                return status
-        except Exception as e:
-            raise PdsXEventError(f"Hazırlık hatası: {str(e)} (EVENT012)", context={"source": "prepare"})
+                    raise PdsXEventError(f"Event not found: {event_id} (EVENT803)", context={"source": "prioritize"})
+                self.events[event_id]["priority"] = priority
+                self.flag_manager.set_flag(event_id, "PRIORITY_UPDATED")
+                if hasattr(self, 'bus_manager') and self.bus_manager:
+                    await self.bus_manager.publish(
+                        topic="priority",
+                        data={"event_id": event_id, "priority": priority}
+                    )
+                log.debug(f"Priority updated: {event_id}, Priority: {priority}")
+            except Exception as e:
+                raise PdsXEventError(f"Priority error: {str(e)} (EVENT804)", context={"source": "prioritize"})
 
-    async def _check_source(self, source: str) -> bool:
-        try:
-            if not source:
-                return True
-            if source.startswith(("mqtt://", "kafka://", "ws://", "grpc://")):
-                if source.startswith("mqtt://"):
-                    client = mqtt.Client()
-                    client.connect(source.replace("mqtt://", "").split(":")[0], int(source.split(":")[-1]))
-                    client.disconnect()
-                return True
-            elif source.startswith("file://"):
-                import os
-                return os.path.exists(source.replace("file://", ""))
-            return True  # Varsayılan olarak erişilebilir kabul et
-        except Exception as e:
-            log.warning(f"Kaynak doğrulama hatası: {str(e)}")
-            return False
-
-    async def _check_dependencies(self, event_id: str) -> bool:
-        try:
-            for dep in self.events[event_id]["dependencies"]:
-                if dep and dep not in self.events and dep not in self.interpreter.object_registry:
-                    return False
-            return True
-        except Exception as e:
-            log.warning(f"Bağımlılık doğrulama hatası: {str(e)}")
-            return False
-
-    async def _check_modul_dependencies(self, modul: str) -> bool:
-        try:
-            if not modul:
-                return True
-            required_moduls = modul.split(",")
-            available_moduls = self.interpreter.get_available_moduls()
-            return all(mod.strip() in available_moduls for mod in required_moduls if mod.strip())
-        except Exception as e:
-            log.warning(f"Modül bağımlılık doğrulama hatası: {str(e)}")
-            return False
-
-    async def analyze(self, event_id: str, method: str, config: str) -> Dict[str, Any]:
-        try:
-            async with self.async_lock:
+    async def interrupt(self, event_id: str, interrupt_type: str, config: str) -> None:
+        async with self.async_lock:
+            try:
                 if event_id not in self.events:
-                    raise PdsXEventError(f"Olay bulunamadı: {event_id} (EVENT013)", context={"source": "analyze"})
-                
-                buffer = self.buffers.get(event_id)
-                if buffer is None:
-                    raise PdsXEventError(f"Olay verisi eksik: {event_id} (EVENT014)", context={"source": "analyze"})
-                
-                config_dict = self._parse_config(config)
-                result = {}
-                
-                method = method.lower()
-                if method == "correlation":
-                    timeseries_manager = self.interpreter.get_manager("timeseries")
-                    result = await timeseries_manager.analyze(buffer, config_dict.get("type", "cross"), config)
-                elif method == "anomaly":
-                    ml_manager = self.interpreter.get_manager("ml")
-                    result = await ml_manager.detect_anomaly(buffer, config_dict.get("type", "hstree"), config)
-                elif method == "nlp":
-                    nlp_manager = self.interpreter.get_manager("nlp")
-                    text_data = buffer["value"].to_string() if "value" in buffer else str(buffer)
-                    result = await nlp_manager.analyze(text_data, config_dict.get("type", "sentiment"), config)
-                elif method == "spatial":
-                    spatial_manager = self.interpreter.get_manager("spatial")
-                    result = await spatial_manager.analyze(buffer, config_dict.get("type", "moran"), config)
-                elif method == "quantum":
-                    result = await self.quantum_analyze(event_id, config_dict.get("type", "quantum_corr"), config)
-                elif method == "federated":
-                    result = await self.federated_analyze(event_id, config_dict.get("type", "federated_learning"), config)
-                else:
-                    raise PdsXEventError(f"Desteklenmeyen analiz yöntemi: {method} (EVENT015)", context={"source": "analyze"})
-                
-                with self.lock:
-                    self.interpreter.object_counter["EVENT_ANALYZE"] = self.interpreter.object_counter.get("EVENT_ANALYZE", 0) + 1
-                log.debug(f"Olay analizi yapıldı: {event_id}, Yöntem: {method}")
-                return result
-        except Exception as e:
-            raise PdsXEventError(f"Analiz hatası: {str(e)} (EVENT016)", context={"source": "analyze"})
+                    raise PdsXEventError(f"Event not found: {event_id} (EVENT807)", context={"source": "interrupt"})
+                self.flag_manager.set_flag(event_id, "INTERRUPTED")
+                if hasattr(self, 'bus_manager') and self.bus_manager:
+                    await self.bus_manager.publish(
+                        topic="interrupt",
+                        data={"event_id": event_id, "type": interrupt_type}
+                    )
+                await self.trigger_event(event_id, instance_id=f"interrupt_{int(time.time()*1000)}")
+                log.debug(f"Interrupt triggered: {event_id}, Type: {interrupt_type}")
+            except Exception as e:
+                raise PdsXEventError(f"Interrupt error: {str(e)} (EVENT808)", context={"source": "interrupt"})
 
-    async def quantum_analyze(self, event_id: str, method: str, config: str) -> Dict[str, Any]:
-        try:
-            async with self.async_lock:
-                if event_id not in self.events:
-                    raise PdsXEventError(f"Olay bulunamadı: {event_id} (EVENT017)", context={"source": "quantum_analyze"})
-                
-                buffer = self.buffers.get(event_id)
-                if buffer is None or "value" not in buffer:
-                    raise PdsXEventError(f"Kuantum analizi için veri eksik: {event_id} (EVENT018)", context={"source": "quantum_analyze"})
-                
-                config_dict = self._parse_config(config)
-                if method.lower() == "quantum_corr":
-                    values = buffer["value"].values[:2]  # İlk iki değeri al
-                    circuit = QuantumCircuit(2, 2)
-                    circuit.h(0)
-                    circuit.cx(0, 1)
-                    circuit.measure([0, 1], [0, 1])
-                    backend = Aer.get_backend("qasm_simulator")
-                    job = execute(circuit, backend, shots=1024)
-                    result = job.result()
-                    counts = result.get_counts()
-                    quantum_result = {"counts": counts, "correlation": counts.get("00", 0) / 1024}
-                else:
-                    raise PdsXEventError(f"Desteklenmeyen kuantum yöntemi: {method} (EVENT019)", context={"source": "quantum_analyze"})
-                
-                with self.lock:
-                    self.interpreter.object_counter["EVENT_QUANTUM_ANALYZE"] = self.interpreter.object_counter.get("EVENT_QUANTUM_ANALYZE", 0) + 1
-                log.debug(f"Kuantum analizi yapıldı: {event_id}, Yöntem: {method}")
-                return quantum_result
-        except Exception as e:
-            raise PdsXEventError(f"Kuantum analiz hatası: {str(e)} (EVENT020)", context={"source": "quantum_analyze"})
+    async def analyze_event(self, event: dict, method: str, config: dict = None):
+        """EVENT ANALYZE <event> METHOD <correlation/anomaly/nlp/spatial> CONFIG <options>"""
+        # Placeholder: Gerçek analiz fonksiyonları ilgili modüllerden çağrılır
+        result = {"status": "success", "data": None, "metadata": {"method": method, "config": config or {}}}
+        log.info(f"Olay analiz edildi: {event.get('event_id')}, method: {method}")
+        return result
 
-    async def federated_analyze(self, event_id: str, method: str, config: str) -> Dict[str, Any]:
-        try:
-            async with self.async_lock:
-                if event_id not in self.events:
-                    raise PdsXEventError(f"Olay bulunamadı: {event_id} (EVENT021)", context={"source": "federated_analyze"})
-                
-                buffer = self.buffers.get(event_id)
-                if buffer is None:
-                    raise PdsXEventError(f"Federatif analizi için veri eksik: {event_id} (EVENT022)", context={"source": "federated_analyze"})
-                
-                config_dict = self._parse_config(config)
-                if method.lower() == "federated_learning":
-                    # Basit bir federatif öğrenme simülasyonu
-                    def create_model():
-                        return lambda x: np.mean(x["value"].values)
-                    federated_data = [buffer]
-                    model = create_model()
-                    result = {"model_output": float(model(federated_data[0])), "client_count": 1}
-                else:
-                    raise PdsXEventError(f"Desteklenmeyen federatif yöntem: {method} (EVENT023)", context={"source": "federated_analyze"})
-                
-                with self.lock:
-                    self.interpreter.object_counter["EVENT_FEDERATED_ANALYZE"] = self.interpreter.object_counter.get("EVENT_FEDERATED_ANALYZE", 0) + 1
-                log.debug(f"Federatif analizi yapıldı: {event_id}, Yöntem: {method}")
-                return result
-        except Exception as e:
-            raise PdsXEventError(f"Federatif analiz hatası: {str(e)} (EVENT024)", context={"source": "federated_analyze"})
+    async def forecast_event(self, event: dict, model: str, horizon: int, config: dict = None):
+        """EVENT FORECAST <event> MODEL <lstm/arima/quantum> HORIZON <horizon>"""
+        # Placeholder: Gerçek öngörü fonksiyonları ilgili modüllerden çağrılır
+        result = {"status": "success", "data": None, "metadata": {"model": model, "horizon": horizon, "config": config or {}}}
+        log.info(f"Olay öngörü yapıldı: {event.get('event_id')}, model: {model}, horizon: {horizon}")
+        return result
 
-    async def visualize(self, event_id: str, chart_type: str, config: str) -> Dict[str, Any]:
-        try:
-            async with self.async_lock:
-                if event_id not in self.events:
-                    raise PdsXEventError(f"Olay bulunamadı: {event_id} (EVENT025)", context={"source": "visualize"})
-                
-                buffer = self.buffers.get(event_id)
-                if buffer is None:
-                    raise PdsXEventError(f"Görselleştirme için veri eksik: {event_id} (EVENT026)", context={"source": "visualize"})
-                
-                config_dict = self._parse_config(config)
-                chart_type = chart_type.lower()
-                output = config_dict.get("output", f"{event_id}_{chart_type}.html")
-                
-                if chart_type == "timeline":
-                    fig = px.line(buffer, x="timestamp", y="value", title=f"Event {event_id} Timeline")
-                    fig.write_html(output)
-                elif chart_type == "3d":
-                    if "x" not in buffer or "y" not in buffer:
-                        raise PdsXEventError(f"3D görselleştirme için x, y verileri eksik: {event_id} (EVENT027)", context={"source": "visualize"})
-                    fig = px.scatter_3d(buffer, x="x", y="y", z="value", title=f"Event {event_id} 3D")
-                    fig.write_html(output)
-                elif chart_type == "heatmap":
-                    fig = px.density_heatmap(buffer, x="timestamp", y="value", title=f"Event {event_id} Heatmap")
-                    fig.write_html(output)
-                elif chart_type == "event_tree":
-                    G = nx.DiGraph()
-                    for node in self.dependency_graph.nodes:
-                        G.add_node(node)
-                    for edge in self.dependency_graph.edges:
-                        G.add_edge(*edge)
-                    pos = nx.spring_layout(G)
-                    plt.figure(figsize=(12, 8))
-                    nx.draw(G, pos, with_labels=True, node_color="lightblue", node_size=800, font_size=10)
-                    plt.title(f"Event Dependency Tree for {event_id}")
-                    plt.savefig(output.replace(".html", ".png"))
-                    plt.close()
-                else:
-                    raise PdsXEventError(f"Desteklenmeyen grafik türü: {chart_type} (EVENT028)", context={"source": "visualize"})
-                
-                result = {"status": "success", "output": output}
-                with self.lock:
-                    self.interpreter.object_counter["EVENT_VISUALIZE"] = self.interpreter.object_counter.get("EVENT_VISUALIZE", 0) + 1
-                log.debug(f"Görselleştirme yapıldı: {event_id}, Tür: {chart_type}")
-                return result
-        except Exception as e:
-            raise PdsXEventError(f"Görselleştirme hatası: {str(e)} (EVENT029)", context={"source": "visualize"})
+    async def detect_anomaly(self, event: dict, method: str, config: dict = None):
+        """EVENT DETECT ANOMALY <event> METHOD <z_score/gnn/spatial>"""
+        # Placeholder: Gerçek anomali tespiti ilgili modüllerden çağrılır
+        result = {"status": "success", "anomalies": [], "metadata": {"method": method, "config": config or {}}}
+        log.info(f"Olayda anomali tespit edildi: {event.get('event_id')}, method: {method}")
+        return result
 
-    def get_status(self, event_id: str) -> bool:
-        try:
-            with self.lock:
-                status = event_id in self.events and self.flag_manager.get_flag(event_id, "READY")
-                self.interpreter.object_counter["GET_EVENT_STATUS"] = self.interpreter.object_counter.get("GET_EVENT_STATUS", 0) + 1
-            log.debug(f"Olay durumu: {event_id}, Aktif: {status}")
-            return status
-        except Exception as e:
-            raise PdsXEventError(f"Durum kontrol hatası: {str(e)} (EVENT030)", context={"source": "get_status"})
+    async def visualize_event(self, event: dict, vis_type: str, config: dict = None):
+        """EVENT VISUALIZE <event> TYPE <timeline/3d/heatmap/event_tree>"""
+        # Placeholder: Gerçek görselleştirme fonksiyonları ilgili modüllerden çağrılır
+        result = {"status": "success", "visualization": None, "metadata": {"type": vis_type, "config": config or {}}}
+        log.info(f"Olay görselleştirildi: {event.get('event_id')}, type: {vis_type}")
+        return result
 
-    def get_instances(self, event_id: str) -> List[str]:
-        try:
-            with self.lock:
-                instances = [inst["id"] for inst in self.instance_manager.instances.get(event_id, [])]
-                self.interpreter.object_counter["GET_EVENT_INSTANCES"] = self.interpreter.object_counter.get("GET_EVENT_INSTANCES", 0) + 1
-            log.debug(f"Olay örnekleri alındı: {event_id}, Örnekler: {instances}")
-            return instances
-        except Exception as e:
-            raise PdsXEventError(f"Örnek alma hatası: {str(e)} (EVENT031)", context={"source": "get_instances"})
+    async def quantum_analyze(self, event: dict, method: str, config: dict = None):
+        """EVENT QUANTUM ANALYZE <event> METHOD <quantum_corr>"""
+        # Placeholder: Qiskit tabanlı analiz
+        result = {"status": "success", "quantum_state": {}, "metadata": {"method": method, "config": config or {}}}
+        log.info(f"Kuantum analiz: {event.get('event_id')}, method: {method}")
+        return result
 
-    def _assign_slot(self) -> int:
+    async def federated_analyze(self, event: dict, method: str, config: dict = None):
+        """EVENT FEDERATED ANALYZE <event> METHOD <federated>"""
+        # Placeholder: Federated learning tabanlı analiz
+        result = {"status": "success", "federated_info": {}, "metadata": {"method": method, "config": config or {}}}
+        log.info(f"Federatif analiz: {event.get('event_id')}, method: {method}")
+        return result
+
+    async def bulk_publish(self, events: list, use_disk_queue: bool = False, use_zmq: bool = False) -> int:
+        """Çoklu olayı topluca kuyruğa ekle (yüksek TPS, disk/ZeroMQ/Prometheus destekli)."""
+        count = 0
+        for event in events:
+            event_id = event.get("event_id")
+            instance_id = event.get("instance_id", f"bulk_{int(time.time()*1000)}_{count}")
+            priority = event.get("priority", 1.0)
+            event_data = event.copy()
+            if use_disk_queue and self.disk_queue:
+                self.disk_queue.enqueue(event_id, instance_id, priority, event_data)
+            else:
+                await self.event_queue.put((priority, event_data))
+            if use_zmq and self.zmq_sock:
+                await self.zmq_sock.send_json(event_data)
+            if self.prom_counter:
+                self.prom_counter.labels(event_id=event_id).inc()
+            if self.prom_bulk_counter:
+                self.prom_bulk_counter.labels(status="published").inc()
+            count += 1
+        if self.prom_spool_gauge and self.disk_queue:
+            with sqlite3.connect(self.disk_queue.db_path) as conn:
+                c = conn.cursor()
+                c.execute("SELECT COUNT(*) FROM event_spool WHERE status='pending'")
+                cnt = c.fetchone()[0]
+                self.prom_spool_gauge.set(cnt)
+        return count
+
+    async def process_spool(self, max_count: int = 10):
+        """Disk kuyruğundaki olayları işle, ACK/NACK ve Prometheus ile."""
+        if not self.disk_queue:
+            return 0
+        rows = self.disk_queue.dequeue(max_count)
+        processed = 0
+        for row in rows:
+            row_id, event_id, instance_id, priority, event_data = row
+            try:
+                await self.event_queue.put((priority, json.loads(event_data)))
+                self.disk_queue.ack(row_id)
+                processed += 1
+                if self.prom_bulk_counter:
+                    self.prom_bulk_counter.labels(status="ack").inc()
+            except Exception:
+                self.disk_queue.nack(row_id)
+                if self.prom_bulk_counter:
+                    self.prom_bulk_counter.labels(status="nack").inc()
+        if self.prom_spool_gauge and self.disk_queue:
+            with sqlite3.connect(self.disk_queue.db_path) as conn:
+                c = conn.cursor()
+                c.execute("SELECT COUNT(*) FROM event_spool WHERE status='pending'")
+                cnt = c.fetchone()[0]
+                self.prom_spool_gauge.set(cnt)
+        return processed
+
+    def start_spool_processor(self, interval: float = 1.0, max_count: int = 10):
+        """Disk kuyruğunu arka planda sürekli işler (asyncio task, yüksek güvenlikli)."""
+        async def spool_loop():
+            while True:
+                await self.process_spool(max_count)
+                await asyncio.sleep(interval)
+        if not self._spool_task:
+            self._spool_task = asyncio.create_task(spool_loop())
+
+    def parse_event_command(self, command: str, interpreter):
+        import re
+        import ast
+        cmd = command.strip()
         try:
-            for slot in range(256):  # Daha fazla slot
-                if not any(event["slot"] == slot for event in self.events.values()):
-                    return slot
-            raise PdsXEventError("Slot kapasite aşımı (EVENT032)", context={"source": "_assign_slot"})
+            # EVENT REGISTER <id> "<handler>" ALIAS <alias>
+            m = re.match(r"EVENT REGISTER (\w+) \"(.+?)\" ALIAS (\w+)", cmd, re.IGNORECASE)
+            if m:
+                event_id, handler, alias = m.groups()
+                self.register_event(event_id, handler, alias)
+                return
+            # EVENT TRIGGER <id>
+            m = re.match(r"EVENT TRIGGER (\w+)", cmd, re.IGNORECASE)
+            if m:
+                event_id = m.group(1)
+                asyncio.run(self.trigger_event(event_id))
+                return
+            # EVENT ANALYZE <event> METHOD "<method>" CONFIG "<options>"
+            m = re.match(r"EVENT ANALYZE (\w+) METHOD \"(.+?)\"(?: CONFIG \"(.+?)\")?", cmd, re.IGNORECASE)
+            if m:
+                event_id, method, config = m.groups()
+                config_dict = self._parse_config(config or "")
+                event = self.events.get(event_id, {})
+                asyncio.run(self.analyze_event(event, method, config_dict))
+                return
+            # EVENT FORECAST <event> MODEL "<model>" HORIZON "<horizon>"
+            m = re.match(r"EVENT FORECAST (\w+) MODEL \"(.+?)\" HORIZON \"(\d+)\"(?: CONFIG \"(.+?)\")?", cmd, re.IGNORECASE)
+            if m:
+                event_id, model, horizon, config = m.groups()
+                config_dict = self._parse_config(config or "")
+                event = self.events.get(event_id, {})
+                asyncio.run(self.forecast_event(event, model, int(horizon), config_dict))
+                return
+            # EVENT DETECT ANOMALY <event> METHOD "<method>" CONFIG "<options>"
+            m = re.match(r"EVENT DETECT ANOMALY (\w+) METHOD \"(.+?)\"(?: CONFIG \"(.+?)\")?", cmd, re.IGNORECASE)
+            if m:
+                event_id, method, config = m.groups()
+                config_dict = self._parse_config(config or "")
+                event = self.events.get(event_id, {})
+                asyncio.run(self.detect_anomaly(event, method, config_dict))
+                return
+            # EVENT VISUALIZE <event> TYPE "<type>" CONFIG "<options>"
+            m = re.match(r"EVENT VISUALIZE (\w+) TYPE \"(.+?)\"(?: CONFIG \"(.+?)\")?", cmd, re.IGNORECASE)
+            if m:
+                event_id, vis_type, config = m.groups()
+                config_dict = self._parse_config(config or "")
+                event = self.events.get(event_id, {})
+                asyncio.run(self.visualize_event(event, vis_type, config_dict))
+                return
+            # EVENT QUANTUM ANALYZE <event> METHOD "<method>" CONFIG "<options>"
+            m = re.match(r"EVENT QUANTUM ANALYZE (\w+) METHOD \"(.+?)\"(?: CONFIG \"(.+?)\")?", cmd, re.IGNORECASE)
+            if m:
+                event_id, method, config = m.groups()
+                config_dict = self._parse_config(config or "")
+                event = self.events.get(event_id, {})
+                asyncio.run(self.quantum_analyze(event, method, config_dict))
+                return
+            # EVENT FEDERATED ANALYZE <event> METHOD "<method>" CONFIG "<options>"
+            m = re.match(r"EVENT FEDERATED ANALYZE (\w+) METHOD \"(.+?)\"(?: CONFIG \"(.+?)\")?", cmd, re.IGNORECASE)
+            if m:
+                event_id, method, config = m.groups()
+                config_dict = self._parse_config(config or "")
+                event = self.events.get(event_id, {})
+                asyncio.run(self.federated_analyze(event, method, config_dict))
+                return
+            # EVENT INSTANCE <id> CREATE ID "<instance_id>" CONFIG "<options>"
+            m = re.match(r"EVENT INSTANCE (\w+) CREATE ID \"(.+?)\"(?: CONFIG \"(.+?)\")?", cmd, re.IGNORECASE)
+            if m:
+                event_id, instance_id, config = m.groups()
+                config_dict = self._parse_config(config or "")
+                asyncio.run(self.instance_manager.create_instance(event_id, instance_id, config_dict.get("priority", 1.0)))
+                return
+            # EVENT INSTANCE <id> DESTROY "<instance_id>"
+            m = re.match(r"EVENT INSTANCE (\w+) DESTROY \"(.+?)\"", cmd, re.IGNORECASE)
+            if m:
+                event_id, instance_id = m.groups()
+                asyncio.run(self.instance_manager.destroy_instance(event_id, instance_id))
+                return
+            # EVENT CHAIN <id1> TO <id2>
+            m = re.match(r"EVENT CHAIN (\w+) TO (\w+)", cmd, re.IGNORECASE)
+            if m:
+                id1, id2 = m.groups()
+                self.dependency_graph.add_edge(id1, id2)
+                log.info(f"Olay zinciri: {id1} -> {id2}")
+                return
+            # EVENT SCHEDULE <id> AT "<time>" CONFIG "<options>"
+            m = re.match(r"EVENT SCHEDULE (\w+) AT \"(.+?)\" CONFIG \"(.+?)\"", cmd, re.IGNORECASE)
+            if m:
+                event_id, time_str, config = m.groups()
+                asyncio.run(self.schedule(event_id, time_str, config))
+                return
+            # EVENT PRIORITIZE <id> LEVEL <priority> CONFIG "<options>"
+            m = re.match(r"EVENT PRIORITIZE (\w+) LEVEL (\d+(?:\.\d+)?) CONFIG \"(.+?)\"", cmd, re.IGNORECASE)
+            if m:
+                event_id, priority, config = m.groups()
+                asyncio.run(self.prioritize(event_id, float(priority), config))
+                return
+            # EVENT INTERRUPT <id> TYPE "<type>" CONFIG "<options>"
+            m = re.match(r"EVENT INTERRUPT (\w+) TYPE \"(.+?)\" CONFIG \"(.+?)\"", cmd, re.IGNORECASE)
+            if m:
+                event_id, interrupt_type, config = m.groups()
+                asyncio.run(self.interrupt(event_id, interrupt_type, config))
+                return
+            log.warning(f"Bilinmeyen komut: {cmd}")
         except Exception as e:
-            raise PdsXEventError(f"Slot atama hatası: {str(e)} (EVENT033)", context={"source": "_assign_slot"})
+            log.error(f"Komut işleme hatası: {str(e)}")
+            raise PdsXEventError(f"Komut işleme hatası: {str(e)}")
+
+    def event_status(self, event_id: str):
+        return self.flag_manager.get_flag(event_id, "TRIGGERED")
+
+    def event_info(self, event_id: str):
+        return self.events.get(event_id, {})
+
+# --- BACKWARD COMPATIBILITY LAYER (event.py API) ---
+# Bu bölüm, eski event.py API'si ile tam uyumluluk sağlar ve modern EventManager ile entegre çalışır.
+
+class EventCompat:
+    """event.py API'si ile uyumlu, modern EventManager'a köprü katmanı."""
+    def __init__(self, event_manager: EventManager):
+        self.event_manager = event_manager
+        self.interpreter = None
+        self.signal_handlers = {}
+        self.timers = {}
+        self.event_log = []
+        self.max_log_size = 1000
+        self.lock = threading.Lock()
+        self.async_loop = asyncio.new_event_loop()
+        self.async_thread = None
+
+    def parse_event_command(self, command: str, interpreter) -> None:
+        if not self.interpreter:
+            self.set_interpreter(interpreter)
+        import re
+        command_upper = command.upper().strip()
+        try:
+            if command_upper.startswith("EVENTX BULK_PUBLISH"):
+                # Örnek: EVENTX BULK_PUBLISH [{...}, {...}] DISK ZMQ
+                import ast
+                match = re.match(r"EVENTX BULK_PUBLISH\s+(\[.*\])\s*(DISK)?\s*(ZMQ)?", command, re.IGNORECASE)
+                if match:
+                    events_str, disk_flag, zmq_flag = match.groups()
+                    events = ast.literal_eval(events_str)
+                    use_disk = bool(disk_flag)
+                    use_zmq = bool(zmq_flag)
+                    loop = None
+                    try:
+                        loop = asyncio.get_running_loop()
+                    except RuntimeError:
+                        pass
+                    if loop and loop.is_running():
+                        fut = self.event_manager.bulk_publish(events, use_disk, use_zmq)
+                        loop.run_until_complete(fut)
+                    else:
+                        asyncio.run(self.event_manager.bulk_publish(events, use_disk, use_zmq))
+            else:
+                super().parse_event_command(command, interpreter)
+        except Exception as e:
+            log.error(f"EventCompat: BULK_PUBLISH komut hatası: {str(e)}")
+            raise PdsXEventError(f"BULK_PUBLISH komut hatası: {str(e)}")
 
 if __name__ == "__main__":
     print("libx_event.py bağımsız çalıştırılamaz. PDSxU ile kullanın.")

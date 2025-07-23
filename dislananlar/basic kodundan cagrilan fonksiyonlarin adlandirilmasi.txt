@@ -1,0 +1,10 @@
+Bir fonksiyonun/fonksiyonel özelliðin kodda tanýmlý olup, BASIC veya kullanýcý komutu olarak doðrudan karþýlýðý (yani kullanýcý tarafýndan çaðrýlabilen bir komut) olmamasýna genellikle þu þekilde denir:
+
+- **"Internal API"** veya **"dahili fonksiyon"**: Sadece sistem/modül içinde kullanýlýr, dýþarýya (kullanýcýya) doðrudan sunulmaz.
+- **"Expose edilmemiþ fonksiyon"**: Kullanýcýya açýk (exposed) deðildir.
+- **"Komut tablosunda yer almayan fonksiyon"**: BASIC komutlarý arasýnda yoktur.
+- **"Kullanýcý arayüzünden eriþilemeyen"** veya **"script ile çaðrýlamayan"** fonksiyon.
+- **"Yalnýzca programatik olarak eriþilebilen"** fonksiyon.
+
+Kýsa özetle:  
+Bu tür fonksiyonlara "dahili (internal) fonksiyon" veya "kullanýcýya açýk olmayan (non-exposed) fonksiyon" denir. BASIC komutu yoksa, kullanýcý doðrudan çaðramaz; sadece sistem veya baþka fonksiyonlar tarafýndan kullanýlabilir.

@@ -1,0 +1,267 @@
+guzel abim bak defalarca yazdim
+TRCODE v0.8 Komut Listesi
+Temel Komutlar:
+
+tanimla <isim> <tip> - Deðiþken tanýmlama (tamsayi, gerceksayi, metin)
+
+<degisken> = <deger> - Atama iþlemi
+
+yaz <metin> - Ekrana yazdýrma
+
+Kontrol Yapýlarý:
+4. eger <koþul> - Koþul baþlangýcý
+5. egerson - Koþul sonu
+6. say <degisken> = X den Y - For döngüsü
+7. sayson - For döngüsü sonu
+
+Nesne Yönelimli Programlama:
+8. sinif <Isim> - Sýnýf tanýmlama
+9. sinif <Isim>: <UstSinif> - Kalýtýmlý sýnýf tanýmlama
+10. public <alan> 'i <tip> olarak tanimla - Genel alan tanýmý
+11. private <alan> 'i <tip> olarak tanimla - Özel alan tanýmý
+12. nesne.olustur <Sinif> - Nesne örnekleme
+13. <nesneID>.<metod>(<parametreler>) - Metod çaðýrma
+14. ben.<alan> - Aktif nesnenin alanýna eriþim
+15. sinifson - Sýnýf tanýmý sonu
+
+Fonksiyonlar ve Modüller:
+16. fonk <isim> - Fonksiyon tanýmlama
+17. fonkson - Fonksiyon sonu
+18. modul <isim> - Modül tanýmlama
+19. modulson - Modül sonu
+
+Dekoratörler:
+20. @<dekorator> - Dekoratör tanýmlama
+
+Prolog Entegrasyonu:
+21. assert <kural> - Prolog kuralý ekleme
+
+bu yukaridaki syntax ingilizce dilbilgisi kurallarina gore yazilmis 
+ben sana diyorum ki
+print ve input da ; kullanimi satirdan devam et anlaminda kullanilmaktadir
+satirlarda coklu komut ayraci : dir
+yorum satiri # ile baslar
+turkce dilbildisi kurallarina ozne nesne yuklem kuralina uyar
+Dilbilgisi kurallarýna uygun þekilde: yüklem = komut , özne = hedef , nesne = veri düzenini saðlamalisin
+prolog mantik motoru and or not xor imp eqv nand nor bind mantik motorunda kullanilmasi gerekli
++,-,*,/,\ mod, islemlerini yapmali
+"metin" yerine |metin| kullanýyoruz. (print ve input komutlarinda.
+Döngü komutlarýný iken ... ikenson (while ... wend) ve(do... loop) dongu ... donguson olarak ayarladýk, dongu cikis exit for, exit do, (cikiken, saycik), continue devam komutlari dongulerin iayrica her dongude next sonraki icinde mutlaka olmali.
+ayrica end komutunu bitti olarak degil son kelimesi ile yap
+
+
+sana ornek trcode imlalari gonderiyorum
+tanimla x tamsayi
+x'e 5 ata
+y = x + 3
+yaz Sonuç: y
+
+sinif Kisi
+ad'i metin olarak tanimla
+yas'i tamsayi olarak tanimla
+sinifson
+
+nesne.olustur Kisi
+1.ad = Mete
+1.yas = 35
+nesne.yazdir 1
+
+veri Mete, 35
+oku x
+yaz Okunan: x
+
+eger x == 5 ise
+    yaz Dogru
+egerson
+
+say i = 1 den 3
+    yaz Sayi: i
+sayson
+
+fonk topla(a, b)
+    sonuc = a + b
+    don sonuc
+fonkson
+
+cagir topla(3, 4)
+yaz Toplam: don.sonuc
+
+tanimla x tamsayi
+x'e 5 ata
+yaz Merhaba Dunya!
+
+sinif Kisi
+ad'i public metin olarak tanimla
+yas'i private tamsayi olarak tanimla
+sinifson
+
+nesne.olustur Kisi
+1.ad = Mete
+1.yas = 35
+nesne.yazdir 1
+
+fonk topla(a, b)
+    sonuc = a + b
+    don sonuc
+fonkson
+
+cagir topla(x, 3)
+yaz Toplam: don.sonuc
+sinif Kisi
+ad'i metin olarak tanimla
+yas'i tamsayi olarak tanimla
+
+rutin Yazdir
+    |Ad: |;kendim.ad yaz
+    |Yas: |;kendim.yas yaz
+rutinson
+
+sinifson
+
+nesne.olustur Kisi
+1.ad = Mete
+1.yas = 35
+cagir 1.Yazdir
+@log
+fonk topla(a, b)
+    sonuc = a + b
+    don sonuc
+fonkson
+DIM SHARED dekoratorAktif%, dekoratorAdi$
+
+IF LEFT$(s$, 1) = "@" THEN
+    dekoratorAktif% = -1
+    dekoratorAdi$ = MID$(s$, 2)
+    blokModu% = 1
+    blokKomut$ = "dekorator"
+    blokSay% = 0
+    PRINT "[DEKORATOR AKTIF EDILDI]: "; dekoratorAdi$
+    EXIT SUB
+END IF
+modul Matematik
+fonk topla(x, y)
+    don x + y
+fonkson
+export
+modulson
+
+import Matematik
+cagir topla(3, 4) 
+yaz Sonuç: don.sonuc
+interface Hareket
+hareketEt soyut fonk
+interfaceson
+
+sinif Insan : Hareket
+fonk hareketEt
+    |Yürüdü| yaz
+    don "yürüdü"
+fonkson
+sinifson
+say i = 1 den 5
+    eger i == 3 ise
+        saycik
+    egerson
+    yaz Sayi: i
+sayson
+
+iken x < 5
+    x += 1
+    eger x == 3 degilse
+        devam
+    egerson
+    yaz Devam edildi!
+ikenson
+FUNCTION BolKomut (s$, ayrac$, maxParca%, OUT$()) AS INTEGER
+    DIM parcaSayisi%, poz%, eskiPoz%
+    parcaSayisi% = 0
+    eskiPoz% = 1
+    FOR i = 1 TO LEN(s$)
+        IF MID$(s$, i, 1) = ayrac$ THEN
+            parcaSayisi% = parcaSayisi% + 1
+            OUT$(parcaSayisi%) = MID$(s$, eskiPoz%, i - eskiPoz%)
+            eskiPoz% = i + 1
+        END IF
+    NEXT
+    parcaSayisi% = parcaSayisi% + 1
+    OUT$(parcaSayisi%) = MID$(s$, eskiPoz%, LEN(s$) - eskiPoz% + 1)
+    BolKomut = parcaSayisi%
+END FUNCTION
+
+tanimla x tamsayi
+x'e 5 ata
+yaz Merhaba Dunya!
+
+sinif Kisi
+public ad'i metin olarak tanimla
+private soyad'i metin olarak tanimla
+protected kimlik'i metin olarak tanimla
+internal hesapNo'u metin olarak tanimla
+sinifson
+
+nesne.olustur Kisi
+1.ad = Mete
+1.soyad = Abi
+1.kimlik = 12345
+1.hesapNo = TRCODE-BANKA
+cagir 1.BilgiYazdir
+
+bu yazim stillerini synaxi iyi incele hala turkce ozne nesne yuklem mantigini her komutta oturtamadim.
+turkce dilbildisi kurallarina ozne nesne yuklem kuralina uyar
+Dilbilgisi kurallarýna uygun þekilde: yüklem = komut , özne = hedef , nesne = veri düzenini saðlamalisin
+bazi durumlarda ozne gizli oznedir mesela
+ekrana |mete| yaz  komutunda ekrana yonelimi gizli oznedir. 
+|mete| yaz denir
+kullanicidan |adiniz?|; ad sor
+burada kullanici gizli oznedir
+|adiniz|; ad sor 
+tanimla x tamsayi  dim ornegi
+x'e 5 ata let ornegi elbette bu kadar uzun yazmak zor ama destek verilmeli
+x = 5 de kabul edilmeli.
+tanimla x tamsayi
+x'e 5 ata
+y = x + 3
+yaz Sonuç: y
+
+sinif Kisi
+ad'i metin olarak tanimla dim ... as yapisi
+yas'i tamsayi olarak tanimla
+sinifson
+
+nesne.olustur Kisi
+1.ad = Mete
+1.yas = 35
+nesne.yazdir 1
+
+veri Mete, 35
+oku x
+yaz Okunan: x
+
+eger x == 5 ise
+    yaz Dogru
+egerson
+
+say i = 1 den 3
+    yaz Sayi: i
+sayson
+
+fonk topla(a, b)
+    sonuc = a + b
+    don sonuc
+fonkson
+
+cagir topla(3, 4)
+yaz Toplam: don.sonuc
+
+tamsayi       -> INTEGER (Int)
+tekhassasiyetli -> SINGLE (Float32)
+cifthassasiyetli -> DOUBLE (Float64)
+metin         -> STRING (Str)
+liste         -> DIM() (Array)
+sabitdizi     -> READ-ONLY Array (Tuple)
+kume          -> Unique Array (Set)
+sozluk        -> KEY-VALUE Array (Dict)
+mantik        -> BOOLEAN (0/1)
+yok           -> EMPTY (None)
+hic           -> NAN (Float)
+bos           -> VOID (Sub)

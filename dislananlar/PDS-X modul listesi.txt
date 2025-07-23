@@ -1,0 +1,78 @@
+her sey bittikten sonra core cekirdegini hafifletmek alaciyla ilgili modullere fonksiyonlari dagitarak is yapmak hedefindeyim. bu nu unutma ve pdsXug arastirmamiz ge modul modul incelememiz bitince bu isi yapalim. simdi yaparsak ortalik cok karisir.
+
+Sorun: tensorflow.keras, scipy.integrate gibi dýþ kütüphane baðýmlýlýklarý doðrudan metot içinde try-except olmadan kullanýlýyor. autoinstaller baþlangýçta paketleri kursa da, bu kýsýmlar hala çalýþma zamaný hatalarýna yol açabilir eðer paketler dinamik olarak kaldýrýlýrsa veya yüklenmezse.
+bu sorunu exceptionmanager3 siniflari ile yoksada ureterek benzersik hata kodlarini ureterek yapabiliriz. duzelmeliyiz bu sorunlari. cozmeliyiz ve alias mekanizmasini genis ve guclu sekilde kurmaliyiz. ileride yine karsimiza cikabiir bu nedenle statik modullerdeki cakismalarin herbirini hangi taraftaki guclu, mukammele yakin ise iki kod da birlestirilmeli ve iki taraftaki kodlardaki her ozellik, her parametre, ilgili cakisma onlanecek sekilde tek bir taraftan ve kendine has gorevleri olan modulden idare edilecek sekilde duzenlenmelidir. karmasiklik giderilmelidir. statik modullerimiz ki bunlari inceliyoruz bu cakismalari bizim onlememiz gerekli. ama dinamik runtime sirasindaki yuklemelerde siniflar fonksiyonlar komutlar ve yerel komutlarin calismasi icin evrensel bir cakisma onleyici alias sitemi kurarak bunu onlameliyiz. simdi core 2-5 ve core2-6 yi tek bir core 2-6 da ve siniflari ayni kalacak sekilde duzenle. cakismalarida ilgili statik python dili ile yazilmis pdsX modullerinde kullanilacak sekilde duzeltelim. ama onceli alias sitemi ve simdi onerdigim alias siteminide kurmamiz gerekli. hata kontrolunde exception hatalarinin benzersiz kodlarla bildirim yapmasini da duzenlemeliyiz.  
+
+
+
+
+
+pdsXuv14.backup.20250611.py
+pdsXuv14.py
+pdsXuv14.-1g.py
+pdsXuv14-2gg.py
+pdsXuv13.py
+pdsXv11g.py
+pdsXuv14eneski.py
+pdsXuv14 copy.py
+pdsXu1.py
+pdsCv13u.py
+pdsxv13xxmxx2.py
+Ek olarak, son mesajýnýzda verdiðiniz 7 dosya:
+libx_task.py
+async_manager.py
+core (2).py
+pdsXv11c.py
+pdsX_v10.py
+pdsx_v11.py
+pdsX.py
+
+ki mesajda listelenen 47 modülü kontrol ettim. Aþaðýda tam liste yer alýyor:
+
+bus3.py
+core2_5.py
+core2_6.py
+functional.py
+save_load_system2.py
+tree.py
+event3.py
+exception_manager3.py
+libx_concurrency.py
+lib_db.py
+f12_timer_manager.py
+f11_backtrace_logger.py
+graph2.py
+export_report_doc.py
+libx_logic.py
+libx_jit.py
+libx_gui.py
+bytecode_engine_core2duo2.py
+libx_ml.py
+libx_network.py
+lowlevel.py
+libx_nlp.py
+module_validator.py
+memory_manager.py
+module_manager.py
+multithreading_process.py
+pdsx_exception.py
+pdsx_exception2.py
+database_sql_isam.py
+pipe3.py
+autoinstaller.py
+libx_stream.py
+libx_security.py
+dll_manager.py
+api_manager.py
+inline_asm.py
+inline_c.py
+unsafe_memory.py
+sys_call.py
+plugin_manager.py
+repl_utils.py
+async_manager.py
+auto_importer.py
+reply_extension.py
+data_types.py
+command_executor.py
+add_exports.py

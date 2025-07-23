@@ -1,0 +1,10 @@
+10 PRINT "PDS-X BASIC Test"
+20 LET A = 10
+30 LET B = 5
+40 PRINT "A =", A
+50 PRINT "B =", B
+60 PRINT "Toplam:", A + B
+70 FOR I = 1 TO 3
+80 PRINT "Sayı:", I
+90 NEXT I
+100 END

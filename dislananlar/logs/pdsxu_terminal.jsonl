@@ -1,0 +1,38 @@
+{"time": "2025-07-20 02:25:19,472", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-20 02:25:19,472", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-20 02:26:08,925", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-20 02:26:08,925", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-20 02:26:10,126", "level": "INFO", "message": "Klavye durdurma kombinasyonu (Ctrl+Shift+Q) etkinleştirildi"}
+{"time": "2025-07-20 02:26:26,466", "level": "WARNING", "message": "Elasticsearch bağlantısı başarısız: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x000001CE5F6D75F0>: Failed to establish a new connection: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı))"}
+{"time": "2025-07-20 02:26:26,471", "level": "INFO", "message": "Python 3.10 aranıyor..."}
+{"time": "2025-07-20 02:26:26,527", "level": "INFO", "message": "Registry'de bulundu: C:\Users\mete\AppData\Local\Programs\Python\Python310\python.exe"}
+{"time": "2025-07-20 02:26:26,527", "level": "INFO", "message": "PATH'e eklemek için 'add_pdsx_path.bat' veya 'add_pdsx_path.ps1' dosyasını yönetici olarak çalıştırın!"}
+{"time": "2025-07-20 02:26:26,527", "level": "ERROR", "message": "Derleme araçları kontrol hatası: [WinError 2] Sistem belirtilen dosyayı bulamıyor"}
+{"time": "2025-07-20 02:26:26,527", "level": "WARNING", "message": "Derleme araçları bulunamadı. Lütfen Visual Studio Build Tools veya MinGW kurun."}
+{"time": "2025-07-20 02:26:26,527", "level": "INFO", "message": "AutoImporter başlatıldı"}
+{"time": "2025-07-20 02:26:26,546", "level": "INFO", "message": "AutoImporter temizlik işlemleri başlatılıyor..."}
+{"time": "2025-07-20 02:26:26,547", "level": "INFO", "message": "Real-time monitoring durduruldu"}
+{"time": "2025-07-20 02:26:26,548", "level": "INFO", "message": "Öğrenilmiş bağımlılıklar kaydedildi: 0 paket"}
+{"time": "2025-07-20 02:26:26,550", "level": "INFO", "message": "Öğrenilmiş bağımlılıklar kaydedildi"}
+{"time": "2025-07-20 02:26:26,552", "level": "INFO", "message": "Bağımlılık kayıt dosyası kaydedildi."}
+{"time": "2025-07-20 02:26:26,552", "level": "INFO", "message": "AutoImporter temizlik tamamlandı."}
+{"time": "2025-07-20 02:26:52,987", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-20 02:26:52,987", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-20 02:39:31,306", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-20 02:39:31,306", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-20 02:41:02,619", "level": "INFO", "message": "Elasticsearch sunucusuna bağlanıldı."}
+{"time": "2025-07-20 02:41:02,619", "level": "INFO", "message": "Loglama sistemi başlatıldı."}
+{"time": "2025-07-20 02:41:03,804", "level": "INFO", "message": "Klavye durdurma kombinasyonu (Ctrl+Shift+Q) etkinleştirildi"}
+{"time": "2025-07-20 02:41:20,058", "level": "WARNING", "message": "Elasticsearch bağlantısı başarısız: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x000001D8E53F6270>: Failed to establish a new connection: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı))"}
+{"time": "2025-07-20 02:41:20,058", "level": "INFO", "message": "Python 3.10 aranıyor..."}
+{"time": "2025-07-20 02:41:20,109", "level": "INFO", "message": "Registry'de bulundu: C:\Users\mete\AppData\Local\Programs\Python\Python310\python.exe"}
+{"time": "2025-07-20 02:41:20,111", "level": "INFO", "message": "PATH'e eklemek için 'add_pdsx_path.bat' veya 'add_pdsx_path.ps1' dosyasını yönetici olarak çalıştırın!"}
+{"time": "2025-07-20 02:41:20,113", "level": "ERROR", "message": "Derleme araçları kontrol hatası: [WinError 2] Sistem belirtilen dosyayı bulamıyor"}
+{"time": "2025-07-20 02:41:20,113", "level": "WARNING", "message": "Derleme araçları bulunamadı. Lütfen Visual Studio Build Tools veya MinGW kurun."}
+{"time": "2025-07-20 02:41:20,113", "level": "INFO", "message": "AutoImporter başlatıldı"}
+{"time": "2025-07-20 02:41:20,125", "level": "INFO", "message": "AutoImporter temizlik işlemleri başlatılıyor..."}
+{"time": "2025-07-20 02:41:20,126", "level": "INFO", "message": "Real-time monitoring durduruldu"}
+{"time": "2025-07-20 02:41:20,128", "level": "INFO", "message": "Öğrenilmiş bağımlılıklar kaydedildi: 0 paket"}
+{"time": "2025-07-20 02:41:20,129", "level": "INFO", "message": "Öğrenilmiş bağımlılıklar kaydedildi"}
+{"time": "2025-07-20 02:41:20,131", "level": "INFO", "message": "Bağımlılık kayıt dosyası kaydedildi."}
+{"time": "2025-07-20 02:41:20,131", "level": "INFO", "message": "AutoImporter temizlik tamamlandı."}

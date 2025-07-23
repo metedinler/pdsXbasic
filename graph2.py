@@ -13,7 +13,7 @@ import heapq
 import graphviz
 import uuid
 import numpy as np
-from pdsx_exception import PdsXException  # Hata yönetimi için
+from pdsx_unified_exception import PdsXException  # Hata yönetimi için
 
 # Loglama Ayarları
 logging.basicConfig(

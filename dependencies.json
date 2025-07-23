@@ -1,4 +1,1410 @@
 {
-  "installed_packages": {},
-  "module_dependencies": {}
+  "packages": {
+    "voila": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:59.150931",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:59.491260"
+    },
+    "pytest-mock": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:03.286383",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:03.708257"
+    },
+    "pytest-cov": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:01.940861",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:02.281612"
+    },
+    "unittest-xml-reporting": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:07.121070",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:07.526332"
+    },
+    "tox": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:10.372876",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:10.758637"
+    },
+    "bandit": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:19.656428",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:20.016262"
+    },
+    "argparse": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:25.126322",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:25.464595"
+    },
+    "configparser": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:26.486285",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:26.822105"
+    },
+    "redis": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:33.289503",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:33.618937"
+    },
+    "pymongo": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:31.921184",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:32.259420"
+    },
+    "cassandra-driver": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:37.605480",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:37.942224"
+    },
+    "rq": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:40.324255",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:40.673619"
+    },
+    "dramatiq": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:41.685743",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:42.023753"
+    },
+    "celery": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:38.951867",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:39.290945"
+    },
+    "airflow": {
+      "version": "failed",
+      "status": "Başarısız",
+      "dependencies": [],
+      "metadata": {
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_method": "pip",
+        "install_timestamp": "2025-07-20T03:53:56.345836",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:53:56.829661"
+    },
+    "luigi": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:43.047044",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:43.384584"
+    },
+    "prefect": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:45.760535",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:46.094927"
+    },
+    "socketio": {
+      "version": "failed",
+      "status": "Başarısız",
+      "dependencies": [],
+      "metadata": {
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_method": "pip",
+        "install_timestamp": "2025-07-20T03:54:12.254351",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:54:12.871033"
+    },
+    "cerberus": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:56.714851",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:57.035721"
+    },
+    "voluptuous": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:59.416485",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:59.764713"
+    },
+    "passlib": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:46:50.909028"
+    },
+    "python-jose": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:47:09.800465"
+    },
+    "maya": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:47:38.390675"
+    },
+    "delorean": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:47:56.990730"
+    },
+    "progressbar2": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:48:06.677824"
+    },
+    "alive-progress": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:48:16.728869"
+    },
+    "memory-profiler": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:48:24.471608"
+    },
+    "py-spy": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:48:30.209075"
+    },
+    "line-profiler": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:48:33.998359"
+    },
+    "cprofile": {
+      "version": "failed",
+      "status": "Başarısız",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:57:11.894792"
+    },
+    "google-cloud": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:48:55.160493"
+    },
+    "azure-storage": {
+      "version": "failed",
+      "status": "Başarısız",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:58:53.257913"
+    },
+    "chameleon": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:49:26.400605"
+    },
+    "genshi": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:49:34.227831"
+    },
+    "igraph": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:49:44.435228"
+    },
+    "graph-tool": {
+      "version": "failed",
+      "status": "Başarısız",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:49:50.451327"
+    },
+    "pygraphviz": {
+      "version": "failed",
+      "status": "Başarısız",
+      "dependencies": [],
+      "timestamp": "2025-07-20T02:00:42.032575"
+    },
+    "pymc3": {
+      "version": "failed",
+      "status": "Başarısız",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:51:15.043168"
+    },
+    "arviz": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:51:27.612239"
+    },
+    "geopy": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:51:40.890371"
+    },
+    "folium": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:51:42.310010"
+    },
+    "shapely": {
+      "version": "failed",
+      "status": "Başarısız",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:51:50.191684"
+    },
+    "geopandas": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:51:54.309383"
+    },
+    "cartopy": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:52:01.103565"
+    },
+    "datasets": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "timestamp": "2025-07-20T01:52:30.737665"
+    },
+    "bokeh": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:52.360144",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:52.722328"
+    },
+    "ipython": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:53.734926",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:54.068134"
+    },
+    "notebook": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:05.231643",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:05.750283"
+    },
+    "jupyterlab": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:55.092367",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:55.423588"
+    },
+    "jupyter": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:57.802087",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:58.130220"
+    },
+    "flake8": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:23.759032",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:24.112221"
+    },
+    "python-dotenv": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:34.640833",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:34.980801"
+    },
+    "sqlalchemy": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:44.403597",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:44.748920"
+    },
+    "twisted": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:51.197840",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:51.529193"
+    },
+    "marshmallow": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:55.350489",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:55.694275"
+    },
+    "matplotlib": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:22.528220",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:22.802059"
+    },
+    "numpy": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:23.671569",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:23.946830"
+    },
+    "pandas": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:24.827641",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:25.113761"
+    },
+    "seaborn": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:25.995102",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:26.283308"
+    },
+    "scipy": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:27.144599",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:27.446986"
+    },
+    "scikit-learn": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:28.328763",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:28.631694"
+    },
+    "requests": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:29.510853",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:29.816542"
+    },
+    "beautifulsoup4": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:30.719801",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:31.003740"
+    },
+    "lxml": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:31.975599",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:32.314066"
+    },
+    "openpyxl": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:33.352193",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:33.694366"
+    },
+    "xlrd": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:34.727587",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:35.065665"
+    },
+    "pillow": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:36.086328",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:36.419877"
+    },
+    "opencv-python": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:37.428595",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:37.768532"
+    },
+    "torch": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:38.790217",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:39.133961"
+    },
+    "tensorflow": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:40.134896",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:40.487185"
+    },
+    "keras": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:41.506899",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:41.839737"
+    },
+    "django": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:42.852025",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:43.193622"
+    },
+    "flask": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:44.207738",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:44.533705"
+    },
+    "fastapi": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:45.566159",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:45.887857"
+    },
+    "streamlit": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:46.911846",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:47.233111"
+    },
+    "dash": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:48.263810",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:48.607520"
+    },
+    "altair": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:49.652007",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:49.991985"
+    },
+    "plotly": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:51.016729",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:51.352394"
+    },
+    "ipywidgets": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:56:56.454540",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:56:56.791138"
+    },
+    "pytest": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:00.566305",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:00.910431"
+    },
+    "coverage": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:08.752489",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:09.154782"
+    },
+    "black": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:11.798014",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:12.132030"
+    },
+    "autopep8": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:13.172502",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:13.633098"
+    },
+    "isort": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:14.722764",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:15.055771"
+    },
+    "mypy": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:16.105052",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:16.443589"
+    },
+    "pylint": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:18.108648",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:18.590437"
+    },
+    "click": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:21.035757",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:21.375219"
+    },
+    "typer": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:22.407178",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:22.744022"
+    },
+    "toml": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:27.830430",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:28.163557"
+    },
+    "pyyaml": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:29.195788",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:29.533585"
+    },
+    "psycopg2-binary": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:30.554245",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:30.894216"
+    },
+    "elasticsearch": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:36.222311",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:36.584100"
+    },
+    "aiohttp": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:47.102190",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:47.436106"
+    },
+    "httpx": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:48.464135",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:48.787591"
+    },
+    "websockets": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:49.806016",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:50.149722"
+    },
+    "tornado": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:52.597892",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:52.952314"
+    },
+    "pydantic": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:53.977751",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:54.311356"
+    },
+    "schema": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:57:58.060591",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:57:58.397581"
+    },
+    "cryptography": {
+      "version": "latest",
+      "status": "Başarılı",
+      "dependencies": [],
+      "metadata": {
+        "install_method": "pip_genetic",
+        "optimization_used": true,
+        "stable_pip": false,
+        "python_stable": false,
+        "pip_version": "pip 25.1.1 from C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\lib\\site-packages\\pip (python 3.10)",
+        "python_version": "3.10.11",
+        "python_executable": "C:\\Users\\mete\\Zotero\\basic\\pdsXuv14\\.pdsx_isolated_env\\Scripts\\python.exe",
+        "install_timestamp": "2025-07-20T03:58:00.814318",
+        "is_stable_env": false
+      },
+      "registered_at": "2025-07-20T03:58:01.146006"
+    }
+  },
+  "resolutions": {},
+  "conflicts": {},
+  "status": "clean",
+  "timestamp": "2025-07-20T03:58:01.146006"
 }

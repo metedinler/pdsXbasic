@@ -1,0 +1,184 @@
+Sorunun Açýklamasý (Kýsa)
+Hata: Verdiðim modül listesinde (dll_manager.py, api_manager.py, vb.) sizin sisteminizde olmayan modüller yer aldý. Bu, modül listesinin yanlýþ veya eksik olduðunu gösteriyor.
+Çözüm:
+Dört dosyanýn (dependencies.json, command_executor.py, exception_manager3.py, pdsXe_uv14_2.py) gerekliliklerini belirleyeceðim.
+ozelbilgi.json'un yapýsýný, bu gerekliliklere göre tasarlayacaðým.
+Sizden doðru modül listesini veya modülleri tek tek/gruplar halinde alacaðým.
+Modülleri satýr satýr tarayarak ozelbilgi.json'u dolduracaðým.
+Bu dosyayý kullanarak eksiklikleri tamamlayacaðýz ve gerekli dosyalarý yazacaðýz.
+2. Dört Dosyanýn Gereklilikleri
+Aþaðýda, dependencies.json, command_executor.py, exception_manager3.py ve pdsXe_uv14_2.py dosyalarýnýn ihtiyaç duyduðu bilgileri belirliyorum. Bu bilgiler, ozelbilgi.json'un hangi verileri içermesi gerektiðini belirleyecek.
+
+2.1. dependencies.json Gereklilikleri
+Amaç: Modüllerin baðýmlýlýklarýný, komutlarýný, fonksiyonlarýný ve hata kodlarýný tanýmlamak.
+Gerekli Bilgiler:
+Modül Baðýmlýlýklarý:
+Python kütüphaneleri (örn. numpy>=1.24.0).
+PDS-X modülleri (örn. core2-5, pipe3).
+Komutlar:
+Komut adý (örn. PRINT, PIPE DEFINE).
+Ait olduðu modül (örn. core2-5, pipe3).
+Alias’lar (örn. ["YAZDIR"]).
+Fonksiyonlar:
+Fonksiyon adý (örn. WEB_GET, GENERATE_CODE).
+Ait olduðu modül (örn. libx_network, libx_ml).
+Alias’lar.
+Hata Kodlarý:
+Kod (örn. SART001, PIPE001).
+Modül (örn. core2-5, pipe3).
+Mesaj (tr/en, örn. {"tr": "SART sözdizimi hatasý", "en": "SART syntax error"}).
+2.2. command_executor.py Gereklilikleri
+Amaç: Tüm komut ve fonksiyonlar için handler fonksiyonlarý tanýmlamak, hata kodlarýný kullanarak yürütme saðlamak.
+Gerekli Bilgiler:
+Komut Handler’larý:
+Komut adý (örn. PRINT, SART).
+Handler fonksiyonu (örn. handle_print, handle_sart).
+Modül (örn. core2-5).
+Asenkron mu? (true/false).
+Fonksiyon Handler’larý:
+Fonksiyon adý (örn. WEB_GET).
+Handler fonksiyonu (örn. handle_web_get).
+Modül (örn. libx_network).
+Asenkron mu? (true/false).
+Hata Kodlarý:
+Komut/fonksiyonla iliþkili hata kodlarý (örn. SART001, NET001).
+Hata sýnýflarý (örn. PdsXSyntaxError, PdsXNetworkError).
+2.3. exception_manager3.py Gereklilikleri
+Amaç: Hata sýnýflarýný ve hata kodlarýný tanýmlamak, hata iþleme mekanizmasýný saðlamak.
+Gerekli Bilgiler:
+Hata Sýnýflarý:
+Sýnýf adý (örn. PdsXSyntaxError, PdsXPipeError).
+Ait olduðu modül (örn. pdsx_exception2, pipe3).
+Hata Kodlarý:
+Kod (örn. SART001, PIPE001).
+Modül (örn. core2-5, pipe3).
+Mesaj (tr/en).
+Hata Ýþleme:
+Hata kodlarýnýn loglama ve kullanýcýya gösterilme þekli.
+2.4. pdsXe_uv14_2.py Gereklilikleri
+Amaç: Ana yorumlayýcý modülü olarak modül entegrasyonlarýný, komut yürütmeyi ve hata yönetimini saðlamak.
+Gerekli Bilgiler:
+Modül Entegrasyonlarý:
+Modül adý (örn. core2-5, pipe3).
+Import ifadesi (örn. from core2-5 import CoreManager as Core2_5Manager).
+Baþlatma yöntemi (örn. Core2_5Manager(self)).
+Komutlar ve Fonksiyonlar:
+Modülün desteklediði komutlar (örn. PRINT, PIPE DEFINE).
+Modülün desteklediði fonksiyonlar (örn. WEB_GET).
+Hata Kodlarý:
+Modülle iliþkili hata kodlarý (örn. INTERPRETER001, SART001).
+Hata sýnýflarý (örn. PdsXException, PdsXPipeError).
+3. ozelbilgi.json Yapýsý
+Yukarýdaki gerekliliklere göre ozelbilgi.json'un yapýsýný tasarlýyorum. Bu dosya, modül analizinden çýkan bilgileri depolayacak ve dört dosyanýn yazýmý için rehber olacak.
+
+Yapý
+json
+
+Daralt
+
+Metni gizle
+
+Kopyala
+{
+  "modules": [
+    {
+      "name": "string", // Modül adý (örn. "core2-5")
+      "path": "string", // Dosya yolu (örn. "core2-5.py")
+      "is_main": boolean // Ana modül mü? (örn. true for pdsx_exception)
+    }
+  ],
+  "error_codes": [
+    {
+      "code": "string", // Hata kodu (örn. "SART001")
+      "module": "string", // Modül adý (örn. "core2-5")
+      "class": "string", // Hata sýnýfý (örn. "PdsXSyntaxError")
+      "message": {
+        "tr": "string", // Türkçe mesaj
+        "en": "string" // Ýngilizce mesaj
+      }
+    }
+  ],
+  "commands": [
+    {
+      "name": "string", // Komut adý (örn. "PRINT")
+      "module": "string", // Modül adý (örn. "core2-5")
+      "handler": "string", // Handler fonksiyonu (örn. "handle_print")
+      "alias": ["string"], // Alias’lar (örn. ["YAZDIR"])
+      "async": boolean, // Asenkron mu?
+      "error_codes": ["string"] // Ýliþkili hata kodlarý (örn. ["PRINT001"])
+    }
+  ],
+  "functions": [
+    {
+      "name": "string", // Fonksiyon adý (örn. "WEB_GET")
+      "module": "string", // Modül adý (örn. "libx_network")
+      "handler": "string", // Handler fonksiyonu (örn. "handle_web_get")
+      "alias": ["string"], // Alias’lar
+      "async": boolean, // Asenkron mu?
+      "error_codes": ["string"] // Ýliþkili hata kodlarý (örn. ["NET001"])
+    }
+  ],
+  "dependencies": [
+    {
+      "module": "string", // Modül adý
+      "python_libs": ["string"], // Python kütüphaneleri (örn. ["numpy>=1.24.0"])
+      "pdsx_modules": ["string"] // PDS-X modülleri (örn. ["core2-5"])
+    }
+  ],
+  "executor_mapping": [
+    {
+      "name": "string", // Komut/fonksiyon adý
+      "handler": "string", // Handler fonksiyonu
+      "module": "string", // Modül adý
+      "async": boolean // Asenkron mu?
+    }
+  ],
+  "exception_manager_mapping": [
+    {
+      "module": "string", // Modül adý
+      "error_class": "string", // Hata sýnýfý
+      "error_codes": ["string"] // Hata kodlarý
+    }
+  ],
+  "pdsxe_mapping": [
+    {
+      "module": "string", // Modül adý
+      "import_statement": "string", // Import ifadesi
+      "initialization": "string", // Baþlatma yöntemi
+      "commands": ["string"], // Komutlar
+      "functions": ["string"], // Fonksiyonlar
+      "error_codes": ["string"] // Hata kodlarý
+    }
+  ]
+}
+Açýklamalar
+modules: Tüm modüllerin listesi, analiz için temel yapý.
+error_codes: Hata kodlarý ve mesajlarý, dependencies.json, exception_manager3.py, command_executor.py ve pdsXe_uv14_2.py için gerekli.
+commands: Komutlar, command_executor.py ve dependencies.json için handler ve alias bilgisi saðlar.
+functions: Fonksiyonlar, command_executor.py ve dependencies.json için handler ve alias bilgisi saðlar.
+dependencies: Baðýmlýlýklar, dependencies.json için doðrudan kullanýlýr.
+executor_mapping: command_executor.py için handler eþleþmeleri.
+exception_manager_mapping: exception_manager3.py için hata sýnýflarý ve kodlarý.
+pdsxe_mapping: pdsXe_uv14_2.py için modül entegrasyon detaylarý.
+4. Modül Saðlama Talebi
+Doðru modülleri analiz etmek için, lütfen aþaðýdaki bilgileri saðlayýn:
+
+Modül Listesi: Sisteminizde bulunan modüllerin tam listesini (örn. core2-5.py, pipe3.py).
+Modül Dosyalarý: Modülleri tek tek veya gruplar halinde yükleyin. Her modülü satýr satýr tarayacaðým.
+Öncelik: Hangi modüllerle baþlamamý istediðinizi belirtin (örn. core2-5 ile baþla).
+Eðer modül listesini hemen saðlayamýyorsanýz, önceki mesajlarda bahsedilen modüllerden (core2-5.py, core2-6.py, pipe3.py, reply_extension.py, vb.) baþlayabilirim. Lütfen onay verin veya listeyi paylaþýn.
+
+5. Sonraki Adýmlar
+Modül Saðlama: Modül listesini ve/veya dosyalarý bekliyorum.
+Analiz: Saðladýðýnýz modülleri satýr satýr tarayýp ozelbilgi.json'u dolduracaðým.
+Dosya Yazýmý:
+dependencies.json: Baðýmlýlýklar, komutlar, fonksiyonlar ve hata kodlarý.
+exception_manager3.py: Hata sýnýflarý ve kodlarý.
+command_executor.py: Handler fonksiyonlarý (parçalý).
+pdsXe_uv14_2.py: Modül entegrasyonlarý (parçalý).
+Doðrulama: Her dosya, ozelbilgi.json ile tutarlý olacak.
+6. Sonuç
+Tamamlananlar: Dört dosyanýn gereklilikleri saptandý, ozelbilgi.json yapýsý oluþturuldu.
+Eksikler: Doðru modül listesi ve dosyalarý bekleniyor.
+Talep: Modül listesini veya dosyalarý saðlayýn, iþlemi devam ettirelim.
+Tarih ve Saat: 14 Haziran 2025, 12:16 +03. Dinlenmeye çalýþýn, sorularýnýz için hemen yanýt vereceðim!

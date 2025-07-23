@@ -1,0 +1,10 @@
+# PDS-X Harici Takma Ad (Alias) Dosyası
+# Bu dosyaya her satıra bir tane gelecek şekilde "takma_ad = paket_adı" formatında girişler yapabilirsiniz.
+# Satır başındaki # işareti yorum olarak kabul edilir ve işleme alınmaz.
+
+# Örnekler:
+cv2 = opencv-python
+BeautifulSoup = beautifulsoup4
+
+# Kendi özel takma adlarınızı buraya ekleyebilirsiniz:
+my_custom_lib = my-super-package

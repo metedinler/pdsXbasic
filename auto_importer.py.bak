@@ -1,0 +1,2199 @@
+# auto_importer.py - PDS-X Akıllı Modül Yükleyici
+# Version: 1.7.9.5 - Merged Features: Terminal Log Analysis, Argparse Replay, Enhanced Dependencies, Real-time Monitoring
+# Date: June 25, 2025
+# Author: xAI (Grok 3 ile oluşturuldu, fikir Mete Dinler, düzenleyen GitHub Copilot)
+
+# PDS-X İhraç Tanımı
+# PDS-X Modül İhraç Tanımlamaları
+__pdsX_exports__ = {
+    "AutoImporter": "Otomatik modül yükleme ve bağımlılık yönetimi ana sınıfı",
+    "PdsXException": "PDS-X özel istisna sınıfı",
+    "DependencyRegistry": "Bağımlılık kayıt defteri sınıfı",
+    "EnvManager": "Sanal ortam yönetimi sınıfı",
+    "RealTimeMonitor": "Gerçek zamanlı sistem izleme sınıfı",
+    "AdvancedLogger": "Gelişmiş log yönetimi sınıfı",
+    "SummaryGenerator": "Özet rapor üretimi sınıfı",
+    "TerminalAnalyzer": "Terminal çıktı analizi sınıfı",
+    "GracefulShutdownManager": "Güvenli kapatma yönetimi sınıfı",
+    "get_numpy": "NumPy lazy loading fonksiyonu",
+    "get_sklearn_components": "Sklearn bileşenleri lazy loading fonksiyonu",
+    "get_keyboard": "Keyboard modülü lazy loading fonksiyonu",
+    "install_missing_packages": "Eksik paketleri kur",
+    "find_python310": "Python 3.10 kurulumunu bul",
+}
+
+# PDS-X Özel İstisna Sınıfı
+class PdsXException(Exception):
+    def __init__(self, message: str, code: str = "ERR_UNDEFINED"):
+        self.code = code
+        super().__init__(f"[Error {code}] {message}")
+
+# Standart Kütüphaneler
+import os
+import sys
+import subprocess
+import shutil
+import importlib.util
+import logging
+import threading
+import json
+import time
+import signal
+import atexit
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Union, Tuple
+from collections import defaultdict
+import hashlib
+import asyncio
+import psutil
+import re
+
+class AutoImporterLogger:
+    """AutoImporter için özel loglama sınıfı"""
+    def __init__(self, name: str = 'AutoImporter'):
+        self.logger = logging.getLogger(name)
+        self.logger.setLevel(logging.DEBUG)
+        self.formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        
+        # Console handler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(self.formatter)
+        self.logger.addHandler(console_handler)
+        
+        # File handler
+        try:
+            log_dir = Path("logs")
+            log_dir.mkdir(exist_ok=True)
+            file_handler = logging.FileHandler(log_dir / f"{name.lower()}.log", encoding='utf-8')
+            file_handler.setLevel(logging.DEBUG)
+            file_handler.setFormatter(self.formatter)
+            self.logger.addHandler(file_handler)
+        except Exception as e:
+            print(f"[PDS-X] Log dosyası oluşturulamadı: {e}")
+    
+    def debug(self, message: str) -> None:
+        self.logger.debug(message)
+    
+    def info(self, message: str) -> None:
+        self.logger.info(message)
+    
+    def warning(self, message: str) -> None:
+        self.logger.warning(message)
+    
+    def error(self, message: str) -> None:
+        self.logger.error(message)
+    
+    def critical(self, message: str) -> None:
+        self.logger.critical(message)
+    
+    @property
+    def name(self) -> str:
+        return self.logger.name
+
+# Lazy imports - sadece gerektiğinde yüklenecek
+numpy = None
+IsolationForest = None
+StandardScaler = None
+MLPClassifier = None
+DecisionTreeClassifier = None
+keyboard = None
+
+# Yardımcı sınıflar
+class RealTimeMonitor:
+    """Gerçek zamanlı sistem izleme"""
+    def __init__(self):
+        self._running = False
+        self._monitor_thread = None
+        self.resource_usage = {
+            'cpu': [],
+            'memory': [],
+            'start_time': datetime.now()
+        }
+        
+    def start(self):
+        """İzlemeyi başlat"""
+        if not self._running:
+            self._running = True
+            self._monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
+            self._monitor_thread.start()
+        
+    def stop(self):
+        """İzlemeyi durdur"""
+        if self._monitor_thread and self._running:
+            self._running = False
+            self._monitor_thread.join(timeout=1.0)
+            if self._monitor_thread.is_alive():
+                print("[PDS-X] Monitor thread güvenli şekilde durdurulamadı!")
+            
+    def _monitor_loop(self):
+        """Ana izleme döngüsü"""
+        while self._running:
+            try:
+                self.update()
+                time.sleep(1)  # Her saniye güncelle
+            except Exception as e:
+                print(f"[PDS-X] Monitor hatası: {e}")
+                time.sleep(5)  # Hata durumunda 5 saniye bekle
+        
+    def update(self):
+        """Sistem metriklerini güncelle"""
+        try:
+            cpu_percent = psutil.cpu_percent(interval=None)
+            memory = psutil.virtual_memory()
+            
+            self.resource_usage['cpu'].append(cpu_percent)
+            self.resource_usage['memory'].append(memory.percent)
+            
+            # Son 1 saatlik veriyi tut
+            if len(self.resource_usage['cpu']) > 3600:
+                self.resource_usage['cpu'] = self.resource_usage['cpu'][-3600:]
+                self.resource_usage['memory'] = self.resource_usage['memory'][-3600:]
+                
+            # Yüksek kullanım uyarısı
+            if cpu_percent > 90 or memory.percent > 90:
+                print(f"[PDS-X] UYARI: Yüksek kaynak kullanımı! (CPU: {cpu_percent}%, Bellek: {memory.percent}%)")
+        except Exception as e:
+            print(f"[PDS-X] Metrik güncelleme hatası: {e}")
+            
+    def get_stats(self) -> Dict[str, Any]:
+        """İstatistikleri döndür"""
+        if not self.resource_usage['cpu']:
+            return {
+                'cpu_avg': 0,
+                'memory_avg': 0,
+                'uptime': 0,
+                'samples': 0
+            }
+            
+        return {
+            'cpu_avg': sum(self.resource_usage['cpu']) / len(self.resource_usage['cpu']),
+            'memory_avg': sum(self.resource_usage['memory']) / len(self.resource_usage['memory']),
+            'uptime': (datetime.now() - self.resource_usage['start_time']).total_seconds(),
+            'samples': len(self.resource_usage['cpu'])
+        }
+
+class SummaryGenerator:
+    """Özet rapor üretimi"""
+    def __init__(self):
+        self.events = []
+        self.successes = []
+        self.skipped = {}
+        self.failures = {}
+        
+    def add_event(self, event):
+        self.events.append({
+            'timestamp': datetime.now().isoformat(),
+            'event': event
+        })
+        
+    def add_success(self, package):
+        self.successes.append(package)
+        self.add_event(f"Paket kuruldu: {package}")
+        
+    def add_skipped(self, package, reason):
+        self.skipped[package] = reason
+        self.add_event(f"Paket atlandı: {package} ({reason})")
+        
+    def add_failure(self, package, error):
+        self.failures[package] = error
+        self.add_event(f"Paket hatası: {package} ({error})")
+        
+    def print_summary(self):
+        print("\n=== AutoImporter Özet Raporu ===")
+        
+        if self.successes:
+            print("\nBaşarılı Kurulumlar:")
+            for pkg in self.successes:
+                print(f"✓ {pkg}")
+                
+        if self.skipped:
+            print("\nAtlanan Paketler:")
+            for pkg, reason in self.skipped.items():
+                print(f"↷ {pkg} ({reason})")
+                
+        if self.failures:
+            print("\nHatalı Paketler:")
+            for pkg, error in self.failures.items():
+                print(f"✗ {pkg} ({error})")
+                
+        print("\nKronolojik Olaylar:")
+        for event in self.events:
+            print(f"{event['timestamp']}: {event['event']}")
+            
+        total = len(self.successes) + len(self.skipped) + len(self.failures)
+        if total > 0:
+            success_rate = (len(self.successes) / total) * 100
+            print(f"\nBaşarı Oranı: %{success_rate:.1f}")
+        
+    def generate_summary(self):
+        """Özet raporu metin olarak döndür"""
+        lines = ["=== AutoImporter Özet Raporu ==="]
+        
+        if self.successes:
+            lines.append("\nBaşarılı Kurulumlar:")
+            lines.extend([f"✓ {pkg}" for pkg in self.successes])
+            
+        if self.skipped:
+            lines.append("\nAtlanan Paketler:")
+            lines.extend([f"↷ {pkg} ({reason})" for pkg, reason in self.skipped.items()])
+            
+        if self.failures:
+            lines.append("\nHatalı Paketler:")
+            lines.extend([f"✗ {pkg} ({error})" for pkg, error in self.failures.items()])
+            
+        lines.append("\nKronolojik Olaylar:")
+        lines.extend([f"{e['timestamp']}: {e['event']}" for e in self.events])
+        
+        total = len(self.successes) + len(self.skipped) + len(self.failures)
+        if total > 0:
+            success_rate = (len(self.successes) / total) * 100
+            lines.append(f"\nBaşarı Oranı: %{success_rate:.1f}")
+            
+        return "\n".join(lines)
+
+class TerminalAnalyzer:
+    """Terminal çıktı analizi"""
+    def __init__(self):
+        self.output_buffer = []
+        self.package_mapping = {
+            'numpy': 'numpy',
+            'pandas': 'pandas',
+            'matplotlib': 'matplotlib',
+            'scipy': 'scipy',
+            'sklearn': 'scikit-learn',
+            'tensorflow': 'tensorflow',
+            'torch': 'torch',
+            'PIL': 'pillow',
+            'cv2': 'opencv-python'
+        }
+        
+    def analyze(self, output):
+        """Terminal çıktısını analiz et ve output buffer'a ekle"""
+        self.output_buffer.append(output)
+        if len(self.output_buffer) > 1000:  # Buffer sınırı
+            self.output_buffer = self.output_buffer[-1000:]
+            
+    def get_last_error(self):
+        """Son hata mesajını bul"""
+        for line in reversed(self.output_buffer):
+            if any(err in line.lower() for err in ['error', 'exception', 'failed']):
+                return line
+        return None
+        
+    def map_module_to_package(self, module_name: str, reverse: bool = False) -> str:
+        """Modül adını paket adına veya tersine dönüştür"""
+        if reverse:
+            # Paket adını modül adına dönüştür
+            for mod, pkg in self.package_mapping.items():
+                if pkg == module_name:
+                    return mod
+            return module_name
+        else:
+            # Modül adını paket adına dönüştür
+            return self.package_mapping.get(module_name, module_name)
+            
+    def find_package_name(self, import_error: str) -> Optional[str]:
+        """ImportError mesajından eksik paket adını bul"""
+        patterns = [
+            r"No module named '([^']+)'",
+            r"ModuleNotFoundError: No module named '([^']+)'",
+            r"ImportError: No module named ([^']+)"
+        ]
+        for pattern in patterns:
+            match = re.search(pattern, import_error)
+            if match:
+                module = match.group(1).split('.')[0]  # Alt modülleri ayır
+                return self.map_module_to_package(module)
+        return None
+
+def get_numpy():
+    """NumPy'ı lazy loading ile yükle ve 1.x sürümünü zorunlu kıl"""
+    global numpy
+    if numpy is None:
+        try:
+            import numpy as np
+            if not np.__version__.startswith("1."):
+                print(f"[PDS-X] NumPy {np.__version__} bulundu, 1.x sürümüne düşürülüyor...")
+                import subprocess
+                import sys
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy==1.26.4"])
+                import importlib
+                importlib.reload(np)
+                import numpy as np
+            numpy = np
+        except ImportError:
+            print("[PDS-X] NumPy bulunamadı, kuruluyor...")
+            import subprocess
+            import sys
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy==1.26.4"])
+            import numpy as np
+            numpy = np
+    return numpy
+
+def get_sklearn_components():
+    """Sklearn bileşenlerini lazy loading ile yükle"""
+    global IsolationForest, StandardScaler, MLPClassifier, DecisionTreeClassifier
+    if IsolationForest is None:
+        try:
+            from sklearn.ensemble import IsolationForest as IF
+            from sklearn.preprocessing import StandardScaler as SS
+            from sklearn.neural_network import MLPClassifier as MLP
+            from sklearn.tree import DecisionTreeClassifier as DTC
+            IsolationForest = IF
+            StandardScaler = SS
+            MLPClassifier = MLP
+            DecisionTreeClassifier = DTC
+        except ImportError:
+            print("[PDS-X] Scikit-learn yüklenemedi, sanal ortam kurulumu gerekli.")
+            return None, None, None, None
+    return IsolationForest, StandardScaler, MLPClassifier, DecisionTreeClassifier
+
+def get_keyboard():
+    """Keyboard modülünü lazy loading ile yükle"""
+    global keyboard
+    if keyboard is None:
+        try:
+            import keyboard as kb
+            keyboard = kb
+        except ImportError:
+            print("[PDS-X] Keyboard modülü yüklenemedi.")
+            return None
+    return keyboard
+
+# Graceful Shutdown Yönetimi
+class GracefulShutdownManager:
+    def __init__(self):
+        self.shutdown_requested = False
+        self.active_processes = []
+        self.cleanup_functions = []
+        self._logger = AutoImporterLogger("GracefulShutdownManager")
+        self.setup_signal_handlers()
+    
+    def setup_signal_handlers(self):
+        """Sinyal handler'larını kurar"""
+        try:
+            signal.signal(signal.SIGINT, self.signal_handler)
+            signal.signal(signal.SIGTERM, self.signal_handler)
+            if hasattr(signal, 'SIGBREAK'):
+                signal.signal(signal.SIGBREAK, self.signal_handler)
+            atexit.register(self.cleanup)
+            self.setup_keyboard_kill_switch()
+            print("[PDS-X] Graceful shutdown sistemi aktif (Ctrl+C veya Ctrl+Shift+Q ile güvenli çıkış)")
+        except Exception as e:
+            print(f"[PDS-X] Signal handler kurulum hatası: {e}")
+    
+    def setup_keyboard_kill_switch(self):
+        """Ctrl+Shift+Q kombinasyonu için listener kur"""
+        try:
+            keyboard = get_keyboard()
+            if keyboard:
+                keyboard.add_hotkey('ctrl+shift+q', self.emergency_shutdown, suppress=True)
+                print("[PDS-X] Keyboard kill switch aktif: Ctrl+Shift+Q")
+            else:
+                print("[PDS-X] Keyboard modülü yüklenemedi, kill switch devre dışı")
+        except Exception as e:
+            print(f"[PDS-X] Keyboard kill switch kurulum hatası: {e}")
+    
+    def emergency_shutdown(self):
+        """Acil kapatma işlemi (Ctrl+Shift+Q)"""
+        try:
+            print("\n[PDS-X] ACIL KAPATMA: Ctrl+Shift+Q kombinasyonu algılandı!")
+            print("[PDS-X] Sistem güvenli şekilde kapatılıyor...")
+            self.shutdown_requested = True
+            self.emergency_cleanup()
+            print("[PDS-X] Acil kapatma tamamlandı.")
+            os._exit(0)
+        except Exception as e:
+            print(f"[PDS-X] Acil kapatma hatası: {e}")
+            os._exit(1)
+    
+    def emergency_cleanup(self):
+        """Acil kapatma için hızlı temizlik"""
+        try:
+            print("[PDS-X] Acil temizlik başlatılıyor...")
+            for process in self.active_processes[-5:]:
+                try:
+                    if hasattr(process, 'poll') and process.poll() is None:
+                        process.terminate()
+                        try:
+                            process.wait(timeout=1)
+                        except subprocess.TimeoutExpired:
+                            process.kill()
+                except Exception:
+                    pass
+            print("[PDS-X] Acil temizlik tamamlandı.")
+        except Exception as e:
+            print(f"[PDS-X] Acil temizlik hatası: {e}")
+    
+    def disable_keyboard_kill_switch(self):
+        """Keyboard kill switch'i devre dışı bırak"""
+        try:
+            keyboard = get_keyboard()
+            if keyboard:
+                keyboard.remove_hotkey('ctrl+shift+q')
+                print("[PDS-X] Keyboard kill switch devre dışı bırakıldı")
+        except Exception as e:
+            print(f"[PDS-X] Kill switch devre dışı bırakma hatası: {e}")
+    
+    def signal_handler(self, signum, frame):
+        """Sinyal geldiğinde çalışır"""
+        print(f"\n[PDS-X] Shutdown sinyali alındı (signal: {signum})")
+        print("[PDS-X] Güvenli çıkış başlatılıyor...")
+        self.shutdown_requested = True
+        self.cleanup()
+        
+    def register_process(self, process):
+        """Aktif process'i kaydet"""
+        self.active_processes.append(process)
+        
+    def register_cleanup_function(self, func):
+        """Temizlik fonksiyonu kaydet"""
+        self.cleanup_functions.append(func)
+        
+    def cleanup(self):
+        """Temizlik işlemlerini yapar"""
+        try:
+            print("[PDS-X] Temizlik işlemleri başlatılıyor...")
+            for process in self.active_processes:
+                try:
+                    if hasattr(process, 'poll') and process.poll() is None:
+                        print(f"[PDS-X] Process sonlandırılıyor: {process.pid}")
+                        process.terminate()
+                        try:
+                            process.wait(timeout=5)
+                        except subprocess.TimeoutExpired:
+                            print(f"[PDS-X] Process zorla sonlandırılıyor: {process.pid}")
+                            process.kill()
+                except Exception as e:
+                    print(f"[PDS-X] Process sonlandırma hatası: {e}")
+            for cleanup_func in self.cleanup_functions:
+                try:
+                    cleanup_func()
+                except Exception as e:
+                    print(f"[PDS-X] Cleanup fonksiyonu hatası: {e}")
+            print("[PDS-X] Temizlik tamamlandı.")
+        except Exception as e:
+            print(f"[PDS-X] Temizlik hatası: {e}")
+        finally:
+            if self.shutdown_requested:
+                print("[PDS-X] Program güvenli şekilde sonlandırılıyor...")
+                os._exit(0)
+
+# Global shutdown manager
+shutdown_manager = GracefulShutdownManager()
+
+try:
+    import winreg
+except ImportError:
+    winreg = None
+
+try:
+    from elasticsearch import Elasticsearch
+except ImportError:
+    Elasticsearch = None
+
+try:
+    from colorama import Fore, Style
+except ImportError:
+    Fore = Style = type('Dummy', (), {'__getattr__': lambda self, name: ''})()
+
+try:
+    from graphviz import Digraph
+except ImportError:
+    Digraph = None
+
+VENV_DIR = Path(".pdsx_isolated_env")
+CACHE_DIR = Path(".pdsx_cache")
+LOG_DIR = Path("logs")
+TERMINAL_LOG = LOG_DIR / "pdsxu_terminal.jsonl"
+INFO_LOG = LOG_DIR / "pdsxu_info.jsonl"
+WARNING_LOG = LOG_DIR / "pdsxu_warnings.jsonl"
+ERROR_LOG = LOG_DIR / "pdsxu_errors.jsonl"
+PLAIN_TERMINAL_LOG = LOG_DIR / "pdsXu_terminal.log"
+LAST_ARGS_FILE = Path(".pdsx_last_args.json")
+MAX_LOG_SIZE = 10 * 1024 * 1024  # 10 MB
+MAX_BACKUPS = 5
+
+# Terminal Log Analysis Regex Patterns
+MODULE_NOT_FOUND_REGEX = re.compile(r"ModuleNotFoundError: No module named ['\"]([^'\"]+)['\"]", re.IGNORECASE)
+PIP_SUGGESTION_REGEX = re.compile(r"pip install ([^\s=]+)(?:==([^\s]+))?", re.IGNORECASE)
+IMPORT_ERROR_REGEX = re.compile(r"ImportError.*?import ([^\s]+) from ([^\s]+)", re.IGNORECASE)
+
+# Bağımlılık Listesi
+REQUIRED_PACKAGES = [
+    ("numpy==1.26.4", "numpy"), ("scipy==1.11.4", "scipy"), ("pandas==2.1.4", "pandas"),
+    ("scikit-learn==1.3.2", "sklearn"), ("joblib==1.3.2", "joblib"), ("threadpoolctl==3.3.0", "threadpoolctl"),
+    ("matplotlib==3.8.4", "matplotlib"), ("kiwisolver==1.4.5", "kiwisolver"), ("cycler==0.12.1", "cycler"),
+    ("pyparsing==3.1.1", "pyparsing"), ("python-dateutil==2.8.2", "dateutil"), ("pillow==10.2.0", "PIL"),
+    ("packaging==23.2", "packaging"), ("seaborn==0.13.2", "seaborn"), ("statsmodels==0.14.1", "statsmodels"),
+    ("tornado==6.4", "tornado"), ("plotly==5.19.0", "plotly"), ("tenacity==8.2.3", "tenacity"),
+    ("dash==2.15.0", "dash"), ("flask==3.0.2", "flask"), ("jinja2==3.1.3", "jinja2"),
+    ("werkzeug==3.0.1", "werkzeug"), ("itsdangerous==2.1.2", "itsdangerous"), ("markupsafe==2.1.5", "markupsafe"),
+    ("click==8.1.7", "click"), ("grpcio==1.62.0", "grpc"), ("protobuf==4.25.3", "google.protobuf"),
+    ("aiohttp==3.9.3", "aiohttp"), ("async-timeout==4.0.3", "async_timeout"), ("yarl==1.9.4", "yarl"),
+    ("multidict==6.0.5", "multidict"), ("attrs==23.2.0", "attr"), ("frozenlist==1.4.1", "frozenlist"),
+    ("pyzmq==25.1.2", "zmq"), ("websocket-client==1.7.0", "websocket"), ("paho-mqtt==2.1.0", "paho.mqtt.client"),
+    ("boto3==1.38.37", "boto3"), ("botocore==1.38.37", "botocore"), ("kafka-python==2.0.2", "kafka"),
+    ("river==0.21.0", "river"), ("qiskit==1.0.1", "qiskit"), ("networkx==3.2.1", "networkx"),
+    ("websockets==12.0", "websockets"), ("rich==13.7.0", "rich"), ("colorama==0.4.6", "colorama"),
+    ("textblob==0.17.1", "textblob"), ("mysql-connector-python==8.3.0", "mysql.connector"),
+    ("psutil==5.9.8", "psutil"), ("pyyaml==6.0.1", "yaml"), ("graphviz==0.20.1", "graphviz"),
+    ("aiofiles==23.2.1", "aiofiles"), ("RestrictedPython>=6.2,<8.0", "RestrictedPython"),
+    ("pdfplumber==0.10.3", "pdfplumber"), ("requests==2.32.4", "requests"), ("psycopg2-binary==2.9.9", "psycopg2"),
+    ("elasticsearch==8.12.0", "elasticsearch"), ("elastic-transport==8.12.0", "elastic_transport"),
+    ("nltk==3.9.1", "nltk"), ("tensorflow==2.15.0", "tensorflow"), ("torch==2.2.2", "torch"),
+    ("torch-geometric==2.5.3", "torch_geometric"), ("spacy==3.5.3", "spacy"), ("transformers==4.52.4", "transformers"),
+    ("pycryptodome==3.20.0", "Crypto"), ("jmespath==1.0.1", "jmespath"), ("pdfminer.six==20250327", "pdfminer"),
+    ("pypdfium2>=4.18.0", "pypdfium2"), ("markdown-it-py>=2.2.0", "markdown_it_py"),
+    ("pygments>=2.13.0,<3.0.0", "pygments"), ("catalogue<2.1.0,>=2.0.6", "catalogue"),
+    ("cymem<2.1.0,>=2.0.2", "cymem"), ("langcodes<4.0.0,>=3.2.0", "langcodes"),
+    ("murmurhash<1.1.0,>=0.28.0", "murmurhash"), ("preshed<3.1.0,>=3.0.2", "preshed"),
+    ("pydantic!=1.8,!=1.8.1,<3.0.0,>=1.7.4", "pydantic"), ("spacy-legacy<3.1.0,>=3.0.11", "spacy_legacy"),
+    ("spacy-loggers<2.0.0,>=1.0.0", "spacy_loggers"), ("srsly<3.0.0,>=2.4.3", "srsly"),
+    ("thinc<8.4.0,>=8.3.2", "thinc"), ("typer<1.0.0,>=0.3.0", "typer"), ("wasabi<1.2.0,>=0.9.1", "wasabi"),
+    ("weasel<0.5.0,>=0.1.0", "weasel"), ("huggingface-hub<1.0,>=0.30.0", "huggingface_hub"),
+    ("regex!=2019.12.17", "regex"), ("safetensors>=0.4.3", "safetensors"), ("tokenizers<0.22,>=0.21", "tokenizers"),
+    ("cryptography==42.0.5", "cryptography"), ("cffi==1.16.0", "cffi"), ("pycparser==2.21", "pycparser"),
+    ("six==1.16.0", "six"), ("pyasn1==0.5.1", "pyasn1"), ("pyasn1-modules==0.3.0", "pyasn1_modules"),
+    ("idna==3.10", "idna"), ("charset_normalizer==3.4.2", "charset_normalizer"), ("urllib3==2.4.0", "urllib3"),
+    ("certifi==2025.6.15", "certifi"), ("chardet==5.2.0", "chardet"), ("blis<0.8.0,>=0.7.8", "blis"),
+    ("confection<1.0.0,>=0.0.1", "confection"), ("shellingham>=1.3.0", "shellingham"),
+    ("smart-open<7.0.0,>=5.2.1", "smart_open"), ("cloudpathlib<1.0.0,>=0.7.0", "cloudpathlib"),
+    ("annotated-types>=0.6.0", "annotated_types"), ("pydantic-core==2.33.2", "pydantic_core"),
+    ("typing-inspection>=0.4.0", "typing_inspection"), ("pytest>=6.2.0", "pytest"), ("black>=21.5b2", "black"),
+    ("pylint>=2.8.0", "pylint"), ("mypy>=0.910", "mypy"), ("coverage>=6.0", "coverage"),
+    ("filelock>=3.18.0", "filelock"), ("fsspec>=2023.5.0", "fsspec"), ("typing-extensions>=3.7.4.3", "typing_extensions"),
+    ("tqdm>=4.67.1", "tqdm"), ("exceptiongroup>=1", "exceptiongroup"), ("iniconfig>=1", "iniconfig"),
+    ("pluggy<2,>=1.5", "pluggy"), ("tomli>=1", "tomli"), ("astroid<=3.4.0.dev0,>=3.3.8", "astroid"),
+    ("dill>=0.2", "dill"), ("isort!=5.13,<7,>=4.2.5", "isort"), ("mccabe<0.8,>=0.6", "mccabe"),
+    ("platformdirs>=2.2", "platformdirs"), ("tomlkit>=0.10.1", "tomlkit"), ("pycodestyle>=2.12.0", "pycodestyle"),
+    ("autopep8>=2.3.2", "autopep8"), ("pathlib-abc==0.1.1", "pathlib_abc"), ("marisa-trie>=1.1.0", "marisa_trie"),
+    ("setuptools>=80.9.0", "setuptools"), ("pytz>=2020.1", "pytz"), ("tzdata>=2022.1", "tzdata"),
+    ("gensim==4.3.3", "gensim"), ("s3transfer<0.14.0,>=0.13.0", "s3transfer"), ("keyboard==0.13.5", "keyboard")
+]
+
+CORE_DEPENDENCIES = {
+    "base": [pkg[0] for pkg in REQUIRED_PACKAGES],
+    "optional": [],
+}
+
+MODULE_SPECIFIC_DEPS = {
+    "core2-5.py": ["tensorflow==2.15.0", "scikit-learn==1.3.2", "numpy==1.26.4"],
+    "core2-6.py": ["tensorflow==2.15.0", "scikit-learn==1.3.2", "numpy==1.26.4"],
+    "libx_ml.py": ["torch==2.2.2", "transformers==4.52.4", "scikit-learn==1.3.2"],
+    "libx_nlp.py": ["nltk==3.9.1", "spacy==3.5.3", "gensim==4.3.3"],
+    "database_sql_isam.py": ["psycopg2-binary==2.9.9", "sqlite3"],
+    "graph.py": ["networkx==3.2.1", "graphviz==0.20.1"],
+}
+
+def find_python310():
+    logger = AdvancedLogger()
+    env_manager = EnvManager(logger=logger)
+    return env_manager.find_python310()
+
+async def install_missing_packages():
+    importer = AutoImporter()
+    for pkg, _ in REQUIRED_PACKAGES:
+        await importer.async_install_package(pkg)
+    importer.summary_generator.print_summary()
+
+# Gelişmiş Loglama Sistemi
+class AdvancedLogger:
+    def __init__(self, silent_mode: bool = False):
+        self.logged_messages = set()
+        self.last_log_time = {}
+        self.es = None
+        self.logger = None
+        self.handlers = {}
+        self.terminal_handler = None
+        self.stdout_handler = None
+        self.silent_mode = silent_mode
+        
+        try:
+            LOG_DIR.mkdir(exist_ok=True)
+            
+            # Önceki handler'ları temizle
+            root_logger = logging.getLogger()
+            for handler in root_logger.handlers[:]:
+                handler.close()
+                root_logger.removeHandler(handler)
+            
+            # Eğer daha önce logger oluşturulmuşsa temizle
+            if hasattr(self, 'logger') and self.logger:
+                for handler in self.logger.handlers[:]:
+                    handler.close()
+                    self.logger.removeHandler(handler)
+            
+            self.plain_terminal_log_file = PLAIN_TERMINAL_LOG
+            if self.plain_terminal_log_file.exists():
+                backup_file = self.plain_terminal_log_file.with_suffix(".bak")
+                if backup_file.exists():
+                    backup_file.unlink()
+                shutil.move(self.plain_terminal_log_file, backup_file)
+                print(f"[PDS-X] Önceki terminal log yedeklendi: {backup_file}")
+            
+            # Handler'ları delay=True ve mode='a' ile oluştur
+            self.terminal_handler = logging.FileHandler(
+                self.plain_terminal_log_file, 
+                mode='a',
+                encoding="utf-8",
+                delay=True  # Dosyayı lazım olana kadar açma
+            )
+            self.terminal_handler.setLevel(logging.INFO)
+            self.terminal_handler.setFormatter(logging.Formatter("%(asctime)s - %(message)s"))
+            
+            # Diğer handler'ları da aynı şekilde oluştur
+            self.handlers = {
+                "info": logging.FileHandler(INFO_LOG, mode='a', encoding="utf-8", delay=True),
+                "warning": logging.FileHandler(WARNING_LOG, mode='a', encoding="utf-8", delay=True),
+                "error": logging.FileHandler(ERROR_LOG, mode='a', encoding="utf-8", delay=True),
+                "terminal": logging.FileHandler(TERMINAL_LOG, mode='a', encoding="utf-8", delay=True),
+            }
+            
+            jsonl_formatter = logging.Formatter('{"time": "%(asctime)s", "level": "%(levelname)s", "message": "%(message)s"}')
+            
+            for level, handler in self.handlers.items():
+                if level == "terminal":
+                    handler.setLevel(logging.INFO)
+                else:
+                    handler.setLevel(getattr(logging, level.upper()))
+                handler.setFormatter(jsonl_formatter)
+            
+            self.logger = logging.getLogger("autoimporter")
+            self.logger.setLevel(logging.DEBUG)
+            
+            self.logger.addHandler(self.terminal_handler)
+            for handler in self.handlers.values():
+                self.logger.addHandler(handler)
+            
+            self.stdout_handler = Tee(sys.__stdout__, self.terminal_handler)
+            sys.stdout = self.stdout_handler
+            sys.stderr = Tee(sys.__stderr__, self.handlers["error"])
+            
+            if Elasticsearch:
+                try:
+                    self.es = Elasticsearch(["http://localhost:9200"])
+                    self.logger.info("Elasticsearch sunucusuna bağlanıldı.")
+                except Exception as e:
+                    self.logger.warning(f"Elasticsearch sunucusu erişilemez, yerel loglamaya geçiliyor: {e}")
+            
+            self.logger.info("Loglama sistemi başlatıldı.")
+        except Exception as e:
+            print(f"[PDS-X] Loglama başlatma hatası: {e}")
+
+    def log(self, level: str, message: str):
+        try:
+            message_hash = hashlib.sha256(message.encode()).hexdigest()
+            current_time = datetime.now()
+            
+            if (message_hash not in self.logged_messages or 
+                (current_time - self.last_log_time.get(message_hash, datetime.min)).total_seconds() > 1):
+                
+                if not self.silent_mode:
+                    if level.lower() == "info":
+                        print(f"[PDS-X] {message}")
+                elif level.lower() in ["error", "warning"]:
+                    print(f"[PDS-X] {level.upper()}: {message}")
+                
+                if self.logger:
+                    log_level = getattr(logging, level.upper(), logging.INFO)
+                    self.logger.log(log_level, message)
+                
+                self.logged_messages.add(message_hash)
+                self.last_log_time[message_hash] = current_time
+                
+                if self.es:
+                    try:
+                        self.es.index(index="pdsx_logs", body={
+                            "timestamp": current_time.isoformat(),
+                            "level": level.upper(),
+                            "message": message,
+                            "silent_mode": self.silent_mode
+                        })
+                    except Exception as e:
+                        if self.logger:
+                            self.logger.warning(f"Elasticsearch bağlantısı başarısız: {e}")
+                        self.es = None
+                
+                self.rotate_logs()
+        except Exception as e:
+            print(f"[PDS-X] Loglama hatası: {e}")
+
+    def set_silent_mode(self, silent: bool):
+        self.silent_mode = silent
+        if silent:
+            print("[PDS-X] Sessiz mod etkinleştirildi - sadece hatalar ve uyarılar gösterilecek")
+        else:
+            print("[PDS-X] Sessiz mod devre dışı bırakıldı - tüm loglar gösterilecek")
+
+    def rotate_logs(self):
+        try:
+            log_files = [self.plain_terminal_log_file, INFO_LOG, WARNING_LOG, ERROR_LOG, TERMINAL_LOG]
+            
+            for log_file in log_files:
+                if log_file.exists() and log_file.stat().st_size > MAX_LOG_SIZE:
+                    if log_file == self.plain_terminal_log_file:
+                        handler = self.terminal_handler
+                    else:
+                        handler = self.handlers.get(log_file.stem)
+                    
+                    if handler:
+                        handler.close()
+                        self.logger.removeHandler(handler)
+                        backup_path = log_file.with_suffix(f".{datetime.now().strftime('%Y%m%d_%H%M%S')}.bak")
+                        shutil.move(log_file, backup_path)
+                        new_handler = logging.FileHandler(log_file, encoding="utf-8")
+                        new_handler.setFormatter(handler.formatter)
+                        new_handler.setLevel(handler.level)
+                        
+                        if log_file == self.plain_terminal_log_file:
+                            self.terminal_handler = new_handler
+                            self.stdout_handler = Tee(sys.__stdout__, self.terminal_handler)
+                            sys.stdout = self.stdout_handler
+                        else:
+                            self.handlers[log_file.stem] = new_handler
+                        
+                        self.logger.addHandler(new_handler)
+                        self.cleanup_old_backups(log_file)
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Log döndürme hatası: {e}")
+            else:
+                print(f"[PDS-X] Log döndürme hatası: {e}")
+
+    def cleanup_old_backups(self, log_file: Path):
+        try:
+            backup_pattern = f"{log_file.name}.*.bak"
+            backups = sorted(
+                log_file.parent.glob(backup_pattern), 
+                key=lambda x: x.stat().st_mtime, 
+                reverse=True
+            )
+            for old_backup in backups[MAX_BACKUPS:]:
+                old_backup.unlink()
+                if self.logger:
+                    self.logger.info(f"Eski yedek silindi: {old_backup}")
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Yedek silme hatası: {e}")
+            else:
+                print(f"[PDS-X] Yedek silme hatası: {e}")
+
+# Terminal ve Log Yönlendirme
+class Tee:
+    def __init__(self, *outputs):
+        self.outputs = outputs
+
+    def write(self, text):
+        for output in self.outputs:
+            try:
+                output.write(text)
+                output.flush()
+            except Exception:
+                pass
+
+    def flush(self):
+        for output in self.outputs:
+            try:
+                output.flush()
+            except Exception:
+                pass
+
+# Bağımlılık Kayıt Sistemi
+class DependencyRegistry:
+    """Bağımlılık kayıt defteri"""
+    def __init__(self):
+        self.registry = {}
+        self.registry_file = Path("dependencies.json")
+        
+    def load_registry(self):
+        if self.registry_file.exists():
+            try:
+                with open(self.registry_file, "r", encoding="utf-8") as f:
+                    self.registry = json.load(f)
+                return True
+            except Exception as e:
+                print(f"[PDS-X] Bağımlılık kayıt defteri okuma hatası: {e}")
+                return False
+        return True  # Dosya yoksa sorun değil
+        
+    def save_registry(self):
+        try:
+            with open(self.registry_file, "w", encoding="utf-8") as f:
+                json.dump(self.registry, f, indent=2)
+            return True
+        except Exception:
+            return False
+            
+    def register(self, package, version):
+        self.registry[package] = version
+        return self.save_registry()
+        
+    def get_version(self, package):
+        return self.registry.get(package)
+
+class EnvManager:
+    def __init__(self, logger=None):
+        self.venv_dir = VENV_DIR
+        self.logger = logger
+
+    def find_python310(self):
+        """Sistemde Python 3.10'u bul"""
+        for path in os.environ["PATH"].split(os.pathsep):
+            python_executable = os.path.join(path, "python.exe" if os.name == "nt" else "python")
+            if os.path.isfile(python_executable):
+                try:
+                    output = subprocess.check_output([python_executable, "--version"], stderr=subprocess.STDOUT)
+                    version = output.decode().strip().split()[-1]
+                    if version.startswith("3.10"):
+                        return python_executable
+                except Exception:
+                    continue
+        return None
+
+    def is_running_in_venv(self) -> bool:
+        """Sanal ortamda çalışıp çalışmadığını kontrol et"""
+        return hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+
+    def create_venv(self) -> bool:
+        """Sanal ortam oluştur"""
+        try:
+            if self.venv_dir.exists():
+                return True
+
+            subprocess.run([sys.executable, "-m", "venv", str(self.venv_dir)], check=True)
+            return self.venv_dir.exists()
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Sanal ortam oluşturma hatası: {e}")
+            return False
+
+    def get_venv_python_path(self) -> Optional[Path]:
+        """Sanal ortam Python yolunu döndür"""
+        if not self.venv_dir.exists():
+            return None
+        
+        if sys.platform == "win32":
+            python_path = self.venv_dir / "Scripts" / "python.exe"
+        else:
+            python_path = self.venv_dir / "bin" / "python"
+            
+        return python_path if python_path.exists() else None
+
+    def get_pip_path(self) -> Optional[Path]:
+        """Sanal ortam pip yolunu döndür"""
+        if not self.venv_dir.exists():
+            return None
+            
+        if sys.platform == "win32":
+            pip_path = self.venv_dir / "Scripts" / "pip.exe"
+        else:
+            pip_path = self.venv_dir / "bin" / "pip"
+            
+        return pip_path if pip_path.exists() else None
+
+# AutoImporter Ana Sınıfı
+class AutoImporter:
+    """PDS-X Akıllı Modül Yükleyici Ana Sınıfı"""
+    def __init__(self, entry_point_script=None, mode="NORMAL", log_to_file=True, log_to_terminal=True, silent_install=False):
+        # Ana parametreler
+        self.entry_point_script = entry_point_script
+        self.mode = mode
+        self.log_to_file = log_to_file
+        self.log_to_terminal = log_to_terminal
+        self.silent_install = silent_install
+        
+        # Yardımcı bileşenler
+        self.env_manager = EnvManager()
+        self.last_args_file = Path(".pdsx_last_args.json")
+        self.dependency_registry = DependencyRegistry()
+        self.logger = AdvancedLogger()  # AutoImporterLogger yerine AdvancedLogger kullanıyoruz
+        self.real_time_monitor = RealTimeMonitor()
+        self.summary_generator = SummaryGenerator()
+        self.terminal_analyzer = TerminalAnalyzer()
+        
+        # Bileşenleri başlat
+        self.initialize_components()
+    
+
+            
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+            
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+            
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def auto_install_package(self, package: str) -> bool:
+        """Paket kurulumunu gerçekleştir"""
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+            
+    async def async_install_package(self, package: str) -> bool:
+        """Paketi asenkron olarak kur"""
+        return self.auto_install_package(package)
+        
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            if not deps or not isinstance(deps, dict):
+                return {}
+            return deps
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+            
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+            
+    def cleanup(self):
+        """Temizlik işlemleri"""
+        self.log("AutoImporter temizlik işlemleri başlatılıyor...", "info")
+        self.real_time_monitor.stop()
+        self.summary_generator.print_summary()
+        self.log("AutoImporter temizlik tamamlandı.", "info")
+
+    def check_package_installed(self, package: str) -> bool:
+        """Paketin kurulu olup olmadığını kontrol et"""
+        try:
+            if not self.env_manager.is_running_in_venv():
+                return False
+
+            venv_python = self.env_manager.get_venv_python_path()
+            if not venv_python:
+                return False
+
+            import_name = package.split("==")[0].split(">")[0].split("<")[0]
+            import_name = self.terminal_analyzer.map_module_to_package(import_name, reverse=True)
+
+            result = subprocess.run(
+                [str(venv_python), "-c", f"import {import_name}"],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            return result.returncode == 0
+        except Exception as e:
+            self.log(f"{package} kontrol hatası: {e}", "debug")
+            return False
+            
+    def save_last_args(self, args: List[str]):
+        """Son argümanları kaydet"""
+        try:
+            with open(self.last_args_file, "w", encoding="utf-8") as f:
+                json.dump({"args": args, "timestamp": datetime.now().isoformat()}, f)
+            self.log(f"Son argümanlar kaydedildi: {args}")
+        except Exception as e:
+            self.log(f"Son argümanlar kaydedilemedi: {e}", "error")
+
+    def load_last_args(self) -> Optional[Dict]:
+        """Son argümanları yükle"""
+        try:
+            if self.last_args_file.exists():
+                with open(self.last_args_file, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            return None
+        except Exception as e:
+            self.log(f"Son argümanlar yüklenemedi: {e}", "error")
+            return None
+
+    def replay_last_command(self) -> bool:
+        """Son komutu tekrar çalıştır"""
+        try:
+            last = self.load_last_args()
+            if not last or "args" not in last:
+                self.log("Önceki komut bulunamadı.", "warning")
+                return False
+            args = last["args"]
+            self.log(f"Önceki komut tekrar çalıştırılıyor: {args}")
+            subprocess.run([sys.executable] + args)
+            return True
+        except Exception as e:
+            self.log(f"Komut tekrar çalıştırılamadı: {e}", "error")
+            return False
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def async_install_package(self, package: str) -> bool:
+        """Paketi asenkron olarak kur"""
+        return self.auto_install_package(package)
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+            
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+            
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def _safe_get_pip_path(self):
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None
+
+    def auto_install_package(self, package: str) -> bool:
+        """Paket kurulumunu gerçekleştir"""
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            if not deps or not isinstance(deps, dict):
+                return {}
+            return deps
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+    
+    def log(self, message: str, level: str = "info") -> None:
+        """Mesajı logla"""
+        if hasattr(self.logger, level):
+            getattr(self.logger, level)(message)
+    
+    def cleanup(self):
+        """Temizlik işlemleri"""
+        self.log("AutoImporter temizlik işlemleri başlatılıyor...", "info")
+        self.real_time_monitor.stop()
+        self.summary_generator.print_summary()
+        self.log("AutoImporter temizlik tamamlandı.", "info")
+
+    def save_last_args(self, args: List[str]):
+        try:
+            with open(self.last_args_file, "w", encoding="utf-8") as f:
+                json.dump({"args": args, "timestamp": datetime.now().isoformat()}, f)
+            self.log(f"Son argümanlar kaydedildi: {args}")
+        except Exception as e:
+            self.log(f"Son argümanlar kaydedilemedi: {e}", "error")
+
+    def load_last_args(self) -> Optional[Dict]:
+        try:
+            if self.last_args_file.exists():
+                with open(self.last_args_file, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            return None
+        except Exception as e:
+            self.log(f"Son argümanlar yüklenemedi: {e}", "error")
+            return None
+
+    def replay_last_command(self) -> bool:
+        try:
+            last = self.load_last_args()
+            if not last or "args" not in last:
+                self.log("Önceki komut bulunamadı.", "warning")
+                return False
+            args = last["args"]
+            self.log(f"Önceki komut tekrar çalıştırılıyor: {args}")
+            subprocess.run([sys.executable] + args)
+            return True
+        except Exception as e:
+            self.log(f"Komut tekrar çalıştırılamadı: {e}", "error")
+            return False
+
+    def check_package_installed(self, package: str) -> bool:
+        try:
+            if not self.env_manager.is_running_in_venv():
+                return False
+
+            venv_python = self.env_manager.get_venv_python_path()
+            if not venv_python:
+                return False
+
+            import_name = package.split("==")[0].split(">")[0].split("<")[0]
+            import_name = self.terminal_analyzer.map_module_to_package(import_name, reverse=True)
+
+            result = subprocess.run(
+                [str(venv_python), "-c", f"import {import_name}"],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            return result.returncode == 0
+        except Exception as e:
+            self.log(f"{package} kontrol hatası: {e}", "debug")
+            return False
+
+    def auto_install_package(self, package: str) -> bool:
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            return deps if isinstance(deps, dict) else {}
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            # RealTimeMonitor servisi
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def _safe_get_pip_path(self):
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None
+
+    def auto_install_package(self, package: str) -> bool:
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            return deps if isinstance(deps, dict) else {}
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            # RealTimeMonitor servisi
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def _safe_get_pip_path(self):
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None
+
+    def auto_install_package(self, package: str) -> bool:
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            return deps if isinstance(deps, dict) else {}
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            # RealTimeMonitor servisi
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def _safe_get_pip_path(self):
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None
+
+    def auto_install_package(self, package: str) -> bool:
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            return deps if isinstance(deps, dict) else {}
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            # RealTimeMonitor servisi
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def _safe_get_pip_path(self):
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None
+
+    def auto_install_package(self, package: str) -> bool:
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            return deps if isinstance(deps, dict) else {}
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            # RealTimeMonitor servisi
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def _safe_get_pip_path(self):
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None
+
+    def auto_install_package(self, package: str) -> bool:
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            return deps if isinstance(deps, dict) else {}
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            # RealTimeMonitor servisi
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def _safe_get_pip_path(self):
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None
+
+    def auto_install_package(self, package: str) -> bool:
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            return deps if isinstance(deps, dict) else {}
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            # RealTimeMonitor servisi
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False
+
+    def _safe_get_pip_path(self):
+        """Güvenli pip yolu alma"""
+        try:
+            pip_path = self.env_manager.get_pip_path()
+            if pip_path:
+                return str(pip_path)
+            return None
+        except Exception as e:
+            self.log(f"Pip yolu alınamadı: {e}", "error")
+            return None
+
+    def auto_install_package(self, package: str) -> bool:
+        try:
+            if self.check_package_installed(package):
+                self.log(f"{package} zaten kurulu.")
+                self.summary_generator.add_skipped(package, "Zaten kurulu")
+                return True
+
+            self.log(f"{package} kuruluyor...")
+            
+            pip_cmd = self._safe_get_pip_path()
+            if not pip_cmd:
+                self.log("Sanal ortamda pip bulunamadı!", "error")
+                return False
+
+            install_command = [pip_cmd, "install", package]
+            if self.silent_install:
+                install_command.append("--quiet")
+
+            result = subprocess.run(install_command, capture_output=True, text=True, check=False)
+            
+            if result.returncode == 0:
+                self.log(f"{package} başarıyla kuruldu.")
+                self.summary_generator.add_success(package)
+                self.dependency_registry.register(package.split("==")[0], package.split("==")[1] if "==" in package else "latest")
+                return True
+            else:
+                error_message = result.stderr or result.stdout
+                self.log(f"{package} kurulum hatası: {error_message}", "error")
+                self.summary_generator.add_failure(package, error_message)
+                return False
+
+        except Exception as e:
+            error_str = str(e)
+            self.log(f"{package} kurulurken hata: {error_str}", "error")
+            self.summary_generator.add_failure(package, error_str)
+            return False
+
+    def load_dependencies(self) -> Dict[str, str]:
+        """Bağımlılık kaydını yükle"""
+        try:
+            deps = self.dependency_registry.load_registry()
+            return deps if isinstance(deps, dict) else {}
+        except Exception as e:
+            self.log(f"Bağımlılıklar yüklenemedi: {e}", "error")
+            return {}
+
+    def install_required_packages(self):
+        """Gerekli paketleri kur"""
+        success_count = 0
+        for pkg, _ in REQUIRED_PACKAGES:
+            if self.auto_install_package(pkg):
+                success_count += 1
+            
+        self.log(f"Gerekli paketler kuruldu: {success_count}/{len(REQUIRED_PACKAGES)}")
+        self.summary_generator.print_summary()
+
+    def _handle_keyboard_event(self, event):
+        """Klavye olaylarını yönet"""
+        try:
+            if hasattr(event, 'event_type') and event.event_type == 'down':
+                if hasattr(event, 'name') and event.name == 'q':
+                    if hasattr(event, 'modifiers') and event.modifiers == {'ctrl', 'shift'}:
+                        self._emergency_shutdown()
+        except Exception as e:
+            self.log(f"Klavye olayı işleme hatası: {e}", "error")
+
+    def _emergency_shutdown(self):
+        """Acil kapatma işlemi"""
+        try:
+            self.log("Acil kapatma başlatılıyor...", "warning")
+            self.real_time_monitor.stop()
+            self.cleanup()
+            sys.exit(1)
+        except Exception as e:
+            self.log(f"Acil kapatma hatası: {e}", "error")
+            os._exit(1)
+
+    def initialize_components(self):
+        """Bileşenleri başlatır"""
+        try:
+            self.real_time_monitor.start()
+            self.dependency_registry.load_registry()
+            self.start_background_services()
+            self.log("Bileşenler başarıyla başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Bileşen başlatma hatası: {e}", "error")
+            return False
+
+    def start_background_services(self):
+        """Arka plan servislerini başlatır"""
+        try:
+            # RealTimeMonitor servisi
+            if not hasattr(self, 'real_time_monitor') or not self.real_time_monitor:
+                self.real_time_monitor = RealTimeMonitor()
+                self.real_time_monitor.start()
+
+            # Diğer arka plan servisleri burada başlatılabilir
+            self.log("Arka plan servisleri başlatıldı", "info")
+            return True
+        except Exception as e:
+            self.log(f"Arka plan servisleri başlatılamadı: {e}", "error")
+            return False

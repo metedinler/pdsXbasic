@@ -1,0 +1,38 @@
+autoinstaller.py: add_exports.py, base_module_manager.py, pdsx_exception.py
+auto_importer copy.py: auto_importer.py, exception_manager3.py
+auto_importer ok copy.py: auto_importer.py, exception_manager3.py
+auto_importer ok.py: auto_importer.py, exception_manager3.py
+auto_importer-v1793(calisan).py: auto_importer.py, exception_manager3.py
+auto_importer_backup_recovery.py: auto_importer.py, exception_manager3.py
+bytecode_engine(core2duo).py: pdsx_exception2.py
+bytecode_engine(wd658160).py: pdsx_exception2.py
+bytecode_manager.py: pdsx_exception.py, save_load_system2.py
+clazz.py: pdsx_exception.py
+command_executor.py: pdsXuv14.py
+commoand_executorx2z1.py: pdsx_exception.py
+core.py: bytecode_manager.py, pdsx_exception.py, save_load_system2.py
+core2-6.py: pdsx_exception2.py
+database_sql_isam.py: pdsx_exception.py, save_load_system2.py
+data_structures.py: pdsx_exception.py
+event3.py: pdsx_exception2.py
+eventx.py: pdsx_exception2.py
+eventxkullanim.py: eventx.py
+export_report_doc.py: pdsx_exception.py, save_load_system2.py
+f11_backtrace_logger.py: pdsx_exception.py
+f12_timer_manager.py: pdsx_exception.py
+functional2.py: pdsx_exception.py
+graph2.py: pdsx_exception.py
+libx_ml.py: bytecode_manager.py, pdsx_exception.py, save_load_system2.py
+module_manager.py: autoinstaller.py, core.py, exception_manager3.py, save_load_system2.py
+module_validator.py: pdsx_exception.py
+multithreading_process.py: pdsx_exception.py
+oop_and_class2.py: pdsx_exception.py
+pdsXuv14 - Kopya (v179- 22.06.25 grok tekrar yazdi).py: auto_importer.py, bytecode_compiler.py, bytecode_manager.py, command_executor.py, core.py, data_structures.py, database_sql_isam.py, export_report_doc.py, f11_backtrace_logger.py, f12_timer_manager.py, functional2.py, graph2.py, lib_db.py, libx_concurrency.py, libx_data.py, libx_gui.py, libx_jit.py, libx_logic.py, libx_network.py, libx_nlp.py, lowlevel.py, memory_manager.py, module_manager.py, module_validator.py, multithreading_process.py, oop_and_class2.py, pdsx_exception.py, pipe3.py, pipe_monitor_gui.py, reply_extension.py, save.py, save_load_system2.py, sqlite.py, tree3.py
+pdsXuv14.py: auto_importer.py, bytecode_compiler.py, bytecode_manager.py, command_executor.py, core.py, data_structures.py, database_sql_isam.py, exception_manager3.py, export_report_doc.py, f11_backtrace_logger.py, f12_timer_manager.py, functional2.py, graph2.py, lib_db.py, libx_concurrency.py, libx_data.py, libx_gui.py, libx_jit.py, libx_logic.py, libx_network.py, libx_nlp.py, lowlevel.py, memory_manager.py, module_manager.py, module_validator.py, multithreading_process.py, oop_and_class2.py, pipe3.py, pipe_monitor_gui.py, reply_extension.py, save.py, save_load_system2.py, sqlite.py, tree3.py
+pdsx_interpreter.py: bytecode_compiler.py, bytecode_manager.py
+pipe3.py: pdsx_exception2.py
+pipe_monitor_gui.py: pdsx_exception.py, save_load_system2.py
+reply_extension.py: pdsx_exception.py
+save.py: pdsx_exception.py
+save_load_system2.py: exception_manager3.py
+tree3.py: pdsx_exception.py

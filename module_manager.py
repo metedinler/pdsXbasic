@@ -32,17 +32,25 @@
 import os
 import sys
 import importlib
+import importlib.util
 import logging
 import json
 import threading
+import functools
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 import shutil
 
-from pdsx_exception import PdsXException
-from save_load_system2 import SaveLoadSystem as SaveLoadSystem2
-from core import synchronized
+from pdsx_unified_exception import PdsXException
 from autoinstaller import DependencyManager
+
+# Synchronized dekoratörü burada tanımlıyoruz
+def synchronized(fn):
+    @functools.wraps(fn)
+    def wrapped(*args, **kwargs):
+        with args[0].lock:
+            return fn(*args, **kwargs)
+    return wrapped
 
 log = logging.getLogger(__name__)
 
@@ -63,7 +71,6 @@ class ModuleManager:
         self.imported_files: Set[str] = set()
         self.aliases: Dict[str, str] = {}
         self.lock = threading.Lock()
-        self.save_load = SaveLoadSystem2()
         
         # Bağımlılık yöneticisini başlat
         self.dependency_manager = DependencyManager(base_path)

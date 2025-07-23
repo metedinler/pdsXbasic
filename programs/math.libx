@@ -1,0 +1,6 @@
+PRINT "LibX Math Library Test"
+LET PI = 3.14159
+LET R = 5
+LET AREA = PI * R * R
+PRINT "Yarıçap:", R
+PRINT "Alan:", AREA

@@ -19,7 +19,7 @@ import graphviz
 import uuid
 import numpy as np
 from sklearn.ensemble import IsolationForest  # AI tabanlı anomali algılama
-from pdsx_exception import PdsXException  # Hata yönetimi için
+from pdsx_unified_exception import PdsXException  # Hata yönetimi için
 import elasticsearch
 from elasticsearch import Elasticsearch
 

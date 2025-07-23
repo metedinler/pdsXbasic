@@ -1,0 +1,6 @@
+{"time": "2025-07-20 02:26:26,466", "level": "WARNING", "message": "Elasticsearch bağlantısı başarısız: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x000001CE5F6D75F0>: Failed to establish a new connection: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı))"}
+{"time": "2025-07-20 02:26:26,527", "level": "ERROR", "message": "Derleme araçları kontrol hatası: [WinError 2] Sistem belirtilen dosyayı bulamıyor"}
+{"time": "2025-07-20 02:26:26,527", "level": "WARNING", "message": "Derleme araçları bulunamadı. Lütfen Visual Studio Build Tools veya MinGW kurun."}
+{"time": "2025-07-20 02:41:20,058", "level": "WARNING", "message": "Elasticsearch bağlantısı başarısız: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x000001D8E53F6270>: Failed to establish a new connection: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı))"}
+{"time": "2025-07-20 02:41:20,113", "level": "ERROR", "message": "Derleme araçları kontrol hatası: [WinError 2] Sistem belirtilen dosyayı bulamıyor"}
+{"time": "2025-07-20 02:41:20,113", "level": "WARNING", "message": "Derleme araçları bulunamadı. Lütfen Visual Studio Build Tools veya MinGW kurun."}

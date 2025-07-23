@@ -1,10 +1,40 @@
-﻿__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
 .Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PDS-X Specific
+.pdsx_cache/
+.pdsx_isolated_env/
+disabled_modules/
+sealed_versions/
+temp/
 *.log
-*.bak
-*.zip
-*.rar
-*.backup.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test files
+*test*.py
+*_test.py
+test_*/

@@ -27,7 +27,7 @@ from sklearn.ensemble import IsolationForest
 import websockets
 import os
 import multiprocessing
-from pdsx_exception import PdsXException
+from pdsx_unified_exception import PdsXException
 import functools
 from save_load_system2 import format_registry, supported_encodings, compression_methods, decompression_methods
 

@@ -1,0 +1,11 @@
+{
+  "pdsx_command": "python pdsxeu_v14.py",
+  "detected_commands": [
+    "python pdsxeu_v14.py",
+    "python core.py",
+    "python pdsx_interpreter.py",
+    "auto_importer.py --learn-pdsx"
+  ],
+  "timestamp": "2025-07-20T05:51:45.274794",
+  "auto_detected": true
+}

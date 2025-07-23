@@ -1,0 +1,144 @@
+[
+  {
+    "timestamp": 1753188960.5488236,
+    "results": {
+      "analysis": {
+        "timestamp": 1753188960.5457523,
+        "imports": {
+          "total": 86,
+          "external": 2,
+          "internal": 84
+        },
+        "memory_mb": 19.30078125,
+        "file_sizes": {
+          "auto_importer.py": 168424,
+          "core2_6.py": 132077,
+          "bytecode_engine_core2duo_2.py": 79147,
+          "pdsXuv14.py": 73044,
+          "command_executor2.py": 72382,
+          "bytecode_engine_wd658160_.py": 61264,
+          "pipe3.py": 60979,
+          "save_load_system2.py": 60091,
+          "bus3.py": 57281,
+          "bytecode_engine(core2duo).py": 52783,
+          "oop_and_class2.py": 50916,
+          "tree3.py": 49116,
+          "quantum_pdsX.py": 46096,
+          "ai.py": 45366,
+          "exception_manager3.py": 44848,
+          "clazz.py": 42732,
+          "functional2.py": 38947,
+          "quantum.py": 37862,
+          "pipe_monitor_gui.py": 37433,
+          "export_report_doc.py": 37321,
+          "multithreading_process.py": 36896,
+          "command_executorx2z.py": 36577,
+          "graph2.py": 33639,
+          "database_sql_isam.py": 31900,
+          "autoinstaller.py": 31752,
+          "save.py": 31594,
+          "pdsx_exception2.py": 31394,
+          "event3.py": 30744,
+          "eventx.py": 29781,
+          "program_manager.py": 29466,
+          "data_structures.py": 27979,
+          "libx_ml.py": 27811,
+          "f12_timer_manager.py": 26325,
+          "pdsx_unified_exception.py": 23358,
+          "libxcore.py": 20475,
+          "lib_db.py": 20246,
+          "f11_backtrace_logger.py": 20155,
+          "memory_manager.py": 18853,
+          "libx_network.py": 18472,
+          "command_executorx2z1.py": 17973,
+          "reply_extension.py": 17570,
+          "bytecode_manager.py": 17385,
+          "system_integration_test.py": 16598,
+          "pdsx_exception.py": 16247,
+          "libx_data.py": 16035,
+          "command_executor.py": 15860,
+          "performance_optimizer.py": 15846,
+          "libx_nlp.py": 15807,
+          "libx_concurrency.py": 14708,
+          "libx_gui.py": 14708,
+          "pdsx_launcher.py": 14564,
+          "lowlevel.py": 14558,
+          "hybrid_command_executor.py": 14079,
+          "sqlite.py": 14057,
+          "libx_logic.py": 11432,
+          "eventxkullanim.py": 11093,
+          "pdsx_pipe.py": 10859,
+          "module_manager.py": 10618,
+          "scientific_utils.py": 9727,
+          "module_analyzer.py": 9030,
+          "libx_jit.py": 7550,
+          "smart_auto_importer.py": 7369,
+          "core_system.py": 7259,
+          "pdsx_repl_demo.py": 6325,
+          "minimal_auto_importer.py": 6048,
+          "bytecode_compiler.py": 5916,
+          "module_validator.py": 5623,
+          "offline_manager.py": 4976,
+          "base_module_manager.py": 4801,
+          "pdsx_repl.py": 4443,
+          "parallel_processor.py": 4080,
+          "simple_system_test.py": 3962,
+          "cleanup_script.py": 3766,
+          "fast_launcher.py": 3765,
+          "pdsx_simple_repl.py": 3373,
+          "add_exports.py": 2603,
+          "module_manager_simple.py": 2516,
+          "test_pdsx.py": 2303,
+          "seal_working_version.py": 2174,
+          "pdsx_clean_launcher.py": 2148,
+          "direct_repl_test.py": 2145,
+          "simple_repl_test.py": 1992,
+          "minimal_repl_test.py": 1474,
+          "test_minimal_repl.py": 1166,
+          "analyze_imports.py": 1027
+        },
+        "cache": {
+          "exists": true,
+          "wheels_count": 1,
+          "packages_count": 0
+        },
+        "startup_time": 0.020009517669677734
+      }
+    }
+  },
+  {
+    "timestamp": 1753188988.670284,
+    "results": {
+      "lazy_loading": true
+    }
+  },
+  {
+    "timestamp": 1753188998.0407982,
+    "results": {
+      "import_filtering": true
+    }
+  },
+  {
+    "timestamp": 1753189019.7906787,
+    "results": {
+      "cache_optimization": true
+    }
+  },
+  {
+    "timestamp": 1753189056.9276106,
+    "results": {
+      "benchmark": {
+        "total_import_time": 0.0,
+        "individual_imports": {
+          "os": 0.0,
+          "sys": 0.0,
+          "json": 0.0,
+          "time": 0.0
+        },
+        "memory_increase_mb": 0.01953125,
+        "repl_response_time": 0.0,
+        "total_runtime": 0.0
+      }
+    }
+  }
+]

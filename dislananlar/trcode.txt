@@ -1,0 +1,141 @@
+trcode.bas
+
+Bu kod, TRCODE adlý bir programlama dilinin yorumlayýcýsýný (interpreter) QBASIC 7.1 ile geliþtirilmiþ bir versiyonunu içeriyor. Kod oldukça kapsamlý ve birçok özelliði destekliyor: deðiþkenler, koþullu ifadeler, döngüler, fonksiyonlar, sýnýflar, nesneler, modüller, veri okuma, hata ayýklama terminali gibi.
+
+### Genel Analiz:
+
+- **Yapýsal Olarak**: Kod, QBASIC dilinde yazýlmýþ ve birçok alt program (SUB) ve fonksiyon (FUNCTION) içeriyor.
+
+- **Özellikler**:
+
+- Deðiþken tanýmlama ve atama
+
+- Koþullu ifadeler (`eger`, `egerson`)
+
+- Döngüler (`say`, `iken`)
+
+- Fonksiyon ve rutin tanýmlama
+
+- Sýnýf (class) ve nesne (object) yönetimi (kalýtým dahil)
+
+- Veri okuma/yazma (DATA/READ benzeri)
+
+- Modül yönetimi (`modul`, `import`, `export`)
+
+- Terminal ekraný (8 satýrlýk bir log)
+
+- Aritmetik ve mantýksal iþlemler
+
+- Hata mesajlarý
+
+- **Eksiklikler ve Hatalar**:
+
+1. **Kod Tekrarý**: `Yorumla` alt programýnda büyük bir kod tekrarý var. Ýlk bölümdeki kodun aynýsý ikinci kez yazýlmýþ. Bu, muhtemelen bir kopyala-yapýþtýr hatasý.
+
+2. **Blok Yönetimi**: Blok yönetimi (if, for, while, fonksiyon, sýnýf gibi) için `blokModu%` kullanýlýyor ancak iç içe bloklarý desteklemiyor. Örneðin, bir `eger` bloðu içinde baþka bir `eger` bloðu olamaz. Bu, karmaþýk programlar için sýnýrlayýcý.
+
+3. **Hata Kontrolü**: Birçok yerde hata kontrolü eksik. Örneðin, bir deðiþken tanýmlanmamýþsa veya bir nesne alaný bulunamazsa hata mesajý veriliyor ama programýn akýþý bozulabilir.
+
+4. **Deðiþken Tipleri**: Deðiþkenler sadece sayýsal deðerler tutuyor. String, boolean gibi tipler desteklenmiyor. Ayrýca, `degiskenTip$` dizisi kullanýlýyor ama bu tiplere göre iþlem yapýlmýyor.
+
+5. **Nesne Yönelimli Programlama (OOP)**:
+
+- Sýnýf tanýmlarken kalýtým var ama sadece public alanlar kopyalanýyor. Private, protected gibi alanlar kopyalanmýyor.
+
+- Metot (fonksiyon) tanýmlama ve çaðýrma eksik.
+
+- `kendim` ve `bu` iþaretçileri tanýmlanmýþ ama kullanýmý sýnýrlý.
+
+6. **Fonksiyon Ýþleyiþi**: Fonksiyonlar tanýmlanýyor ama çaðrýldýðýnda nasýl çalýþtýðý belirsiz. `FonksiyonCalistir` alt programý tanýmlanmamýþ.
+
+7. **Döngü Yönetimi**: Döngüler için iç içe derinlik desteklenmiyor. `donguDerinlik%` kullanýlýyor ama sadece bir döngüyü destekliyor.
+
+8. **Terminal Ekraný**: Terminal ekraný gösterimi için `TerminalGoster` alt programý var ama ana programda çaðrýlmýyor. Ayrýca, REPL modu için `TRYorumlayici` var ama ana programda kullanýlmýyor.
+
+9. **Derleyici ve Kendini Derleme**: Kod bir yorumlayýcý (interpreter) olarak yazýlmýþ. Kendini derleyebilmesi için ayrý bir derleyici (compiler) tasarlanmasý gerekiyor. Þu anki kod bunu desteklemiyor.
+
+10. **Kodun Okunabilirliði**: QBASIC sýnýrlamalarýndan dolayý kod okunabilirliði düþük. Deðiþken isimleri kýsa ve açýklayýcý deðil.
+
+### Düzeltme Önerileri:
+
+1. **Kod Tekrarýný Kaldýr**: `SUB Yorumla` içindeki tekrar eden kodu kaldýr. Ýlk bölüm yeterli.
+
+2. **Ýç Ýçe Blok Desteði**: Bloklarý yýðýn (stack) yapýsýyla yönet. Her yeni blok baþlangýcýnda (if, for, fonk, sýnýf) mevcut durumu bir yýðýna kaydet.
+
+3. **Deðiþken Tipleri**: Deðiþkenleri sadece sayýsal deðil, string ve boolean deðerler de tutacak þekilde geniþlet. `degiskenDeger` dizisini string yap ve tiplerine göre iþlem yap.
+
+4. **OOP Geliþtirmeleri**:
+
+- Sýnýflara metot ekleme desteði.
+
+- Kalýtýmda tüm eriþim belirteçlerini (public, private, protected) dikkate al.
+
+- `kendim` ve `bu` iþaretçilerini kullanarak sýnýf içindeki metotlara eriþim.
+
+5. **Fonksiyon Çaðýrma**: `FonksiyonCalistir` alt programýný yaz. Fonksiyon çaðrýldýðýnda, fonksiyonun kod satýrlarýný çalýþtýr ve dönüþ deðerini iþle.
+
+6. **Hata Yönetimi**: Hata durumlarýnda programýn çökmemesi için daha fazla kontrol ekle. Örneðin, bir deðiþken bulunamadýðýnda veya döngü sýnýrlarý aþýldýðýnda uygun hata mesajý ver.
+
+7. **Döngü Yönetimi**: Döngüler için iç içe desteði saðla. `donguDerinlik%` yerine bir döngü yýðýný kullan.
+
+8. **Terminal ve REPL**: Ana programda `TerminalGoster` ve `TRYorumlayici` kullan. Kullanýcý etkileþimli bir REPL modu ekle.
+
+9. **Derleyici Tasarýmý**: Kendini derleyebilmesi için:
+
+- TRCODE dilini baþka bir dile (örneðin C veya Assembly) çeviren bir derleyici yaz.
+
+- Derleyici, TRCODE kodunu okuyup hedef dilde kod üretmeli.
+
+- Bu derleyiciyi TRCODE ile yazmak için önce temel özellikleri (dosya iþleme, string iþleme) desteklemeli.
+
+### Geliþtirme Önerileri:
+
+- **Deðiþken Kapsamý (Scope)**: Global, local ve static deðiþkenler için kapsam yönetimi ekle.
+
+- **Hata Ayýklama Modu**: Adým adým çalýþtýrma, deðiþkenleri izleme gibi hata ayýklama özellikleri ekle.
+
+- **Standart Kütüphane**: Matematik, string, dosya iþlemleri için standart fonksiyonlar ekle.
+
+- **Daha Ýyi Terminal**: Renkli çýktý, daha fazla satýr, komut geçmiþi gibi özellikler.
+
+- **Kendini Derleme**:
+
+- TRCODE derleyicisini TRCODE ile yazmak için, önce derleyicinin temel parçalarýný (lexer, parser, code generator) TRCODE'da uygula.
+
+- Derleyici, TRCODE kaynak kodunu alýp hedef dilde (örneðin x86 Assembly) kod üretebilmeli.
+
+- Bu hedef kodu bir assembler ve linker ile çalýþtýrýlabilir hale getir.
+
+### Örnek Derleyici Tasarýmý:
+
+1. **Lexer (Tokenizer)**: Kaynak kodu tokenlara ayýr.
+
+2. **Parser**: Tokenlarý alarak soyut sözdizim aðacý (AST) oluþtur.
+
+3. **Semantik Analiz**: Deðiþken ve tip kontrolleri yap.
+
+4. **Kod Üretimi**: AST'yi hedef dildeki koda çevir.
+
+TRCODE derleyicisinin kendisini derlemesi için:
+
+- Derleyicinin kaynak kodu (TRCODE ile yazýlmýþ) kendi kendini derleyebilmeli.
+
+- Bu, derleyicinin yeterince olgunlaþmasý ile mümkün olur (bootstrap).
+
+### Sonuç:
+
+Mevcut kod, temel bir yorumlayýcý olarak iþlevsel ama birçok eksiklik var. Özellikle OOP, fonksiyonlar ve hata yönetimi geliþtirilmeli. Kendini derleyebilmesi için ise ayrý bir derleyici projesi baþlatmak gerekli. Bu derleyici, TRCODE kodunu makine koduna veya baþka bir dile çevirebilmeli.
+
+Eðer bu proje ciddi olarak devam ettirilecekse, öncelikle:
+
+1. Kod tekrarý ve hatalar düzeltilmeli.
+
+2. Ýç içe blok ve döngü desteði eklenmeli.
+
+3. Deðiþken tipleri (string, boolean) eklenmeli.
+
+4. OOP tam olarak uygulanmalý (metotlar, kalýtým, kapsülleme).
+
+5. Fonksiyon çaðýrma mekanizmasý tamamlanmalý.
+
+Bu adýmlardan sonra derleyici tasarýmýna geçilebilir.

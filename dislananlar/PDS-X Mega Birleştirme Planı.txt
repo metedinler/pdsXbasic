@@ -1,0 +1,96 @@
+PDS-X Mega Birleþtirme Planý
+Tarih: 15 Haziran 2025
+Versiyon: 2.0
+
+1. Amaç:
+   - pdsXe.py’yi pdsXuv14xxx.py temelinde, yenilikleri entegre ederek oluþturmak.
+   - Her modül için dependencies_<modulismi>.json, exception_<modulismi>.json, command_executor_<modulismi>.py üretmek.
+   - core2-6.py komut/fonksiyonlarýný modüllere yönlendirmek, core2-5.py özelliklerini entegre etmek.
+   - Evrensel alias sistemi, çok satýrlý REPL, test/dökümantasyon.
+   - Dinamik modül ve sýnýf çakýþmalarýný yönetmek.
+
+2. Ana Modüller:
+   - Ana Modullerin benzer ozellikleri birlestirilecek,
+   - Benzersiz ozellikleri cakisma olmadan birlestirilecek
+   - Tum modullerin entegrasyonu yapilacak
+   - Tum ana modullerideki pdsX komut ve fonksiyonlar, veri yapilari,  karsilastirilacak ve bunlar hic bir modul olmasada calisacak sekilde ana modu
+   - pdsXuv14xxx.py: Ana temel, CommandParser, PDSXIntegrator.
+   - pdsXuv14.py: Komut ayrýþtýrma referansý.
+   - pdsXuv14_kn2.py: RestrictedPython, qiskit, torch.
+   - pdsXuv14-2gg.py: Bytecode_opcodes (SIMD, NEURAL, QUANTUM, GENETIC, BLOCKCHAIN).
+   - pdsXuv15(1).py: Asenkron run, sade REPL.
+   - pdsXuv14 (2).py: Detaylý function_table.
+   - pdsXuv14eneski.py: Eski komut ayrýþtýrma (kullanýlmayacak).
+   - pdsXuv14.backup.20250611.py, pdsXuv14.-1g.py, pdsXuv14.backup.py: Modül entegrasyonu.
+   - pdsXuv14_kn3.py, pdsXuv14_kn1.py: Güvenli yürütme, NLP.
+   - Diðer: pdsXuv13.py, pdsXv11g.py, pdsXu1.py, pdsCv13u.py, pdsxv13xxmxx2.py, pdsXv13.py, pdsXuv14.copy.py.
+
+3. Statik Çekirdek Modülleri yoneten Moduller(46):
+   
+auto_importer.py,
+3.1 dinamik modulleri yoneten Moduller
+- add_exports.py, autoinstaller.py, base_module_manager.py, module_manager.py, module_validator.py
+
+3.2 Statik modullerin listesi
+- add_exports.py, autoinstaller.py, base_module_manager.py, 
+- bus3.py, bytecode_compiler.py, bytecode_engine(core2duo)2.py,
+- bytecode_manager.py, clazz.py, command_executor.py, 
+- data_structures.py, database_sql_isam.py, event3.py, 
+- exception_manager3.py, export_report_doc.py, f11_backtrace_logger.py, 
+- f12_timer_manager.py, functional2.py, graph2.py, lib_db.py,
+- libx_concurrency.py, libx_data.py, libx_gui.py, libx_jit.py,
+- libx_logic.py, libx_ml.py, libx_network.py, libx_nlp.py, lowlevel.py,
+- memory_manager.py, module_manager.py, module_validator.py, 
+- multithreading_process.py, oop_and_class2.py, pdsX_exception2.py, pipe.py,
+- pipe_monitor_gui.py, reply_extension.py, save.py, save_load_system2.py,
+- sqlite.py, tree3.py, libx_task.py, async_manager.py, core2-6.py.
+
+4. Yer Tutucu Modüller:
+   - libx_stream.py: Veri akýþý (websocket, kafka).
+   - libx_security.py: Þifreleme, yetkilendirme.
+
+5. Adýmlar:
+   a. Modül Bazlý Dosyalar:
+      - dependencies_<modulismi>.json, exception_<modulismi>.json, command_executor_<modulismi>.py.
+   b. core2-6.py Yeniden Yapýlandýrma:
+      - Komut/fonksiyon yönlendirme, core2-5.py özellikleri (kuantum, nöral, blockchain).
+      - __pdsX_exports__ ekleme.
+   c. pdsXe.py Geliþtirme:
+      - pdsXuv14xxx.py temel, yenilikler entegre.
+   d. REPL Güçlendirme:
+      - Çok satýrlý destek, listX, listdirX, loadX, saveX, helpX, exitX.
+   e. Alias Sistemi:
+      - Komut, fonksiyon, sýnýf çakýþmalarý, null alias.
+   f. Test ve Doðrulama:
+      - tests/test_<modulismi>.py, pytest.
+   g. Dökümantasyon:
+      - docs/README_<modulismi>.md.
+   h. Dinamik Modül Yükleme:
+      - autoinstaller, pds_isolated_env, sýnýf çakýþmalarý.
+
+6. Ýþleme Sýrasý:
+   - exception_manager3: Hata yönetimi.
+   - core2_6: Çekirdek, yönlendirme, core2-5 entegrasyonu.
+   - libx_data, lib_db, f12_timer_manager, event3, f11_backtrace_logger, bus3, diðerleri.
+
+7. Takip:
+   - Her modül için Takip bölümü.
+   - plan.txt her modül için güncellenecek.
+
+8. Komut Yürütücü Belirleme:
+   - Seçilen: A. Hibrit (dependencies.json, command_registry, önek, decentralized parsing)
+   - Uygulama: CommandParser pdsXe.py’ye entegre edildi, dependencies.json’dan komutlar okunuyor, PREFIX_MAP önek eþleþtirme saðlýyor, decentralized parsing yedek mekanizma.
+   - Çakýþmalar: Alias’larla yönetiliyor, pdsxe_conflicts.log’a yazýlýyor.
+   - Test: CommandParser’ýn komut yönlendirme ve çakýþma yönetimi test edilecek.    
+    
+9. Potansiyel Hatalar ve Çözümler:
+   - Performans: ast ile import analizi.
+   - Güvenlik: RestrictedPython sandbox.
+   - Alias Önerileri: Kullanýcý kontrolü.
+   - Modül Kodu Ekleme: __main__ yerine __pdsX_exports__ init.
+   - Çakýþma Tespiti: Sýnýf ve fonksiyonlar kapsanacak.
+
+10. Exception Manager:
+   - Durum: exception_manager3-1.py tamamlandý, dependencies_exception_manager3.json ve exception_exception_manager3.json ile uyumlu.
+   - Test: TRY, ERROR, SUPPRESSERROR komutlarý test edilecek.
+   - Entegrasyon: pdsXe.py’ye baðlandý, f11_backtrace_logger ile loglama yapýyor.

@@ -1,0 +1,13 @@
+[PDS-X] Python 3.10 arama başlatıldı...
+[PDS-X] PATH'de bulundu: C:\Users\mete\anaconda3\python.EXE (Python 3.12.7)
+[PDS-X] py launcher ile Python 3.10 bulunamadı: [WinError 2] Sistem belirtilen dosyayı bulamıyor
+[PDS-X] Yaygın dizinde bulundu: C:\\Users\\mete\\AppData\\Local\\Programs\\Python\\Python310\\python.exe
+[PDS-X] Python 3.10 bulundu: C:\\Users\\mete\\AppData\\Local\\Programs\\Python\\Python310\\python.exe
+[PDS-X] PATH'e eklemek için add_pdsx_path.bat veya add_pdsx_path.ps1 dosyasını yönetici olarak çalıştırın!
+[PDS-X] UYARI: Şu anda base ortamdasınız. Otomatik olarak izole venv'ye geçiliyor!
+[PDS-X] UYARI: Şu anda base ortamdasınız. Otomatik olarak izole venv'ye geçiliyor!
+WARNING:root:Base ortamda başlatıldı, otomatik olarak venv'ye geçiliyor.
+[PDS-X] pip güncelleniyor...
+[PDS-X] pip güncelleniyor...
+[PDS-X] Ortam hazırlanıyor, tekrar başlatılıyor... (venv (.pdsx_isolated_env) içinde)
+[PDS-X] Ortam hazırlanıyor, tekrar başlatılıyor... (venv (.pdsx_isolated_env) içinde)

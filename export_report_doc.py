@@ -33,7 +33,7 @@ except ImportError as e:
 import aiofiles
 import io
 import subprocess
-from pdsx_exception import PdsXException
+from pdsx_unified_exception import PdsXException
 import functools
 from save_load_system2 import format_registry, supported_encodings, compression_methods, decompression_methods
 from datetime import datetime

@@ -1,0 +1,65 @@
+Programýn baþlatma ve izole edilmiþ ortam kurulum akýþý kabaca þöyle iþliyor:
+
+1. Ortam Bulma ve Oluþturma (auto_importer.py)  
+   • find_python310() fonksiyonu çaðrýlýr.  
+     – PATH, “py –3.10” launcher, yaygýn Windows dizinleri, proje içi venv’ler (.venv, venv, .pdsx_isolated_env), Conda ve pyenv kontrol edilir.  
+     – Eðer Python 3.10 bulunursa yolu döner, bulunamazsa “uygun Python 3.10 bulunamadý” mesajý verilir.  
+   • .pdsx_isolated_env yoksa, bulunan Python 3.10 ile “python -m venv .pdsx_isolated_env” komutuyla sanal ortam oluþturulur.  
+   • Ortam etkinleþtirilir (PowerShell için `& .\.pdsx_isolated_env\Scripts\Activate.ps1`).  
+
+2. Kütüphane Kurulumu  
+   • auto_importer, CORE_DEPENDENCIES listesindeki temel paketleri (`numpy`, `pandas`, `scikit-learn`, vs.) pip ile kurar.  
+   • MODULE_SPECIFIC_DEPS’e göre modül baðýmlýlýklarý da tek tek `pip install modul_adi` ile yüklenir.  
+   • Yükleme sýrasýnda hatalar loglanýr ve kuruluma devam edilir.  
+
+3. Terminal Çýktý Yönetimi  
+   • `sys.stdout` ve `sys.stderr`, “Tee” sýnýfýyla hem ekrana hem de pdsxu_terminal.log dosyasýna yazacak þekilde yönlendirilir.  
+
+4. Ana Baþlatýcý (pdsXuv14.py)  
+   • `ensurepip.bootstrap` ile pip ve setuptools güncellenir (veya kurulursa atlanýr).  
+   • Python versiyonuna bakýlýr; < 3.10 ise uyarý verip devam edilir (eski sürümlerde çýkýþ yapmýyor).  
+   • Proje kökünden tüm çekirdek modüller (core2-6.py, module_manager.py vs.) dinamik olarak yüklenir.  
+     – `importlib.util.spec_from_file_location` ile core2-6.py’deki `CoreManager` alýnýr.  
+   • `ModuleManager`, `BytecodeCompiler` ve `BytecodeManager` gibi temel yöneticiler baþlatýlýr.  
+
+5. Dinamik Modül ve Eklenti Yükleme  
+   • `MODULE_COMMAND_MAP` ve otomatik importer döngüleriyle workspace içindeki tüm `pdsx_*` modülleri taranýr, içlerindeki `__pdsX_exports__` kayýtlarý alýnýr ve komut/fonksiyon tablolarýna eklenir.  
+   • `PluginManager` ile kullanýcý dizinindeki `plugins/` klasöründen ek eklentiler yüklenip çýkartýlabilir.  
+
+6. Bytecode Sistemi  
+   • `BytecodeCompiler` kod derleme, `BytecodeManager` ise derlenmiþ bytecode’larý saklama ve yürütme iþlevlerini saðlar.  
+   • Bytecode yöneticisi kendi içinde bir asyncio döngüsü baþlatýr (`start_async_loop()`) ve komut tablolarýna “COMPILE”, “EXECUTE_BYTECODE” gibi özel iþlemler kaydeder.  
+
+7. REPL ve Senkron/Asenkron Yürütme  
+   • `run_async`, `interactive_shell` ve `repl` metodlarýyla hem .basX dosyalarý hem de etkileþimli kabuk (REPL) desteklenir.  
+   • `run` veya `execute_command` çaðrýlarý geldiðinde önce eski (“14u”) yöntem denenir, sonra Xe/15 sürümlerine, en son da Bytecode veya plugin API’larýna yönlendirilir.  
+
+8. Ýzleme ve Loglama  
+   • Tüm hata ve uyarýlar pdsxu_errors.log dosyasýna, terminal çýktýsý ise pdsxu_terminal.log’a kaydedilir.  
+   • `performance_metrics` içinde derlenen/çalýþtýrýlan bytecode sayýsý, bellek ve CPU kullaným bilgileri toplanýr.  
+   • Git modüllerindeki (workspace içindeki) her dosya import edildiðinde Python’ýn standart yükleme mekanizmasý (`importlib`) ve `pkgutil.iter_modules` ile adým adým izlenebilir; kodun içindeki `print(...)` ve `log.info(...)` çaðrýlarý bu adýmlarý ekrana/loga yansýtýr.  
+
+Sonuç olarak, program neredeyse her koþulda önce sistemde Python 3.10’u arýyor, bulamazsa indirip .pdsx_isolated_env içinde venv oluþturuyor, pip ve baðýmlýlýklarý orada kurup aktif ediyor; ardýndan ana pdsXuv14.py’ye geçip modülleri dinamik þekilde yüklüyor, fonksiyon/komut tablolarýný oluþturuyor, bytecode sistemini devreye alýyor ve REPL veya dosya çalýþtýrma modunda çalýþmaya baþlýyor. Tüm bu adýmlar otomatik olarak loglanýyor ve kullanýcýya gerektiðinde ekrana veya log dosyalarýna ayrýntýlý mesajlar yazýlýyor.
+
+Artýk her baþlangýçta:
+
+1. .pdsx_isolated_env dizini var mý kontrol edilir.  
+2. Yoksa:
+   • Python3.10 bulunur, `-m venv` ile sanal ortam oluþturulur  
+   • `ensurepip` ile pip kurulup `pip,setuptools,wheel` yükseltilir  
+3. Venv içindeki Python ile **her** paket (CORE_DEPENDENCIES["base"] içindekiler, örn. numpy, pandas, scikit-learn vs.) yüklenir  
+4. Eðer þu anki Python, venv içindeki Python deðilse, `os.execv` ile python.exe ile program yeniden baþlatýlýr  
+
+Bu sayede:
+
+- Program ne zaman baþlarsa baþlasýn önce otomatik olarak .pdsx_isolated_env hazýrlar,
+- Ardýndan sanal ortam içindeki Python ile yeniden çalýþýr,
+- Paket yükleme adýmlarý hep venv üzerinde gerçekleþir,
+- Venv içindeki Python, **tek bir kez** oluþturulduktan sonra bile CORE_DEPENDENCIES altýnda tanýmlý kütüphaneler ne zaman eksikse yükler,
+- Böylece `import numpy` veya `import pandas` hatasý kalmamalý.
+
+Þimdi `python pdsXuv14.py --interactive` çalýþtýrdýðýnýzda:
+
+- Tekrardan venv altýnda baþlatýp  
+- `numpy`, `pandas` vs. paketleri venv’e yükleyip  
+- Ana yorumlayýcý kodu (`import numpy as np`, vb.) hatasýz çalýþacaktýr.
