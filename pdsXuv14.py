@@ -404,6 +404,7 @@ from libx_gui import LibXGui
 from libx_concurrency import LibXConcurrency, AsyncManager
 from libx_nlp import LibXNLP
 from libx_network import LibXNetwork
+from libx_ml import LibXML
 from lib_db import LibDB
 from sqlite import SQLiteManager
 
@@ -457,6 +458,15 @@ from pipe_monitor_gui import PipeMonitorGUIManager
 from export_report_doc import ExportReportDocManager
 
 from command_executor import execute_command
+
+# Yeni eklenen modüller (çalışan olanlar)
+from clazz import Clazz  # ClassManager yerine Clazz kullanılabilir
+from exception_manager3 import PdsXException, PdsXSyntaxError, PdsXRuntimeError
+# from ai import AIManager  # Syntax error - geçici olarak devre dışı
+from autoinstaller import AutoInstaller  
+from add_exports import add_export  # ExportManager yerine add_export
+# from bus3 import BusManager  # Syntax error - geçici olarak devre dışı  
+from analyze_imports import analyze_module_imports  # ImportAnalyzer yerine
 
 __version__ = "14u"
 
