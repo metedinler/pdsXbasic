@@ -1,0 +1,84 @@
+REM Test 08: GOTO ve etiketler
+REM PDS-X BASIC - Test08.basx
+
+PRINT "=== TEST 08: GOTO ve Etiketler ==="
+
+LET counter = 0
+
+start_label:
+    LET counter = counter + 1
+    PRINT "Sayaç:"; counter
+    
+    IF counter < 3 THEN
+        GOTO start_label
+    ENDIF
+
+PRINT "GOTO döngüsü tamamlandı"
+
+REM Koşullu atlama
+LET number = 7
+
+IF number > 10 THEN
+    GOTO big_number
+ELSE
+    GOTO small_number
+ENDIF
+
+big_number:
+    PRINT "Büyük sayı:"; number
+    GOTO end_check
+
+small_number:
+    PRINT "Küçük sayı:"; number
+    GOTO end_check
+
+end_check:
+    PRINT "Sayı kontrolü tamamlandı"
+
+REM Çoklu etiket örneği
+LET choice = 2
+
+IF choice = 1 THEN
+    GOTO option_a
+ELSE
+    IF choice = 2 THEN
+        GOTO option_b
+    ELSE
+        GOTO option_default
+    ENDIF
+ENDIF
+
+option_a:
+    PRINT "Seçenek A işlemi"
+    GOTO program_end
+
+option_b:
+    PRINT "Seçenek B işlemi"
+    GOTO program_end
+
+option_default:
+    PRINT "Varsayılan işlem"
+    GOTO program_end
+
+program_end:
+    PRINT "Program sonu"
+
+REM Basit durum makinesi
+LET state = 1
+
+state_1:
+    PRINT "Durum 1'deyiz"
+    LET state = 2
+    GOTO state_2
+
+state_2:
+    PRINT "Durum 2'deyiz"
+    LET state = 3
+    GOTO state_3
+
+state_3:
+    PRINT "Durum 3'teyiz"
+    PRINT "Durum makinesi tamamlandı"
+
+PRINT "Test 08 tamamlandı!"
+END

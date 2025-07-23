@@ -1,0 +1,30 @@
+REM Test 02: Diziler ve DIM komutu
+REM PDS-X BASIC - Test02.basx
+
+PRINT "=== TEST 02: Diziler ==="
+
+REM Sayısal dizi tanımlama
+DIM numbers AS SINGLE [10]
+DIM matrix AS DOUBLE [3,3]
+
+REM Dizi elemanlarına değer atama
+LET numbers[0] = 1.5
+LET numbers[1] = 2.5
+LET numbers[2] = 3.5
+
+PRINT "numbers[0] ="; numbers[0]
+PRINT "numbers[1] ="; numbers[1] 
+PRINT "numbers[2] ="; numbers[2]
+
+REM 2D dizi testi
+LET matrix[0,0] = 1.0
+LET matrix[1,1] = 2.0
+LET matrix[2,2] = 3.0
+
+PRINT "Matris köşegen elemanları:"
+PRINT "matrix[0,0] ="; matrix[0,0]
+PRINT "matrix[1,1] ="; matrix[1,1]
+PRINT "matrix[2,2] ="; matrix[2,2]
+
+PRINT "Test 02 tamamlandı!"
+END

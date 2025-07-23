@@ -1,0 +1,58 @@
+REM Test 12: LibX modül komutları
+REM PDS-X BASIC - Test12.basx
+
+PRINT "=== TEST 12: LibX Modülleri ==="
+
+REM LibX.Data modülü testleri
+PRINT "LibX.Data testleri:"
+LIBX.DATA.CREATE_ARRAY("test_array", 5)
+LIBX.DATA.SET_VALUE("test_array", 0, 10)
+LIBX.DATA.SET_VALUE("test_array", 1, 20)
+LIBX.DATA.SET_VALUE("test_array", 2, 30)
+
+PRINT "Dizi elemanları:"
+FOR i = 0 TO 2
+    LIBX.DATA.GET_VALUE("test_array", i)
+NEXT
+
+REM LibX.Logic modülü testleri
+PRINT "LibX.Logic testleri:"
+LIBX.LOGIC.AND_GATE(TRUE, TRUE)
+LIBX.LOGIC.OR_GATE(TRUE, FALSE)
+LIBX.LOGIC.NOT_GATE(TRUE)
+LIBX.LOGIC.XOR_GATE(TRUE, FALSE)
+
+REM LibX.Network modülü testleri
+PRINT "LibX.Network testleri:"
+LIBX.NETWORK.PING("localhost")
+LIBX.NETWORK.CHECK_CONNECTION()
+
+REM LibX.GUI modülü testleri
+PRINT "LibX.GUI testleri:"
+LIBX.GUI.SHOW_MESSAGE("Test mesajı")
+LIBX.GUI.CREATE_WINDOW("Test Window", 400, 300)
+
+REM LibX.ML modülü testleri
+PRINT "LibX.ML testleri:"
+LIBX.ML.CREATE_DATASET("test_data")
+LIBX.ML.ADD_SAMPLE("test_data", 1, 2, 3)
+LIBX.ML.TRAIN_MODEL("test_data", "linear")
+
+REM LibX.Concurrency modülü testleri
+PRINT "LibX.Concurrency testleri:"
+LIBX.CONCURRENCY.CREATE_THREAD("worker1")
+LIBX.CONCURRENCY.START_THREAD("worker1")
+LIBX.CONCURRENCY.WAIT_THREAD("worker1")
+
+REM LibX.JIT modülü testleri
+PRINT "LibX.JIT testleri:"
+LIBX.JIT.COMPILE_FUNCTION("test_func", "return x * 2")
+LIBX.JIT.EXECUTE_FUNCTION("test_func", 5)
+
+REM LibX.NLP modülü testleri
+PRINT "LibX.NLP testleri:"
+LIBX.NLP.TOKENIZE("Merhaba dünya nasılsın")
+LIBX.NLP.ANALYZE_SENTIMENT("Bu harika bir test!")
+
+PRINT "Test 12 tamamlandı!"
+END

@@ -1,0 +1,61 @@
+REM Test 11: Hata yönetimi - ON ERROR
+REM PDS-X BASIC - Test11.basx
+
+PRINT "=== TEST 11: Hata Yönetimi ==="
+
+REM Hata yakalama ayarı
+ON ERROR GOTO error_handler
+
+PRINT "Güvenli işlemler:"
+LET a = 10
+LET b = 5
+LET result = a / b
+PRINT "10 / 5 ="; result
+
+PRINT "Hatalı işlem denenecek:"
+LET c = 10
+LET d = 0
+LET bad_result = c / d  REM Bu sıfıra bölme hatası verebilir
+
+PRINT "Bu satır çalışmayabilir"
+GOTO program_end
+
+error_handler:
+    PRINT "HATA YAKALANDI!"
+    PRINT "Sıfıra bölme hatası oluştu"
+    PRINT "Program güvenli şekilde devam ediyor"
+    
+    REM Hata sonrası güvenli işlem
+    LET safe_result = c + d
+    PRINT "Güvenli işlem: "; c; " + "; d; " = "; safe_result
+    
+    REM Hata yönetimini kapat
+    ON ERROR RESUME NEXT
+    GOTO program_end
+
+program_end:
+    PRINT "Hata yönetimi testi tamamlandı"
+
+REM İkinci hata yönetimi testi
+ON ERROR GOTO math_error
+
+LET x = 5
+LET y = -1
+
+REM Negatif sayının karekökü hatası simülasyonu
+IF y < 0 THEN
+    PRINT "Negatif sayı hatası!"
+    GOTO math_error
+ENDIF
+
+PRINT "Pozitif sayı karekökü hesaplanabilir"
+GOTO final_end
+
+math_error:
+    PRINT "Matematik hatası yakalandı!"
+    PRINT "Negatif sayının karekökü alınamaz"
+    ON ERROR RESUME NEXT
+
+final_end:
+    PRINT "Test 11 tamamlandı!"
+END

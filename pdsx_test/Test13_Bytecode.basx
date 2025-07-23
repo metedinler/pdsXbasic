@@ -1,0 +1,58 @@
+REM Test 13: Bytecode komutları
+REM PDS-X BASIC - Test13.basx
+
+PRINT "=== TEST 13: Bytecode Komutları ==="
+
+REM Temel bytecode işlemleri
+PRINT "Temel bytecode testleri:"
+BYTECODE.LOAD(42)
+BYTECODE.STORE("temp_var")
+BYTECODE.ADD(10, 20)
+BYTECODE.MULTIPLY(5, 6)
+
+REM SIMD işlemleri
+PRINT "SIMD testleri:"
+SIMD.VECTOR_ADD([1,2,3,4], [5,6,7,8])
+SIMD.VECTOR_MULTIPLY([2,4,6,8], 2)
+SIMD.DOT_PRODUCT([1,2,3], [4,5,6])
+
+REM Neural Network işlemleri
+PRINT "Neural Network testleri:"
+NEURAL.CREATE_LAYER("input", 4)
+NEURAL.CREATE_LAYER("hidden", 8)
+NEURAL.CREATE_LAYER("output", 2)
+NEURAL.CONNECT_LAYERS("input", "hidden")
+NEURAL.CONNECT_LAYERS("hidden", "output")
+NEURAL.FORWARD_PASS([0.5, 0.3, 0.8, 0.1])
+
+REM Quantum computing işlemleri
+PRINT "Quantum testleri:"
+QUANTUM.CREATE_QUBIT("q1")
+QUANTUM.CREATE_QUBIT("q2")
+QUANTUM.HADAMARD_GATE("q1")
+QUANTUM.CNOT_GATE("q1", "q2")
+QUANTUM.MEASURE("q1")
+QUANTUM.MEASURE("q2")
+
+REM Genetic Algorithm işlemleri
+PRINT "Genetic Algorithm testleri:"
+GENETIC.CREATE_POPULATION(50, 10)
+GENETIC.SET_FITNESS_FUNCTION("maximize")
+GENETIC.EVOLVE_GENERATION()
+GENETIC.GET_BEST_INDIVIDUAL()
+
+REM Blockchain işlemleri
+PRINT "Blockchain testleri:"
+BLOCKCHAIN.CREATE_BLOCK("Genesis Block")
+BLOCKCHAIN.ADD_TRANSACTION("Alice", "Bob", 10)
+BLOCKCHAIN.MINE_BLOCK()
+BLOCKCHAIN.VALIDATE_CHAIN()
+
+REM Bytecode optimizasyonu
+PRINT "Bytecode optimizasyon testleri:"
+BYTECODE.OPTIMIZE_CODE("O2")
+BYTECODE.COMPILE_TO_NATIVE()
+BYTECODE.PROFILE_PERFORMANCE()
+
+PRINT "Test 13 tamamlandı!"
+END

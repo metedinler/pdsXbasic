@@ -1,0 +1,67 @@
+REM Test 15: String işlemleri ve fonksiyonlar
+REM PDS-X BASIC - Test15.basx
+
+PRINT "=== TEST 15: String İşlemleri ==="
+
+REM Temel string değişkenleri
+LET message$ = "Merhaba"
+LET name$ = "PDS-X"
+LET version$ = "v14u"
+
+REM String birleştirme
+LET greeting$ = message$ + " " + name$ + " " + version$
+PRINT "Birleştirilmiş: "; greeting$
+
+REM String uzunluğu
+PRINT "message$ uzunluğu: "; LEN(message$)
+PRINT "greeting$ uzunluğu: "; LEN(greeting$)
+
+REM String alt string alma
+LET text$ = "PDS-X BASIC"
+PRINT "İlk 5 karakter: "; LEFT$(text$, 5)
+PRINT "Son 5 karakter: "; RIGHT$(text$, 5)
+PRINT "3. karakterden 4 karakter: "; MID$(text$, 3, 4)
+
+REM String arama
+LET search_text$ = "BASIC Programming"
+LET find_word$ = "BASIC"
+PRINT "'" + find_word$ + "' kelimesi pozisyonu: "; INSTR(search_text$, find_word$)
+
+REM String dönüşümler
+LET lowercase$ = "hello world"
+LET uppercase$ = "HELLO WORLD"
+PRINT "Büyük harf: "; UCASE$(lowercase$)
+PRINT "Küçük harf: "; LCASE$(uppercase$)
+
+REM String temizleme
+LET spaced_text$ = "  Test String  "
+PRINT "Boşluk temizleme: '" + LTRIM$(RTRIM$(spaced_text$)) + "'"
+
+REM Sayı ve string dönüşümü
+LET number_value = 123
+LET string_number$ = "456"
+
+PRINT "Sayıdan string: "; STR$(number_value)
+PRINT "String'den sayı: "; VAL(string_number$)
+
+REM Karakter kodları
+LET char$ = "A"
+PRINT "'" + char$ + "' ASCII kodu: "; ASC(char$)
+PRINT "ASCII 66 karakteri: "; CHR$(66)
+
+REM String karşılaştırma
+LET str1$ = "Apple"
+LET str2$ = "Banana"
+
+IF str1$ < str2$ THEN
+    PRINT str1$; " alfabetik olarak "; str2$; "'dan önce gelir"
+ELSE
+    PRINT str1$; " alfabetik olarak "; str2$; "'dan sonra gelir"
+ENDIF
+
+REM String formatlama
+LET pi_value = 3.14159
+PRINT "Pi değeri (2 ondalık): "; FORMAT$(pi_value, "0.00")
+
+PRINT "Test 15 tamamlandı!"
+END

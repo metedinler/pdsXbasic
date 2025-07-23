@@ -1,0 +1,54 @@
+REM Test 10: SUB ve FUNCTION tanımlama
+REM PDS-X BASIC - Test10.basx
+
+PRINT "=== TEST 10: SUB ve FUNCTION ==="
+
+REM Fonksiyon çağrıları
+LET num1 = 15
+LET num2 = 25
+LET sum_result = ADD(num1, num2)
+PRINT "Toplama sonucu:"; sum_result
+
+LET base = 5
+LET exp = 3
+LET power_result = POWER(base, exp)
+PRINT base; "^"; exp; "="; power_result
+
+REM Alt program çağrıları
+CALL SHOW_INFO
+CALL CALCULATE_CIRCLE(7)
+
+PRINT "Test 10 tamamlandı!"
+END
+
+REM Toplama fonksiyonu
+FUNCTION ADD(a, b)
+    LET ADD = a + b
+END FUNCTION
+
+REM Üs alma fonksiyonu
+FUNCTION POWER(base, exponent)
+    LET result = 1
+    FOR i = 1 TO exponent
+        LET result = result * base
+    NEXT
+    LET POWER = result
+END FUNCTION
+
+REM Bilgi gösterme alt programı
+SUB SHOW_INFO
+    PRINT "PDS-X BASIC Test Programı"
+    PRINT "Fonksiyonlar ve Alt Programlar"
+END SUB
+
+REM Daire hesaplama alt programı
+SUB CALCULATE_CIRCLE(radius)
+    LET pi = 3.14159
+    LET area = pi * radius * radius
+    LET circumference = 2 * pi * radius
+    
+    PRINT "Daire Hesaplamaları:"
+    PRINT "Yarıçap:"; radius
+    PRINT "Alan:"; area
+    PRINT "Çevre:"; circumference
+END SUB

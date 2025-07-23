@@ -1,0 +1,82 @@
+REM Test 16: Dosya işlemleri (INPUT simülasyonu)
+REM PDS-X BASIC - Test16.basx
+
+PRINT "=== TEST 16: INPUT ve Dosya İşlemleri ==="
+
+REM Kullanıcı girdisi simülasyonu
+PRINT "Kullanıcı girdisi testleri:"
+PRINT "İsminizi girin (simülasyon):"
+
+REM INPUT simülasyonu - gerçek input yerine otomatik değerler
+LET user_name$ = "Test Kullanıcısı"
+PRINT "Girilen isim: "; user_name$
+
+PRINT "Yaşınızı girin:"
+LET user_age = 25
+PRINT "Girilen yaş: "; user_age
+
+PRINT "Maaşınızı girin:"
+LET user_salary = 5000.50
+PRINT "Girilen maaş: "; user_salary
+
+REM Veri doğrulama
+IF user_age < 18 THEN
+    PRINT "Yaş 18'den küçük - Reşit değil"
+ELSE
+    PRINT "Yaş uygun - Reşit"
+ENDIF
+
+IF user_salary > 0 THEN
+    PRINT "Maaş bilgisi geçerli"
+ELSE
+    PRINT "Maaş bilgisi geçersiz"
+ENDIF
+
+REM Çoklu INPUT simülasyonu
+PRINT "Koordinat bilgilerini girin:"
+LET x_coord = 10.5
+LET y_coord = 20.3
+PRINT "X koordinatı: "; x_coord
+PRINT "Y koordinatı: "; y_coord
+
+LET distance = SQR(x_coord * x_coord + y_coord * y_coord)
+PRINT "Orijine uzaklık: "; distance
+
+REM Menü INPUT simülasyonu
+PRINT ""
+PRINT "=== MENÜ ==="
+PRINT "1. Toplama"
+PRINT "2. Çıkarma"
+PRINT "3. Çarpma"
+PRINT "4. Bölme"
+PRINT "Seçiminiz (1-4):"
+
+LET menu_choice = 3  REM Otomatik seçim
+PRINT "Seçilen: "; menu_choice
+
+LET num1 = 15
+LET num2 = 3
+
+SELECT CASE menu_choice
+    CASE 1
+        LET result = num1 + num2
+        PRINT num1; " + "; num2; " = "; result
+    CASE 2
+        LET result = num1 - num2
+        PRINT num1; " - "; num2; " = "; result
+    CASE 3
+        LET result = num1 * num2
+        PRINT num1; " * "; num2; " = "; result
+    CASE 4
+        IF num2 <> 0 THEN
+            LET result = num1 / num2
+            PRINT num1; " / "; num2; " = "; result
+        ELSE
+            PRINT "Sıfıra bölme hatası!"
+        ENDIF
+    CASE ELSE
+        PRINT "Geçersiz seçim!"
+END SELECT
+
+PRINT "Test 16 tamamlandı!"
+END

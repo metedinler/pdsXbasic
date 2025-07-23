@@ -1,0 +1,181 @@
+REM Test 19: Gelişmiş programlama teknikleri
+REM PDS-X BASIC - Test19.basx
+
+PRINT "=== TEST 19: Gelişmiş Teknikler ==="
+
+REM Rekursif fonksiyon simülasyonu (factorial)
+LET factorial_n = 5
+GOSUB calculate_factorial
+PRINT factorial_n; "! = "; factorial_result
+
+REM Stack simülasyonu
+DIM stack AS SINGLE [10]
+LET stack_top = -1
+
+REM Stack push işlemleri
+GOSUB push_to_stack(5)
+GOSUB push_to_stack(10)
+GOSUB push_to_stack(15)
+
+PRINT "Stack içeriği (push sonrası):"
+GOSUB print_stack
+
+REM Stack pop işlemleri
+GOSUB pop_from_stack
+PRINT "Pop edilen: "; popped_value
+GOSUB pop_from_stack
+PRINT "Pop edilen: "; popped_value
+
+PRINT "Stack içeriği (pop sonrası):"
+GOSUB print_stack
+
+REM Queue simülasyonu
+DIM queue AS SINGLE [10]
+LET queue_front = 0
+LET queue_rear = -1
+LET queue_size = 0
+
+REM Enqueue işlemleri
+GOSUB enqueue(20)
+GOSUB enqueue(30)
+GOSUB enqueue(40)
+
+PRINT "Queue içeriği:"
+GOSUB print_queue
+
+REM Dequeue işlemleri
+GOSUB dequeue
+PRINT "Dequeue edilen: "; dequeued_value
+
+PRINT "Queue içeriği (dequeue sonrası):"
+GOSUB print_queue
+
+REM State machine simülasyonu
+LET state = 1
+LET input_value = 1
+
+PRINT "State Machine testi:"
+FOR step = 1 TO 5
+    PRINT "Step "; step; ": State = "; state; ", Input = "; input_value
+    
+    SELECT CASE state
+        CASE 1
+            IF input_value = 1 THEN
+                LET state = 2
+            ELSE
+                LET state = 1
+            ENDIF
+        CASE 2
+            IF input_value = 0 THEN
+                LET state = 1
+            ELSE
+                LET state = 3
+            ENDIF
+        CASE 3
+            LET state = 1
+    END SELECT
+    
+    REM Rastgele input simülasyonu
+    LET input_value = step MOD 2
+NEXT
+
+GOTO main_end
+
+REM Alt programlar
+calculate_factorial:
+    LET factorial_result = 1
+    FOR fact_i = 1 TO factorial_n
+        LET factorial_result = factorial_result * fact_i
+    NEXT
+RETURN
+
+push_to_stack:
+    IF stack_top < 9 THEN
+        LET stack_top = stack_top + 1
+        LET stack[stack_top] = push_value
+    ELSE
+        PRINT "Stack overflow!"
+    ENDIF
+RETURN
+
+pop_from_stack:
+    IF stack_top >= 0 THEN
+        LET popped_value = stack[stack_top]
+        LET stack_top = stack_top - 1
+    ELSE
+        PRINT "Stack underflow!"
+        LET popped_value = -1
+    ENDIF
+RETURN
+
+print_stack:
+    IF stack_top >= 0 THEN
+        FOR i = stack_top TO 0 STEP -1
+            PRINT "Stack["; i; "] = "; stack[i]
+        NEXT
+    ELSE
+        PRINT "Stack boş"
+    ENDIF
+RETURN
+
+enqueue:
+    IF queue_size < 10 THEN
+        LET queue_rear = (queue_rear + 1) MOD 10
+        LET queue[queue_rear] = enqueue_value
+        LET queue_size = queue_size + 1
+    ELSE
+        PRINT "Queue overflow!"
+    ENDIF
+RETURN
+
+dequeue:
+    IF queue_size > 0 THEN
+        LET dequeued_value = queue[queue_front]
+        LET queue_front = (queue_front + 1) MOD 10
+        LET queue_size = queue_size - 1
+    ELSE
+        PRINT "Queue underflow!"
+        LET dequeued_value = -1
+    ENDIF
+RETURN
+
+print_queue:
+    IF queue_size > 0 THEN
+        LET temp_front = queue_front
+        FOR i = 1 TO queue_size
+            PRINT "Queue["; temp_front; "] = "; queue[temp_front]
+            LET temp_front = (temp_front + 1) MOD 10
+        NEXT
+    ELSE
+        PRINT "Queue boş"
+    ENDIF
+RETURN
+
+main_end:
+PRINT "Test 19 tamamlandı!"
+END
+
+REM Parametreli alt program örnekleri (simülasyon)
+push_to_stack:
+    LET push_value = 5  REM İlk çağrı
+RETURN
+
+push_to_stack:
+    LET push_value = 10  REM İkinci çağrı  
+RETURN
+
+push_to_stack:
+    LET push_value = 15  REM Üçüncü çağrı
+RETURN
+
+enqueue:
+    LET enqueue_value = 20  REM İlk enqueue
+RETURN
+
+enqueue:
+    LET enqueue_value = 30  REM İkinci enqueue
+RETURN
+
+enqueue:
+    LET enqueue_value = 40  REM Üçüncü enqueue
+RETURN

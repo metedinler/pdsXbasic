@@ -1,0 +1,58 @@
+REM Test 05: WHILE döngüleri
+REM PDS-X BASIC - Test05.basx
+
+PRINT "=== TEST 05: WHILE Döngüleri ==="
+
+REM Basit WHILE döngüsü
+LET counter = 1
+PRINT "WHILE döngüsü ile 1'den 5'e:"
+WHILE counter <= 5
+    PRINT "counter ="; counter
+    LET counter = counter + 1
+WEND
+
+REM Kullanıcı girişi simülasyonu
+LET number = 0
+LET sum = 0
+LET count = 0
+
+PRINT "5'ten küçük sayıları toplama:"
+WHILE number < 5
+    LET sum = sum + number
+    LET count = count + 1
+    LET number = number + 1
+WEND
+
+PRINT "Toplam ="; sum
+PRINT "Adet ="; count
+
+REM Faktöriyel hesaplama
+LET n = 5
+LET factorial = 1
+LET temp = n
+
+WHILE temp > 0
+    LET factorial = factorial * temp
+    LET temp = temp - 1
+WEND
+
+PRINT n; "! ="; factorial
+
+REM Fibonacci serisi
+LET a = 0
+LET b = 1
+LET limit = 10
+
+PRINT "Fibonacci serisi ("; limit; " terime kadar):"
+PRINT a
+PRINT b
+
+WHILE a + b <= limit
+    LET c = a + b
+    PRINT c
+    LET a = b
+    LET b = c
+WEND
+
+PRINT "Test 05 tamamlandı!"
+END

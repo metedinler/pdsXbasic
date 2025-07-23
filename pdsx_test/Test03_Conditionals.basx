@@ -1,0 +1,44 @@
+REM Test 03: IF-THEN-ELSE yapısı ve mantıksal işlemler
+REM PDS-X BASIC - Test03.basx
+
+PRINT "=== TEST 03: Koşullu İfadeler ==="
+
+LET age = 25
+LET score = 85
+
+REM Basit IF kontrolü
+IF age >= 18 THEN
+    PRINT "Yaş uygun: Reşit"
+ELSE
+    PRINT "Yaş uygun değil: Reşit değil"
+ENDIF
+
+REM Çoklu koşul
+IF score >= 90 THEN
+    PRINT "Başarı notu: Mükemmel"
+ELSE
+    IF score >= 70 THEN
+        PRINT "Başarı notu: İyi"
+    ELSE
+        IF score >= 50 THEN
+            PRINT "Başarı notu: Geçer"
+        ELSE
+            PRINT "Başarı notu: Kaldı"
+        ENDIF
+    ENDIF
+ENDIF
+
+REM Mantıksal operatörler
+LET x = 10
+LET y = 5
+
+IF x > y AND x < 20 THEN
+    PRINT "x, y'den büyük ve 20'den küçük"
+ENDIF
+
+IF x = 10 OR y = 10 THEN
+    PRINT "x veya y değeri 10'dur"
+ENDIF
+
+PRINT "Test 03 tamamlandı!"
+END

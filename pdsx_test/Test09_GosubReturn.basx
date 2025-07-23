@@ -1,0 +1,49 @@
+REM Test 09: GOSUB ve RETURN - Alt programlar
+REM PDS-X BASIC - Test09.basx
+
+PRINT "=== TEST 09: GOSUB ve RETURN ==="
+
+PRINT "Ana program başladı"
+
+REM İlk alt program çağrısı
+GOSUB print_header
+GOSUB calculate_area
+GOSUB print_footer
+
+PRINT "Ana program tamamlandı"
+END
+
+print_header:
+    PRINT "************************"
+    PRINT "* Alan Hesaplama       *"
+    PRINT "************************"
+RETURN
+
+calculate_area:
+    LET width = 10
+    LET height = 5
+    LET area = width * height
+    
+    PRINT "Genişlik:"; width
+    PRINT "Yükseklik:"; height
+    PRINT "Alan:"; area
+    
+    REM Başka bir alt program çağrısı
+    GOSUB show_perimeter
+RETURN
+
+show_perimeter:
+    LET perimeter = 2 * (width + height)
+    PRINT "Çevre:"; perimeter
+RETURN
+
+print_footer:
+    PRINT "************************"
+    PRINT "* Hesaplama Tamamlandı *"
+    PRINT "************************"
+RETURN
+
+REM Bu satırlar çalışmayacak çünkü END'den sonralar
+unreachable_code:
+    PRINT "Bu kod çalışmaz"
+RETURN

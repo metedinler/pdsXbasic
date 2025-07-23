@@ -1,0 +1,63 @@
+REM Test 14: Matematiksel işlemler ve fonksiyonlar
+REM PDS-X BASIC - Test14.basx
+
+PRINT "=== TEST 14: Matematik İşlemleri ==="
+
+REM Temel aritmetik
+LET a = 15
+LET b = 4
+
+PRINT "Temel işlemler:"
+PRINT a; " + "; b; " = "; a + b
+PRINT a; " - "; b; " = "; a - b
+PRINT a; " * "; b; " = "; a * b
+PRINT a; " / "; b; " = "; a / b
+PRINT a; " MOD "; b; " = "; a MOD b
+PRINT a; " ^ "; b; " = "; a ^ b
+
+REM Karşılaştırma operatörleri
+PRINT "Karşılaştırma operatörleri:"
+PRINT a; " = "; b; " : "; a = b
+PRINT a; " <> "; b; " : "; a <> b
+PRINT a; " > "; b; " : "; a > b
+PRINT a; " < "; b; " : "; a < b
+PRINT a; " >= "; b; " : "; a >= b
+PRINT a; " <= "; b; " : "; a <= b
+
+REM Mantıksal operatörleri
+LET flag1 = TRUE
+LET flag2 = FALSE
+
+PRINT "Mantıksal operatörler:"
+PRINT "TRUE AND FALSE = "; flag1 AND flag2
+PRINT "TRUE OR FALSE = "; flag1 OR flag2
+PRINT "NOT TRUE = "; NOT flag1
+PRINT "TRUE XOR FALSE = "; flag1 XOR flag2
+
+REM Matematiksel fonksiyonlar (eğer varsa)
+LET angle = 30
+LET number = 16
+
+PRINT "Matematiksel fonksiyonlar:"
+PRINT "ABS(-15) = "; ABS(-15)
+PRINT "SQR(16) = "; SQR(number)
+PRINT "INT(3.7) = "; INT(3.7)
+PRINT "RND() = "; RND()
+
+REM Trigonometrik fonksiyonlar
+PRINT "SIN(30) = "; SIN(angle)
+PRINT "COS(30) = "; COS(angle)
+PRINT "TAN(30) = "; TAN(angle)
+
+REM Logaritmik fonksiyonlar
+PRINT "LOG(10) = "; LOG(10)
+PRINT "EXP(1) = "; EXP(1)
+
+REM Min/Max işlemleri
+LET x = 10
+LET y = 25
+PRINT "MIN(10, 25) = "; MIN(x, y)
+PRINT "MAX(10, 25) = "; MAX(x, y)
+
+PRINT "Test 14 tamamlandı!"
+END

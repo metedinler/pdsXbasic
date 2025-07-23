@@ -1,0 +1,108 @@
+REM Test 17: Gelişmiş veri yapıları ve işlemler
+REM PDS-X BASIC - Test17.basx
+
+PRINT "=== TEST 17: Gelişmiş Veri Yapıları ==="
+
+REM Çok boyutlu diziler
+DIM matrix AS DOUBLE [3,3]
+DIM cube AS SINGLE [2,2,2]
+
+PRINT "3x3 Matris işlemleri:"
+FOR i = 0 TO 2
+    FOR j = 0 TO 2
+        LET matrix[i,j] = (i + 1) * (j + 1)
+    NEXT
+NEXT
+
+REM Matris yazdırma
+PRINT "Matris içeriği:"
+FOR i = 0 TO 2
+    FOR j = 0 TO 2
+        PRINT matrix[i,j];
+    NEXT
+    PRINT  REM Yeni satır
+NEXT
+
+REM 3D dizi işlemleri
+PRINT "2x2x2 Küp işlemleri:"
+FOR x = 0 TO 1
+    FOR y = 0 TO 1
+        FOR z = 0 TO 1
+            LET cube[x,y,z] = x + y + z
+        NEXT
+    NEXT
+NEXT
+
+PRINT "Küp içeriği:"
+FOR x = 0 TO 1
+    FOR y = 0 TO 1
+        FOR z = 0 TO 1
+            PRINT "cube["; x; ","; y; ","; z; "] = "; cube[x,y,z]
+        NEXT
+    NEXT
+NEXT
+
+REM Dinamik dizi benzeri işlemler
+DIM dynamic_array AS SINGLE [10]
+LET array_size = 5
+
+PRINT "Dinamik dizi ("; array_size; " eleman):"
+FOR i = 0 TO array_size - 1
+    LET dynamic_array[i] = i * i
+NEXT
+
+FOR i = 0 TO array_size - 1
+    PRINT "dynamic_array["; i; "] = "; dynamic_array[i]
+NEXT
+
+REM Dizi arama işlemi
+LET search_value = 9
+LET found_index = -1
+
+FOR i = 0 TO array_size - 1
+    IF dynamic_array[i] = search_value THEN
+        LET found_index = i
+        GOTO search_complete
+    ENDIF
+NEXT
+
+search_complete:
+IF found_index >= 0 THEN
+    PRINT "Değer "; search_value; " index "; found_index; "'te bulundu"
+ELSE
+    PRINT "Değer "; search_value; " bulunamadı"
+ENDIF
+
+REM Dizi sıralama (bubble sort)
+DIM sort_array AS SINGLE [5]
+LET sort_array[0] = 5
+LET sort_array[1] = 2
+LET sort_array[2] = 8
+LET sort_array[3] = 1
+LET sort_array[4] = 9
+
+PRINT "Sıralama öncesi:"
+FOR i = 0 TO 4
+    PRINT sort_array[i];
+NEXT
+PRINT
+
+REM Bubble sort algoritması
+FOR i = 0 TO 3
+    FOR j = 0 TO 3 - i
+        IF sort_array[j] > sort_array[j + 1] THEN
+            LET temp = sort_array[j]
+            LET sort_array[j] = sort_array[j + 1]
+            LET sort_array[j + 1] = temp
+        ENDIF
+    NEXT
+NEXT
+
+PRINT "Sıralama sonrası:"
+FOR i = 0 TO 4
+    PRINT sort_array[i];
+NEXT
+PRINT
+
+PRINT "Test 17 tamamlandı!"
+END

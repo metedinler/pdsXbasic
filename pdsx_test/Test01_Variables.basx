@@ -1,0 +1,24 @@
+REM Test 01: Temel değişken atamaları ve çıktı komutları
+REM PDS-X BASIC - Test01.basx
+
+PRINT "=== TEST 01: Temel Değişkenler ==="
+
+REM Sayısal değişkenler
+LET A = 10
+LET B = 20.5
+LET C = A + B
+
+PRINT "A ="; A
+PRINT "B ="; B  
+PRINT "C = A + B ="; C
+
+REM String değişkenler  
+LET message$ = "Merhaba PDS-X!"
+PRINT message$
+
+REM Boolean değişken
+LET flag = TRUE
+PRINT "Flag ="; flag
+
+PRINT "Test 01 tamamlandı!"
+END

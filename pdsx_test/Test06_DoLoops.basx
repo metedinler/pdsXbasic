@@ -1,0 +1,51 @@
+REM Test 06: DO-LOOP döngüleri
+REM PDS-X BASIC - Test06.basx
+
+PRINT "=== TEST 06: DO-LOOP Döngüleri ==="
+
+REM DO-LOOP WHILE
+LET x = 1
+PRINT "DO-LOOP WHILE örneği:"
+DO
+    PRINT "x ="; x
+    LET x = x + 1
+LOOP WHILE x <= 3
+
+REM DO-LOOP UNTIL
+LET y = 10
+PRINT "DO-LOOP UNTIL örneği:"
+DO
+    PRINT "y ="; y
+    LET y = y - 2
+LOOP UNTIL y <= 4
+
+REM Menü simülasyonu
+LET choice = 0
+LET menu_count = 0
+
+PRINT "Menü simülasyonu (3 kez çalışacak):"
+DO
+    LET menu_count = menu_count + 1
+    PRINT "--- Menü"; menu_count; "---"
+    PRINT "1. Seçenek A"
+    PRINT "2. Seçenek B" 
+    PRINT "3. Çıkış"
+    
+    REM Otomatik seçim simülasyonu
+    LET choice = menu_count
+    PRINT "Seçim:"; choice
+    
+    IF choice = 1 THEN
+        PRINT "Seçenek A seçildi"
+    ELSE
+        IF choice = 2 THEN
+            PRINT "Seçenek B seçildi"
+        ELSE
+            PRINT "Çıkış seçildi"
+        ENDIF
+    ENDIF
+    
+LOOP UNTIL choice = 3 OR menu_count >= 3
+
+PRINT "Test 06 tamamlandı!"
+END

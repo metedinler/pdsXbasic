@@ -1,0 +1,80 @@
+REM Test 07: SELECT CASE yapısı
+REM PDS-X BASIC - Test07.basx
+
+PRINT "=== TEST 07: SELECT CASE ==="
+
+REM Basit SELECT CASE
+LET grade = 85
+
+SELECT CASE grade
+    CASE 90
+        PRINT "Mükemmel!"
+    CASE 80
+        PRINT "Çok İyi!"
+    CASE 70
+        PRINT "İyi!"
+    CASE 60
+        PRINT "Geçer!"
+    CASE ELSE
+        PRINT "Diğer not:", grade
+END SELECT
+
+REM Gün ismi belirleme
+LET day_number = 3
+
+PRINT "Gün numarası:"; day_number
+SELECT CASE day_number
+    CASE 1
+        PRINT "Pazartesi"
+    CASE 2
+        PRINT "Salı"
+    CASE 3
+        PRINT "Çarşamba"
+    CASE 4
+        PRINT "Perşembe"
+    CASE 5
+        PRINT "Cuma"
+    CASE 6
+        PRINT "Cumartesi"
+    CASE 7
+        PRINT "Pazar"
+    CASE ELSE
+        PRINT "Geçersiz gün numarası"
+END SELECT
+
+REM Karakter analizi
+LET char_code = 65  REM 'A' karakteri
+
+SELECT CASE char_code
+    CASE 65
+        PRINT "Bu 'A' karakteridir"
+    CASE 66
+        PRINT "Bu 'B' karakteridir"
+    CASE 67
+        PRINT "Bu 'C' karakteridir"
+    CASE ELSE
+        PRINT "Diğer karakter, kod:"; char_code
+END SELECT
+
+REM İşlem seçimi
+LET operation = 2
+
+SELECT CASE operation
+    CASE 1
+        LET result = 10 + 5
+        PRINT "Toplama: 10 + 5 ="; result
+    CASE 2
+        LET result = 10 - 5
+        PRINT "Çıkarma: 10 - 5 ="; result
+    CASE 3
+        LET result = 10 * 5
+        PRINT "Çarpma: 10 * 5 ="; result
+    CASE 4
+        LET result = 10 / 5
+        PRINT "Bölme: 10 / 5 ="; result
+    CASE ELSE
+        PRINT "Bilinmeyen işlem"
+END SELECT
+
+PRINT "Test 07 tamamlandı!"
+END

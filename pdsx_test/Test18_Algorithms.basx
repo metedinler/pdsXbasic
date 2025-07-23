@@ -1,0 +1,133 @@
+REM Test 18: Algoritma örnekleri ve karmaşık programlar
+REM PDS-X BASIC - Test18.basx
+
+PRINT "=== TEST 18: Algoritmalar ==="
+
+REM Fibonacci serisi (recursive yaklaşım simülasyonu)
+PRINT "Fibonacci Serisi (ilk 10 sayı):"
+LET fib_a = 0
+LET fib_b = 1
+PRINT fib_a
+PRINT fib_b
+
+FOR i = 2 TO 9
+    LET fib_c = fib_a + fib_b
+    PRINT fib_c
+    LET fib_a = fib_b
+    LET fib_b = fib_c
+NEXT
+
+REM Asal sayı kontrolü
+LET number_to_check = 17
+LET is_prime = TRUE
+
+IF number_to_check <= 1 THEN
+    LET is_prime = FALSE
+ELSE
+    IF number_to_check = 2 THEN
+        LET is_prime = TRUE
+    ELSE
+        IF number_to_check MOD 2 = 0 THEN
+            LET is_prime = FALSE
+        ELSE
+            FOR i = 3 TO SQR(number_to_check) STEP 2
+                IF number_to_check MOD i = 0 THEN
+                    LET is_prime = FALSE
+                    GOTO prime_check_done
+                ENDIF
+            NEXT
+        ENDIF
+    ENDIF
+ENDIF
+
+prime_check_done:
+IF is_prime THEN
+    PRINT number_to_check; " asal sayıdır"
+ELSE
+    PRINT number_to_check; " asal sayı değildir"
+ENDIF
+
+REM EBOB (Greatest Common Divisor) algoritması
+LET num1 = 48
+LET num2 = 18
+LET gcd_a = num1
+LET gcd_b = num2
+
+PRINT "EBOB("; num1; ", "; num2; ") hesaplanıyor:"
+
+WHILE gcd_b <> 0
+    LET temp = gcd_b
+    LET gcd_b = gcd_a MOD gcd_b
+    LET gcd_a = temp
+WEND
+
+PRINT "EBOB = "; gcd_a
+
+REM Binary search simülasyonu (sıralı dizi)
+DIM search_array AS SINGLE [8]
+LET search_array[0] = 1
+LET search_array[1] = 3
+LET search_array[2] = 5
+LET search_array[3] = 7
+LET search_array[4] = 9
+LET search_array[5] = 11
+LET search_array[6] = 13
+LET search_array[7] = 15
+
+LET target = 7
+LET left = 0
+LET right = 7
+LET found = FALSE
+
+PRINT "Binary search ile "; target; " aranıyor:"
+
+WHILE left <= right AND NOT found
+    LET mid = INT((left + right) / 2)
+    
+    IF search_array[mid] = target THEN
+        PRINT "Değer index "; mid; "'te bulundu"
+        LET found = TRUE
+    ELSE
+        IF search_array[mid] < target THEN
+            LET left = mid + 1
+        ELSE
+            LET right = mid - 1
+        ENDIF
+    ENDIF
+WEND
+
+IF NOT found THEN
+    PRINT "Değer bulunamadı"
+ENDIF
+
+REM Basit hesap makinesi algoritması
+LET calc_num1 = 25
+LET calc_num2 = 7
+LET operation$ = "*"
+
+PRINT "Hesap makinesi: "; calc_num1; " "; operation$; " "; calc_num2
+
+SELECT CASE operation$
+    CASE "+"
+        LET calc_result = calc_num1 + calc_num2
+    CASE "-"
+        LET calc_result = calc_num1 - calc_num2
+    CASE "*"
+        LET calc_result = calc_num1 * calc_num2
+    CASE "/"
+        IF calc_num2 <> 0 THEN
+            LET calc_result = calc_num1 / calc_num2
+        ELSE
+            PRINT "Hata: Sıfıra bölme!"
+            GOTO calc_end
+        ENDIF
+    CASE ELSE
+        PRINT "Bilinmeyen işlem: "; operation$
+        GOTO calc_end
+END SELECT
+
+PRINT "Sonuç = "; calc_result
+
+calc_end:
+PRINT "Test 18 tamamlandı!"
+END
